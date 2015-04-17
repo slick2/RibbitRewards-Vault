@@ -1,13 +1,9 @@
-coinbin
+RibbitRewards Vault
 =======
 
-A Open Source Browser Based Bitcoin Wallet. Version 1.1 beta by OutCast3k
+A Open Source Browser Based RibbitRewards Wallet. Version 1.0 beta by ShannonCode forked from OutCast3k
 
-Live version available at http://coinb.in/ or http://4zpinp6gdkjfplhk.onion
-
-Github URL: https://github.com/OutCast3k/coinbin/
-
-Coinb.in supports a number of key features such as: 
+ supports a number of key features such as: 
 
 - Offline Compressed & uncompressed Address creation.
 - Offline Multisignature Address creation.
@@ -22,8 +18,4 @@ Coinb.in supports a number of key features such as:
 - Add custom data to transactions with the use of OP_RETURN.
 - Support current Dark Wallet Stealth Address structure (as of version Alpha 7) for outputs.
 - Brain wallet support.
-- Compatible with bitcoin-qt
-- An offical .onion address for tor users.
 - Offline qrcode creator and scanning tool
-
-Donate to 1CWHWkTWaq1K5hevimJia3cyinQsrgXUvg to see more development!
