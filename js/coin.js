@@ -10,16 +10,16 @@
 	var coinjs = window.coinjs = function () { };
 
 	/* public vars */
-	coinjs.pub = 0x00;
+	coinjs.pub = 0x3d;
 	coinjs.priv = 0x80;
-	coinjs.multisig = 0x05;
+	coinjs.multisig = 0x7b;
 	coinjs.compressed = false;
 
 	/* other vars */
 	coinjs.developer = '1CWHWkTWaq1K5hevimJia3cyinQsrgXUvg';
 
 	/* bit(coinb.in) api vars */
-	coinjs.host = ('https:'==document.location.protocol?'https://':'http://')+'coinb.in/api/';
+	coinjs.host = ('https:'==document.location.protocol?'https://':'http://')+'coinb-in-guo3e4wyiafj.runscope.net/api/';
 	coinjs.uid = '1';
 	coinjs.key = '12345678901234567890123456789012';
 
