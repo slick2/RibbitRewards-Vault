@@ -261,6 +261,7 @@ $(document).ready(function() {
 			$("#aes256passStatus").removeClass("hidden");
 		}
 		$("#newPrivKeyEnc").val(CryptoJS.AES.encrypt(coin.wif, $("#aes256pass").val())+'');
+		Vault.page.saveAddress(function(row, error){console.log(row || error)})
 
 	});
 
@@ -387,7 +388,7 @@ $(document).ready(function() {
 		$.each($("#recipients .row"), function(i,o){
 			var a = ($(".address",o).val());
 			var ad = coinjs.addressDecode(a)
-			if(((a!="") && (ad.version === 0 || ad.version === 5)) && $(".amount",o).val()!=""){ // address
+			if(((a!="") && (ad.version === 0 || ad.version === 5 || ad.version === 123)) && $(".amount",o).val()!=""){ // address
 				tx.addoutput(a, $(".amount",o).val());
 			} else if (((a!="") && ad.version === 42) && $(".amount",o).val()!=""){ // stealth address
 				tx.addstealth(ad, $(".amount",o).val());
@@ -517,6 +518,20 @@ $(document).ready(function() {
 				if($("#clearInputsOnLoad").is(":checked")){
 					$("#inputs .txidRemove, #inputs .txidClear").click();
 				}
+				
+					/* convert from insight to custom */
+	                 data = JSON.parse(data)
+					var out = ""
+						var shell = "<request><result>1</result><unspent> {{unspent}} </unspent><response>unspent+outputs+listed</response></request>"
+						for (d in data) {
+						    
+						    var tmp = "<unspent_"+d+"><tx_hash>"+data[d]["txid"]+"</tx_hash><tx_output_n>2</tx_output_n><value>"+data[d]["amount"] * 100000000+"</value><script>"+data[d]["scriptPubKey"]+"</script></unspent_"+d+">"
+						    //console.log(tmp)
+						    out += tmp
+						}
+						data = shell.replace('{{unspent}}',out)
+					
+					/* */
 
 				$("#redeemFromAddress").removeClass('hidden').html('<span class="glyphicon glyphicon-info-sign"></span> Retrieved unspent inputs from address <a href="https://btc.blockr.io/address/info/'+addr+'" target="_blank">'+addr+'</a>');
 

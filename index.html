@@ -13,23 +13,43 @@
 
 		<link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
 		<link rel="stylesheet" href="css/style.css" media="screen">
-		
-		<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
-		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 
+		<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/crypto-min.js"></script>
 		<script type="text/javascript" src="js/crypto-sha256.js"></script>
 		<script type="text/javascript" src="js/crypto-sha256-hmac.js"></script>
 		<script type="text/javascript" src="js/ripemd160.js"></script>
 		<script type="text/javascript" src="js/aes.js"></script>
-
 		<script type="text/javascript" src="js/qrcode.js"></script>
 		<script type="text/javascript" src="js/qcode-decoder.min.js"></script>
 		<script type="text/javascript" src="js/jsbn.js"></script>
 		<script type="text/javascript" src="js/ellipticcurve.js"></script>
-
 		<script type="text/javascript" src="js/coin.js"></script>
 		<script type="text/javascript" src="js/coinbin.js"></script>
+		
+		<!-- Menu Additions -->
+		
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<!--<link rel="stylesheet" href="js/multi-level-push-menu/demo/bootstrap/bootstrap_integration.css">-->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700&subset=latin,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="js/multi-level-push-menu/demo/jquery.multilevelpushmenu.css" />
+		<script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+		<script src="js/multi-level-push-menu/jquery.multilevelpushmenu.min.js"></script>
+		<!--<script src="js/multi-level-push-menu/demo/bootstrap/bootstrap_integration.js"></script>-->
+		<script>
+		    $(document).ready(function(){
+		         $('#menu').multilevelpushmenu({'collapsed':true});
+		         $("#menu_multilevelpushmenu").height($(window).height())
+		    });
+		</script>
+		
+		<!-- /Menu Additions -->
+		
+		<!-- Database -->
+		<script src="js/database/database.js"></script>
+		<script src="js/database/jquery.db.min.js"></script>
+		<!-- Database -->
 	</head>
 
 	<body>
@@ -70,8 +90,167 @@
 			<div id="content" class="container">
 
 				<noscript class="alert alert-danger center-block"><span class="glyphicon glyphicon-exclamation-sign"></span> This page uses javascript, please enable it to continue!</noscript>
-
-				<div class="tab-content">
+				<div class="row">
+			    <div class="col-xs-1 col-sm-1 col-lg-1" style="position:absolute;left:0;padding-left:0;top:0">
+			    <div id="menu">
+                    <nav style="z-index:10">
+                        <h2><i class="fa fa-university"></i>My Vault</h2>
+                        <ul>
+                        	<li>
+                                <a href="#"><i class="fa fa-key"></i>Key Ring</a>
+                                <h2><i class="fa fa-key"></i>Key Ring</h2>
+                                <ul>
+                                    <li>
+                                        <a href="#" ><i class="fa fa-users"></i>Multisig</a>
+                                        <h2><i class="fa fa-users"></i>Multisig</h2>
+                                        <ul>
+                                        	<li>
+                                        		<a>Export</a>
+                                        	</li>
+                                        	<li>
+                                        		<a>Encrypt</a>
+                                        	</li>
+                                        	<li>
+                                        		<a>View</a>
+                                        	</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-shield"></i>Keys</a>
+                                        <h2><i class="fa fa-shield"></i>Keys</h2>
+                                        <ul>
+                                        	<li>
+                                        		<a>Export</a>
+                                        	</li>
+                                        	<li>
+                                        		<a>Encrypt</a>
+                                        	</li>
+                                        	<li>
+                                        		<a>View</a>
+                                        	</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-user-secret"></i>HD Keys</a>
+                                        <h2><i class="fa fa-user-secret"></i>HD Keys</h2>
+                                        <ul>
+                                        	<li>
+                                        		<a>Export</a>
+                                        	</li>
+                                        	<li>
+                                        		<a>Encrypt</a>
+                                        	</li>
+                                        	<li>
+                                        		<a>View</a>
+                                        	</li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Settings</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                            	<a href="#"><i class="fa fa-users"></i>Co-Signers</a>
+                                <h2><i class="fa fa-users"></i>Co-Signers</h2>
+                                <ul>
+                                    <li>
+                                  	</li>
+                                </ul
+                            </li>
+                            <li>
+                            	<a href="#"><i class="fa fa-user-plus"></i>Contacts</a>
+                            	<h2><i class="fa fa-user-plus"></i>Contacts</h2>
+                            	<ul>
+                            		<li>
+                            			<a href="#"><i class="fa fa-comments"></i>Chat</a>
+                            		</li>
+                            		<li>
+                            			<a><i class="fa fa-book"></i>Address Book</a>
+                            		</li>
+                            	</ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-laptop"></i>Devices</a>
+                                <h2><i class="fa fa-laptop"></i>Devices</h2>
+                                <ul>
+                                    <li>
+                                        <a href="#"><i class="fa fa-phone"></i>Mobile</a>
+                                        <h2><i class="fa fa-phone"></i>Mobile</h2>
+                                        <ul>
+                                            <li>
+                                                <a href="#"><i class="fa fa-plus-square"></i>Add Mobile</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fa fa-gear"></i>Settings</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fa fa-ambulance"></i>Help</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-desktop"></i>Desktop</a>
+                                        <h2><i class="fa fa-desktop"></i>Desktop</h2>
+                                        <ul>
+                                        	<li>
+                                        		<a href="#">This Device</a>
+                                        		<h2><i class="fa fa-desktop"></i>This Device</h2>
+                                        		<ul>
+                                        			<li>
+                                        				<a>Settings</a>
+                                        			</li>
+                                        		</ul>
+                                        	</li>
+                                            <li>
+                                                <a href="#"><i class="fa fa-plus-square"></i>Add Desktop</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fa fa-gear"></i>Settings</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fa fa-ambulance"></i>Help</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-link"></i>History</a>
+                                <h2><i class="fa fa-link"></i>History</h2>
+                                <ul>
+                                    <li>
+                                        <a href="#"><i class="fa fa-chevron-left"></i>Outgoing Transactions</a>
+                                        <h2><i class="fa fa-tags"></i>Outgoing Transactions</h2>
+                                        <ul>
+	                                        <li>
+	                                            <a href="#">Settings</a>
+	                                        </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                    	<a href="#"><i class="fa fa-chevron-right"></i>Incoming Transactions</a>
+                                        <h2><i class="fa fa-tags"></i>Incoming Transactions</h2>
+                                        <ul>
+	                                        <li>
+	                                            <a href="#">Settings</a>
+	                                        </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-ambulance"></i>Help</a>
+                            </li>
+                            <li>
+                                <a href="#">Credits</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+			        </div>
+			        <div class="col-xs-16 col-lg-14">
+			        	<div class="tab-content">
 					<div class="tab-pane tab-content active" id="home">
 						<div class="row">
 							<div class="col-md-12">
@@ -678,6 +857,11 @@
 				</div>
 			</div>
 		</div>
+			        </div>
+			    </div>
+				
+
+				
 
 		<div id="footer">
 			<div class="container text-right">
