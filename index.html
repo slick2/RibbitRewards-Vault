@@ -4,7 +4,7 @@
 
 		<title>RibbitRewards Vault by ShannonCode</title>
 
-        	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 		<meta name="keywords" content="rbr ribbitrewards, wallet, multisig, multisignature, address, browser, javascript, js, broadcast, transaction, verify, decode" />
 		<meta name="description" content="A RibbitRewards Wallet written in Javascript. Supports Multisig, Custom Transactions, nLockTime and more!" />
 
@@ -27,6 +27,10 @@
 		<script type="text/javascript" src="js/ellipticcurve.js"></script>
 		<script type="text/javascript" src="js/coin.js"></script>
 		<script type="text/javascript" src="js/coinbin.js"></script>
+		<script src="bower_components/bitcore/bitcore.min.js"></script>
+  		<script src="bower_components/bitcore-ecies/bitcore-ecies.min.js"></script>
+  		<script src="js/identity.js"></script>
+  		<script src="js/gserializer.js"></script>
 		
 		<!-- Menu Additions -->
 		
@@ -41,7 +45,12 @@
 		    $(document).ready(function(){
 		         $('#menu').multilevelpushmenu({'collapsed':true});
 		         $("#menu_multilevelpushmenu").height($(window).height())
-		    });
+		         $(document).delegate('#newKeysBtn', 'click', function() { console.log(Vault.page.saveAddress(function(){
+		         	console.log("Added a new address")
+		         })) });
+		    })
+		    var bitcore = require('bitcore')
+		    var ECIES = require('bitcore-ecies')
 		</script>
 		
 		<!-- /Menu Additions -->
@@ -575,7 +584,7 @@
 
 								<label>Null Data</label> <span class="text-muted text-normal">(40 byte limit)</span>
 								<p class="checkbox">
-									<label><input type="checkbox" id="opReturn" class="checkbox-inline"> Allow data to be sent within the transaction and stored in the blockchain by using <a href="https://bitcoin.org/en/developer-guide#null-data" target="_"blank">OP_RETURN</a>.</label>
+									<label><input type="checkbox" id="opReturn" class="checkbox-inline"> Allow data to be sent within the transaction and stored in the blockchain by using <a href="https://bitcoin.org/en/developer-guide#null-data" target="blank">OP_RETURN</a>.</label>
 									<div class="text-muted">When using this option you may enter a hex string or address into the address field on the output tab.</div>
 								</p>
 

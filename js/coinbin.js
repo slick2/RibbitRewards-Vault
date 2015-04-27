@@ -261,7 +261,7 @@ $(document).ready(function() {
 			$("#aes256passStatus").removeClass("hidden");
 		}
 		$("#newPrivKeyEnc").val(CryptoJS.AES.encrypt(coin.wif, $("#aes256pass").val())+'');
-		Vault.page.saveAddress(function(row, error){console.log(row || error)})
+		//Vault.page.saveAddress(function(row, error){console.log(row || error)})
 
 	});
 
