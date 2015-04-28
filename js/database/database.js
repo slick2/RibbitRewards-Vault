@@ -113,18 +113,6 @@ Vault.saveHDAddress = function(cb) {
     })
 }
 
-Vault.getIdentity = function() {
-    Vault.database.getRowByKey("privkey", "format", "Extended Identity", function(tx,error,row) {
-        if (row != null)
-            console.log("found Identity: " + JSON.stringify(row))
-        else
-            var identity = Vault.saveHDAddress(function(row, error) {
-                if (verbose) console.log("generated identity: " + row)
-                return row
-            })
-    })
-}
-
 Vault.insertAddress = function(payload, cb) {
     init()
     var addressInsertData = payload
@@ -326,8 +314,11 @@ $(document).ready(function() {
 })
 
 function readyWork() {
+            $(document).delegate('#newKeysBtn', 'click', function() {
+                Vault.page.saveAddress(function(){})
+            });
     Vault.init(function() {
-        //Vault.getIdentity(function(){ })
+        publish()
         db.tables(function(tables) {
             if (verbose) console.log("Tables: " + tables);
             if (!tables.contains("multisig")) {

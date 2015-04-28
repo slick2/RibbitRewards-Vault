@@ -10,6 +10,31 @@ body {
 	display:none;
 }
 
+.shannon .btn {
+	padding-top: 2px !important;
+}
+
+.shannon .toggle.btn {
+	min-height: 24px !important;
+	height: 24px !important;
+}
+
+.input-group-lg>.input-group-addon {
+	padding-top: 7px!important ;
+}
+
+.shannon .toggle {
+	width: 185px;
+}
+
+.navbar-right {
+	margin-right: -100px !important;
+}
+
+.navbar-form .form-control {
+	width:375px;
+}
+
 #wrap {
 	min-height: 100%;
 	height: auto;
