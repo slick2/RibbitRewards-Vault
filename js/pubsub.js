@@ -20,14 +20,32 @@ function publish() {
     function pub() {
         pubnub.publish({
             channel: address,
-            message: "You have successfully registered your identity as a channel",
+            message: "Your receive channel is: "+foundIdentity[0].address.addressData,
             callback: function(m) {
                 console.log("m: "+m)
             }
         })
     }
     
-    function popMsg(msg) {
+    subscribeToBlockchain()
+}
+
+ function popMsg(msg) {
         $('.top-right').notify({ message: { text: msg },type: "blackgloss" }).show()
-     }
+}
+
+function subscribeToBlockchain(){
+    var eventToListenTo = 'tx'
+    var room = 'inv'
+
+    var socket = io("http://ribbitchain.info:80/");
+    socket.on('connect', function() {
+      // Join the room.
+      socket.emit('subscribe', room);
+    })
+    socket.on(eventToListenTo, function(data) {
+        var msg = "Blockchain registered new TX: " + data.txid
+      console.log(msg)
+      popMsg(msg)
+    })
 }

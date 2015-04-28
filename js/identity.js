@@ -6,17 +6,7 @@ Identity.generate = function(cb){
 }
 
 Identity.getIdentity = function(cb) {
-    Vault.database.getRowByKey("privkey", "format", "Extended Identity", function(tx,error,row) {
-        if (row != null) {
-            if (verbose) console.log("found Identity: " + JSON.stringify(row))
-            return cb(row)
-        }
-        else
-            var identity = Vault.saveHDAddress(function(row, error) {
-                if (verbose) console.log("generated identity: " + row)
-                return cb(row)
-            })
-    })
+    return cb(foundIdentity[0].address.addressData)
 }
 
 Identity.getIdentityPrivateKey = function(cb) {

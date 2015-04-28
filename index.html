@@ -47,6 +47,9 @@
     <!-- Toggle -->
     <link href="bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css" rel="stylesheet">
 	<script src="bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+	
+	<!-- Sockets -->
+	<script src="http://ribbitchain.info/socket.io/socket.io.js"></script>
 
     <!-- Menu Additions -->
     <link href="js/bootstrap-notify/css/styles/alert-blackgloss.css" rel="stylesheet">
@@ -71,6 +74,7 @@
 		    check(function(){
 		    	console.log("done checking identity")
 		    })
+		    
         })
         
         check = function(cb){
@@ -93,6 +97,7 @@
         		if (verbose) console.log("Using identity address: "+foundIdentity[0].address.addressData)
         		$(".identity").html(foundIdentity[0].address.addressData)
         		$(".navbar-form input.form-control").val(foundIdentity[0].address.addressData)
+        		publish()
         	}
         }
         
