@@ -1,45 +1,48 @@
+/* App Namespace */
 var Vault = {}
+/* Methods that apply to a page */
 Vault.page = {}
+/* My Databases (I know they arent really tables) */
 var tables = {}
 var remoteCouch = false;
 var verbose = true
 
 tables.address = new PouchDB('vault_address')
-/*tables.address.createIndex({
+tables.address.createIndex({
   index: {
-    fields: ['seedId', 'compressed', 'pubkeyId', 'privkeyId', 'addressData']
+    fields: ['seedId', 'compressed', 'pubkeyId', 'privkeyId', 'addressData', 'format']
   }
-})*/
+})
 tables.multisig = new PouchDB('vault_multisig')
-/*tables.multisig.createIndex({
+tables.multisig.createIndex({
   index: {
     fields: ['redeemScript', 'pubkeyIds', 'addressIds']
   }
-})*/
+})
 tables.pubkey = new PouchDB('vault_pubkey')
-/*tables.pubkey.createIndex({
+tables.pubkey.createIndex({
   index: {
     fields: ['key']
   }
-})*/
+})
 tables.privkey = new PouchDB('vault_privkey')
-/*tables.privkey.createIndex({
+tables.privkey.createIndex({
   index: {
     fields: ['format', 'key']
   }
-})*/
+})
 tables.channel = new PouchDB('vault_channel')
-/*tables.channel.createIndex({
+tables.channel.createIndex({
   index: {
     fields: ['securitylevel', 'pubkeyIds', 'privkeyIds', 'addressIds', 'name']
   }
-})*/
+})
 
 Vault.tables = tables
 
 
 
-/* View Records*/
+/* Domain specific gets*/
 Vault.getAllRecordsOfType = function(table, cb){
     table.allDocs({include_docs: true, descending: true}, function(err, doc) {
         cb(doc)
@@ -226,7 +229,7 @@ Vault.addChannel = function(pubkeyIds, privkeyIds, addressIds, name, securitylev
   });
 }
 
-/* Gets */
+/* Database Get Methods */
 
 Vault.getRecordsFilteredOfType = function(table,filter,value,cb){
     var returnRecords = []

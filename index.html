@@ -37,7 +37,7 @@
     <script src="js/bootstrap-notify/js/bootstrap-notify.js"></script>
 	<script src="js/pouchdb-3.4.0.min.js"></script>
 	<script src="bower_components/transform-pouch/dist/pouchdb.transform-pouch.js"></script>
-	<!--<script src="bower_components/pouchdb-find/dist/pouchdb.find.js"></script>-->
+	<script src="bower_components/pouchdb-find/dist/pouchdb.find.js"></script>
     <script src="js/database/pouch-crypto.js"></script>
     <!-- https://github.com/nolanlawson/transform-pouch -->
     <!-- https://github.com/calvinmetcalf/crypto-pouch -->
@@ -84,7 +84,7 @@
 		        })
 		    }
         
-        lazyCheck = function(){setTimeout(function(){ checkLocalIdentity() },3000)}
+        lazyCheck = function(){setTimeout(function(){ checkLocalIdentity() },5000)}
         lazyCheck()
         
         function checkLocalIdentity(){
