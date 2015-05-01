@@ -15,99 +15,15 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" media="screen">
     <link rel="stylesheet" href="css/style.css" media="screen">
 
-    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/crypto-min.js"></script>
-    <script type="text/javascript" src="js/crypto-sha256.js"></script>
-    <script type="text/javascript" src="js/crypto-sha256-hmac.js"></script>
-    <script type="text/javascript" src="js/ripemd160.js"></script>
-    <script type="text/javascript" src="js/aes.js"></script>
-    <script type="text/javascript" src="js/qrcode.js"></script>
-    <script type="text/javascript" src="js/qcode-decoder.min.js"></script>
-    <script type="text/javascript" src="js/jsbn.js"></script>
-    <script type="text/javascript" src="js/ellipticcurve.js"></script>
-    <script type="text/javascript" src="js/coin.js"></script>
-    <script type="text/javascript" src="js/coinbin.js"></script>
-    <script src="bower_components/bitcore/bitcore.min.js"></script>
-    <script src="bower_components/bitcore-ecies/bitcore-ecies.min.js"></script>
-    <script src="js/identity.js"></script>
-    <script src="js/gserializer.js"></script>
-    <script src="js/pubsub.js"></script>
-    <script src="http://cdn.pubnub.com/pubnub-3.7.1.min.js"></script>
-    <script src="js/bootstrap-notify/js/bootstrap-notify.js"></script>
-	<script src="js/pouchdb-3.4.0.min.js"></script>
-	<script src="bower_components/transform-pouch/dist/pouchdb.transform-pouch.js"></script>
-	<script src="bower_components/pouchdb-find/dist/pouchdb.find.js"></script>
-    <script src="js/database/pouch-crypto.js"></script>
-    <!-- https://github.com/nolanlawson/transform-pouch -->
-    <!-- https://github.com/calvinmetcalf/crypto-pouch -->
-    <script src="js/database/pouch.js"></script>
-    <!--<script src="js/database/pouchdb-extend.js"></script>-->
-    
-    <!-- Toggle -->
     <link href="bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css" rel="stylesheet">
-	<script src="bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
-	
-	<!-- Sockets -->
-	<script src="http://ribbitchain.info/socket.io/socket.io.js"></script>
 
-    <!-- Menu Additions -->
     <link href="js/bootstrap-notify/css/styles/alert-blackgloss.css" rel="stylesheet">
 	<link rel="stylesheet" href="js/bootstrap-notify/css/bootstrap-notify.css">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <!--<link rel="stylesheet" href="js/multi-level-push-menu/demo/bootstrap/bootstrap_integration.css">-->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700&subset=latin,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='css/font.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="js/multi-level-push-menu/demo/jquery.multilevelpushmenu.css" />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-    <script src="js/multi-level-push-menu/jquery.multilevelpushmenu.min.js"></script>
-    <script>
-    	var foundIdentity = {}
-        $(document).ready(function() {
-            $('#menu').multilevelpushmenu({
-                'collapsed': true
-            })
-            $("#menu_multilevelpushmenu").height($(window).height())
-            $(document).on('click', '#newKeysBtn', function() {
-				Vault.page.saveAddress(function(out){console.log("Added address: ");console.log(out)})
-			})
-		    
-		    check(function(){
-		    	console.log("done checking identity")
-		    })
-		    
-        })
-        
-        check = function(cb){
-		        Vault.getAddressesByPrivateKeyFormat("Extended Identity",function(keys){
-		            foundIdentity = keys
-		            return cb()
-		        })
-		    }
-        
-        lazyCheck = function(){setTimeout(function(){ checkLocalIdentity() },5000)}
-        lazyCheck()
-        
-        function checkLocalIdentity(){
-        	if (foundIdentity.length == 0) {
-        		Vault.saveHDAddress(true,function(){
-        			if (verbose) console.log("Created a new identity")
-        			check(function(){ console.log("checked identity again") ; lazyCheck() })
-        		})
-        	} else {
-        		if (verbose) console.log("Using identity address: "+foundIdentity[0].address.addressData)
-        		$(".identity").html(foundIdentity[0].address.addressData)
-        		$(".navbar-form input.form-control").val(foundIdentity[0].address.addressData)
-        		publish()
-        	}
-        }
-        
-        var bitcore = require('bitcore')
-        var ECIES = require('bitcore-ecies')
-    </script>
-
-    <!-- /Menu Additions -->
-
-
+    
 </head>
 
 <body>
@@ -1049,6 +965,98 @@
     <!-- qrcode scanner modal -->
 
     <div class="hidden" id="entropybucket"></div>
+    
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+        <script>
+            try {
+                $ = jQuery = module.exports;
+                // If you want module.exports to be empty, uncomment:
+                // module.exports = {};
+            } catch(e) {}
+        </script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/crypto-min.js"></script>
+    <script type="text/javascript" src="js/crypto-sha256.js"></script>
+    <script type="text/javascript" src="js/crypto-sha256-hmac.js"></script>
+    <script type="text/javascript" src="js/ripemd160.js"></script>
+    <script type="text/javascript" src="js/aes.js"></script>
+    <script type="text/javascript" src="js/qrcode.js"></script>
+    <script type="text/javascript" src="js/qcode-decoder.min.js"></script>
+    <script type="text/javascript" src="js/jsbn.js"></script>
+    <script type="text/javascript" src="js/ellipticcurve.js"></script>
+    <script type="text/javascript" src="js/coin.js"></script>
+    <script type="text/javascript" src="js/coinbin.js"></script>
+    <script src="bower_components/bitcore/bitcore.min.js"></script>
+    <script src="bower_components/bitcore-ecies/bitcore-ecies.min.js"></script>
+    <script src="js/identity.js"></script>
+    <script src="js/gserializer.js"></script>
+    <script src="js/pubsub.js"></script>
+    <script src="js/pubnub-3.7.1.min.js"></script>
+    <script src="js/bootstrap-notify/js/bootstrap-notify.js"></script>
+	<script src="js/pouchdb-3.4.0.min.js"></script>
+	<script src="bower_components/transform-pouch/dist/pouchdb.transform-pouch.js"></script>
+	<script src="bower_components/pouchdb-find/dist/pouchdb.find.js"></script>
+    <script src="js/database/pouch-crypto.js"></script>
+    <!-- https://github.com/nolanlawson/transform-pouch -->
+    <!-- https://github.com/calvinmetcalf/crypto-pouch -->
+    <script src="js/database/pouch.js"></script>
+    <!--<script src="js/database/pouchdb-extend.js"></script>-->
+        <script src="js/modernizr.js"></script>
+    <script src="js/multi-level-push-menu/jquery.multilevelpushmenu.min.js"></script>
+    <script src="bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+	
+	<!-- Sockets -->
+	<script src="js/socket.io.js"></script>
+    <script>
+    	var foundIdentity = {}
+        $(document).ready(function() {
+            $.getScript( "js/bootstrap.min.js", function( data, textStatus, jqxhr ) {
+                console.log( data ); // Data returned
+                console.log( textStatus ); // Success
+                console.log( jqxhr.status ); // 200
+                console.log( "Load was performed." );
+            });
+            $('#menu').multilevelpushmenu({
+                'collapsed': true
+            })
+            $("#menu_multilevelpushmenu").height($(window).height())
+            $(document).on('click', '#newKeysBtn', function() {
+				Vault.page.saveAddress(function(out){console.log("Added address: ");console.log(out)})
+			})
+		    
+		    check(function(){
+		    	console.log("done checking identity")
+		    })
+		    
+        })
+        
+        check = function(cb){
+		        Vault.getAddressesByPrivateKeyFormat("Extended Identity",function(keys){
+		            foundIdentity = keys
+		            return cb()
+		        })
+		    }
+        
+        lazyCheck = function(){setTimeout(function(){ checkLocalIdentity() },5000)}
+        lazyCheck()
+        
+        function checkLocalIdentity(){
+        	if (foundIdentity.length == 0) {
+        		Vault.saveHDAddress(true,function(){
+        			if (verbose) console.log("Created a new identity")
+        			check(function(){ console.log("checked identity again") ; lazyCheck() })
+        		})
+        	} else {
+        		if (verbose) console.log("Using identity address: "+foundIdentity[0].address.addressData)
+        		$(".identity").html(foundIdentity[0].address.addressData)
+        		$(".navbar-form input.form-control").val(foundIdentity[0].address.addressData)
+        		publish()
+        	}
+        }
+        
+        var bitcore = require('bitcore')
+        var ECIES = require('bitcore-ecies')
+    </script>
 </body>
 
 </html>
