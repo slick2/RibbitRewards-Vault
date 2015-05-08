@@ -46,7 +46,7 @@ function performImports(which, cb) {
 		//add html5 import
 		if (which == "all") {
 			$.each(items, function(item){
-				$('<iframe seamless width="100%" scrolling="no" onresize="alert(1)" frameborder="0" src="'+items[item].file+'" class="'+items[item].name+'frame"></iframe>').appendTo(items[item].selector);
+				$('<iframe seamless width="40px" scrolling="no" frameborder="0" src="'+items[item].file+'" class="'+items[item].name+'frame"></iframe>').appendTo(items[item].selector);
 				$("."+items[item].name+"frame").height($("#wrap").height())
 				if (!--count) cb(html5Import);
 			})
@@ -54,7 +54,7 @@ function performImports(which, cb) {
 		else {
 			$.each(items, function(item){
 				if (items[item].name == which) {
-					$('<iframe seamless width="100%" scrolling="no" onresize="alert(1)" frameborder="0" src="'+items[item].file+'" class="'+items[item].name+'frame"></iframe>').appendTo(items[item].selector);
+					$('<iframe seamless width="40px" scrolling="no" frameborder="0" src="'+items[item].file+'" class="'+items[item].name+'frame"></iframe>').appendTo(items[item].selector);
 					$("."+items[item].name+"frame").height($("#wrap").height())
 					cb(html5Import)
 				}
