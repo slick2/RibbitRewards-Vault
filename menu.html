@@ -1,0 +1,205 @@
+<html>
+    
+    <head>
+        <link rel="stylesheet" href="js/multi-level-push-menu/demo/jquery.multilevelpushmenu.css" />
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+        <script src="js/multi-level-push-menu/jquery.multilevelpushmenu.min.js"></script>
+        <script type="text/javascript" src="js/iframeResizer.contentWindow.min.js"></script>
+        <script>
+            var proxy
+            $(document).ready(function(){
+                $('#menu').multilevelpushmenu({'collapsed': true })                
+                    setTimeout(function(){
+                        if ('parentIFrame' in window) {
+                            proxy = window.parentIFrame;
+                            $("div").bind('mouseup', function(e)
+                             {
+                                 var proxy = window.parentIFrame;
+                                 setTimeout(function(){
+                                     var elem = $("#menu")
+                                     console.log("letting parent know size "+elem.height() + " "+ elem.width())
+                                     var height = elem.height()
+                                     var width = elem.width()
+                                     proxy.size(height,width)
+                                 },1000)
+                            });
+                          }
+                      },300)                                             
+            })
+        </script>
+    </head>
+    
+    <body style="margin: 0px;">
+        <div id="menu">
+            <nav style="z-index:10">
+                <h2>
+                    <i class="fa fa-university"></i>My Vault</h2>
+                <ul>
+                    <li>
+                        <a href="#"><i class="fa fa-key"></i>Key Ring</a>
+                        <h2>
+                            <i class="fa fa-key"></i>Key Ring</h2>
+                        <ul>
+                            <li>
+                                <a href="#"><i class="fa fa-users"></i>Multisig</a>
+                                <h2>
+                                    <i class="fa fa-users"></i>Multisig</h2>
+                                <ul>
+                                    <li>
+                                        <a>Export</a>
+                                    </li>
+                                    <li>
+                                        <a>Encrypt</a>
+                                    </li>
+                                    <li>
+                                        <a>View</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-shield"></i>Keys</a>
+                                <h2>
+                                    <i class="fa fa-shield"></i>Keys</h2>
+                                <ul>
+                                    <li>
+                                        <a>Export</a>
+                                    </li>
+                                    <li>
+                                        <a>Encrypt</a>
+                                    </li>
+                                    <li>
+                                        <a>View</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-user-secret"></i>HD Keys</a>
+                                <h2>
+                                    <i class="fa fa-user-secret"></i>HD Keys</h2>
+                                <ul>
+                                    <li>
+                                        <a>Export</a>
+                                    </li>
+                                    <li>
+                                        <a>Encrypt</a>
+                                    </li>
+                                    <li>
+                                        <a>View</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Settings</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-users"></i>Co-Signers</a>
+                        <h2>
+                            <i class="fa fa-users"></i>Co-Signers</h2>
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-user-plus"></i>Contacts</a>
+                        <h2>
+                            <i class="fa fa-user-plus"></i>Contacts</h2>
+                        <ul>
+                            <li>
+                                <a href="#"><i class="fa fa-comments"></i>Chat</a>
+                            </li>
+                            <li>
+                                <a><i class="fa fa-book"></i>Address Book</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-laptop"></i>Devices</a>
+                        <h2>
+                            <i class="fa fa-laptop"></i>Devices</h2>
+                        <ul>
+                            <li>
+                                <a href="#"><i class="fa fa-phone"></i>Mobile</a>
+                                <h2>
+                                    <i class="fa fa-phone"></i>Mobile</h2>
+                                <ul>
+                                    <li>
+                                        <a href="#"><i class="fa fa-plus-square"></i>Add Mobile</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-gear"></i>Settings</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-ambulance"></i>Help</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-desktop"></i>Desktop</a>
+                                <h2>
+                                    <i class="fa fa-desktop"></i>Desktop</h2>
+                                <ul>
+                                    <li>
+                                        <a href="#">This Device</a>
+                                        <h2>
+                                            <i class="fa fa-desktop"></i>This Device</h2>
+                                        <ul>
+                                            <li>
+                                                <a>Settings</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-plus-square"></i>Add Desktop</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-gear"></i>Settings</a>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-ambulance"></i>Help</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-link"></i>History</a>
+                        <h2>
+                            <i class="fa fa-link"></i>History</h2>
+                        <ul>
+                            <li>
+                                <a href="#"><i class="fa fa-chevron-left"></i>Outgoing Transactions</a>
+                                <h2>
+                                    <i class="fa fa-tags"></i>Outgoing Transactions</h2>
+                                <ul>
+                                    <li>
+                                        <a href="#">Settings</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"><i class="fa fa-chevron-right"></i>Incoming Transactions</a>
+                                <h2>
+                                    <i class="fa fa-tags"></i>Incoming Transactions</h2>
+                                <ul>
+                                    <li>
+                                        <a href="#">Settings</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-ambulance"></i>Help</a>
+                    </li>
+                    <li>
+                        <a href="#">Credits</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </body>
+
+</html>
