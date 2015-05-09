@@ -182,6 +182,7 @@
                                     <div class="col-md-12">
                                         <h2>keychain
                                             <small>keychain management</small>
+                                        </h2>
                                             <div id="toolbar">
                                                 <button id="remove" class="btn btn-danger" disabled>
                                                     <i class="glyphicon glyphicon-remove"></i> Delete
@@ -198,25 +199,20 @@
                                                    data-pagination="true"
                                                    data-page-list="[10, 25, 50, 100, ALL]"
                                                    data-show-footer="true"
-                                                   data-side-pagination="server"
-                                                   data-url="data/sample"
+                                                   data-side-pagination="server"                                                   
                                                    data-response-handler="responseHandler">
-                                                <thead>
+                                                <thead><!--data-url="data/sample"-->
                                                 <tr>
-                                                    <th data-field="state" data-checkbox="true"></th>
-                                                    <th data-field="id" data-sortable="true"
-                                                        data-footer-formatter="totalTextFormatter">ID</th>
-                                                    <th data-field="name" data-sortable="true" data-editable="true"
-                                                        data-footer-formatter="totalNameFormatter">Item Name</th>
-                                                    <th data-field="price" data-sortable="true" data-editable="true"
-                                                        data-footer-formatter="totalPriceFormatter">Item Price</th>
-                                                    <th data-field="operate"
-                                                        data-formatter="operateFormatter"
-                                                        data-events="operateEvents">Item Operate</th>
+                                                    <th data-field="label" data-sortable="true" data-editable="true" >Label</th>                                                         
+                                                    <th data-field="compressed">Compressed</th>
+                                                    <th data-field="encrypted">Encrypted</th>
+                                                    <th data-field="addressData" data-sortable="true" >Address</th>
+                                                    <th data-field="format" data-sortable="true" >Format</th>                                                    
+                                                    <th data-field="privkeyId" data-sortable="true" data-formatter="linkPrivKeyFormatter" >Private Key</th>
+                                                    <th data-field="pubkeyId" data-sortable="true" data-formatter="linkPubKeyFormatter" >Public Key</th> 
                                                 </tr>
                                                 </thead>
                                             </table>
-                                        </h2>
                                     </div>
                                 </div>
                                 <hr>
@@ -963,21 +959,10 @@
         <script src="js/socket.io.js"></script>
         <script>
             var foundIdentity = {}
-                $(document).ready(function() {
-                    /*$.getScript( "js/bootstrap.min.js", function( data, textStatus, jqxhr ) {
-                        console.log( data ); // Data returned
-                        console.log( textStatus ); // Success
-                        console.log( jqxhr.status ); // 200
-                        console.log( "Load was performed." );
-                    });  */                  
-                    $(document).on('click', '#newKeysBtn', function() {
-        				Vault.page.saveAddress(function(out){console.log("Added address: ");console.log(out)})
-        			})
-        		    
+                $(document).ready(function() {            		    
         		    check(function(){
         		    	console.log("done checking identity")
-        		    })
-        		    
+        		    })        		    
                 })
                 
                 check = function(cb){

@@ -271,6 +271,62 @@ Vault.getAddressesByPrivateKeyFormat = function(type,cb){
     })
 }
 
+/* DATATABLE GETS */
+function getTableAsDataTableRows(table,cb) {
+	Vault.getAllRecordsOfType(table, function(records) {
+		var dataTableObject = {
+			rows: []
+		}
+		var rawRecords = records.rows
+		$.each(rawRecords, function(item) {
+			if (item != 0)
+				dataTableObject.rows.push(rawRecords[item].doc)
+			if (rawRecords.length - 1 == item)
+				cb(dataTableObject)
+		})
+	})
+}
+
+function getPubkeyAsDataTable(cb) {
+	getTableAsDataTableRows(tables.pubkey, function(rows){
+		cb(rows)
+	})
+}
+
+function getPrivkeyAsDataTable(cb) {
+	getTableAsDataTableRows(tables.privkey, function(rows){
+		cb(rows)
+	})
+}
+
+function getAddressAsDataTable(cb) {
+	getTableAsDataTableRows(tables.address, function(rows){
+		cb(rows)
+	})
+}
+
+function getMultisigAsDataTable(cb) {
+	getTableAsDataTableRows(tables.multisig, function(rows){
+		cb(rows)
+	})
+}
+
+function getAllTablesAsDataTable(cb) {	
+	var KeyData = {}
+	getPubkeyAsDataTable(function(pubkey){
+		KeyData.pubkey = pubkey
+		getPrivkeyAsDataTable(function(privkey){
+			KeyData.privkey = privkey
+			getAddressAsDataTable(function(address){
+				KeyData.address = address
+				cb(KeyData)
+			})
+		})
+	})
+}
+
+/* DATATABLE GETS */
+
 /* Utility Extensions */
 Array.prototype.contains = function(elem) {
     for (var i in this) {
