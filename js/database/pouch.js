@@ -149,6 +149,41 @@ Vault.insertAddress = function(payload, cb){
     }
 }
 
+Vault.addSetting = function(key, value, cb) {
+    var kvp = {
+        _id: new Date().toISOString(),
+        key: key,
+        value: value
+    }
+    Vault.getSettingValue(key,function(value){
+        if (value === undefined) {
+            tables.settings.put(kvp, function callback(err, result) {
+                if (!err) {
+                  if (verbose) console.log('Successfully added a setting!');
+                  if (verbose) console.log(result)
+                  return cb(result)
+                } else {
+                    if (verbose) console.log(err)
+                    return cb(err)
+                }
+            })
+        } else {
+            console.log("already exists - Updating")
+            value.value == kvp.value
+            tables.settings.put(kvp, function callback(err, result) {
+                if (!err) {
+                  if (verbose) console.log('Successfully added a setting!');
+                  if (verbose) console.log(result)
+                  return cb(result)
+                } else {
+                    if (verbose) console.log(err)
+                    return cb(err)
+                }
+            })            
+        }
+    })    
+}
+
 Vault.addAddress = function(label, compressed, encrypted, location, pubkeyId, privkeyId, seedId, addressData, type, cb) {
     var address = {
         _id: new Date().toISOString(),
@@ -268,7 +303,7 @@ Vault.getAddressesByPrivateKeyFormat = function(type,cb){
     Vault.getRecordsFilteredOfType(tables.privkey,"format",type,function(privkeys){
         for (var i = 0; i < privkeys.length; i++) {
             var poi = privkeys[i]
-            Vault.getRecordFilteredOfType(tables.address,"privkeyId",privkeys[i]._id,function(address){
+            Vault.getRecordFilteredOfType(tables.address,"privkeyId",privkeys[i]._id, function(address){
                 var addressRecord = {address: address, privkey: poi}
                 Vault.getRecordOfType(tables.pubkey,address.pubkeyId,function(pubkey){
                     addressRecord.pubkey = pubkey
@@ -277,6 +312,12 @@ Vault.getAddressesByPrivateKeyFormat = function(type,cb){
             })
         }
         return cb(returnRecords)
+    })
+}
+
+Vault.getSettingValue = function getSettingValue(key,cb){
+    Vault.getRecordFilteredOfType(tables.settings, "key", key, function(record){
+        cb(record.value)
     })
 }
 
@@ -300,12 +341,6 @@ function getPubkeyAsDataTable(cb) {
 	getTableAsDataTableRows(tables.pubkey, function(rows){
 		cb(rows)
 	})
-}
-
-function getSettingValue(key,cb){
-    Vault.getRecordFilteredOfType(tables.settings, "key", key, function(settingRecord){
-        
-    })
 }
 
 function getPrivkeyAsDataTable(cb) {

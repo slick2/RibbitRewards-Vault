@@ -42,8 +42,7 @@ function initPubNub(uuid){
             //subscribe_key: 'sub-c-360460ce-eca5-11e4-aafa-0619f8945a4f',
             publish_key: 'demo',
             subscribe_key: 'demo',
-            uuid: JSON.stringify({"uuid": uuid, "name": "foo"}),
-            foo: 'bar'
+            uuid: JSON.stringify({"uuid": uuid, "name": $("#displayName").val()})
         })
         return pubnub
 }
@@ -65,7 +64,7 @@ function joinLobby() {
             
             $output.scrollTop($output[0].scrollHeight);
             //call display styler
-            toggleIdentityViewType($(".btn-radio > .btn.active"))
+            handleIdentityViewType($(".btn-radio > .btn.active"))
             
           }, 
           presence: function(data) {
@@ -73,13 +72,14 @@ function joinLobby() {
             console.log(data);
             var identityObject = JSON.parse(data.uuid)
             if (verbose) console.log("Obj: ")
-            if (verbose) console.log(identityObject.name)
+            //if (verbose) console.log(identityObject.name)
             // get notified when people join
             if(data.action == "join") {
         
               var $new_user = $('<li data-address="' + identityObject.uuid + '" data-name="'+identityObject.name+'" class="list-group-item"><strong>' + identityObject.uuid + '</strong></li>')
         
               $('#online-users').append($new_user);
+              handleIdentityViewType($(".btn-radio > .btn.active"))
               popMsg(identityObject.uuid + "Joined the lobby")
             }
         
@@ -107,7 +107,7 @@ function setupChatButton(channel){
       message: {
         text: $input.val(),
         username: uuid,
-        name: "foo"
+        name: $("#displayName").val()
       }
     });
     

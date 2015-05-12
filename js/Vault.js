@@ -9,6 +9,8 @@ $(document).ready(function () {
    bindClicks()
     
    checkHash()
+   
+   getDisplayName($("#displayName"))
 })
 
 function loadAddressTable(){
@@ -179,8 +181,13 @@ var $table = $('#table'),
         $(document).on('click.bs.radio', '.btn-radio > .btn', function(e) {
           $(this).siblings().removeClass('active');
           $(this).addClass('active');
-          toggleIdentityViewType($(this))
+          handleIdentityViewType($(this))
         });
+        $(document).on('click','.displayNameSave',function(){
+            Vault.addSetting("DisplayName",$("#displayName").val(),function(result){
+                console.log(result)
+            })
+        })
     }
     
     function checkHash(){
@@ -191,7 +198,7 @@ var $table = $('#table'),
         }
     }
     
-    function toggleIdentityViewType(element) {
+    function handleIdentityViewType(element) {
         switch(element.text()) {
             case "Official Name":
                 displayOfficialNames()
@@ -208,7 +215,10 @@ var $table = $('#table'),
     function displayOfficialNames(){
         var elements = $(".panel .list-group-item")
         $.each(elements,function( index, value ) {
-            $(value).find("strong").text($(value).attr("data-name"))
+            if ($(value).attr("data-name") != "")            
+                $(value).find("strong").text($(value).attr("data-name"))
+            else 
+                $(value).find("strong").text($(value).find("strong").text()+ " (No Display Name Specified)")
         })
     }
     function displayMyLabels(){}

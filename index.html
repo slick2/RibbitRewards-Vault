@@ -52,11 +52,15 @@
                                                 <span class="glyphicon glyphicon-qrcode"></span>
                                             </button>
                                         </span>
-                                        <input class=" form-control" placeholder="Loading Identity Address" type="text" readonly>
+                                        <input id="identityAddress" class="form-control" placeholder="Loading Identity Address" type="text" style="width:auto;" readonly>
+                                        <input id="displayName" name="displayName" type="text" placeholder="DisplayName" class="form-control" style="width:auto;">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="displayNameSave btn btn-default" style="border-radius:0">Save</button>                                            
+                                        </span>
                                         <span class="shannon input-group-addon" id="basic-addon2">
                                             <input class="shannon" checked data-off="Local Database Disabled" data-on="Local Database Enabled" data-toggle="toggle"
                                             id="toggle-two" type="checkbox">
-                                        </span>
+                                        </span>                                        
                                     </div>
                                 </form>
                             </li>
@@ -973,9 +977,17 @@
         		    })        		    
                 })   
                 
-                var lazyCheck = function(){setTimeout(function(){ checkLocalIdentity() },5000)}
+                var lazyCheck = function(){
+                    setTimeout(function(){ 
+                        checkLocalIdentity() },5000) }
                 lazyCheck()
-                
+                function getDisplayName(element) {
+                    Vault.getSettingValue("DisplayName",function(setting){
+                        if (setting !== undefined) {
+                            element.val(setting)
+                        }
+                    })
+                }
                 function checkLocalIdentity(){
                 	if (foundIdentity.length == 0) {
                 		Vault.saveHDAddress(true,function(){
@@ -986,7 +998,7 @@
                 	} else {
                 		if (verbose) console.log("Using identity address: "+foundIdentity[0].address.addressData)
                 		$(".identity").html(foundIdentity[0].address.addressData)
-                		$(".navbar-form input.form-control").val(foundIdentity[0].address.addressData)
+                		$("#identityAddress").val(foundIdentity[0].address.addressData)
                 		joinIdentity()
                 	}
                 }
