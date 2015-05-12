@@ -6,10 +6,9 @@ $(document).ready(function () {
     
    loadAddressTable()
     
-    $(document).on('click', '#newKeysBtn', function() {
-		Vault.page.saveAddress(function(out){console.log("Added address: ");console.log(out)})
-        loadAddressTable()
-	})
+   bindClicks()
+    
+   checkHash()
 })
 
 function loadAddressTable(){
@@ -79,6 +78,15 @@ var $table = $('#table'),
             // push or splice the selections if you want to save all data selections
         });
         $table.on('all.bs.table', function (e, name, args) {
+            //This is where I can save the changes
+            if (name.indexOf('editable-save') == 0) {
+            	var interestingRecord = args[1]._id
+            	var fieldEdited = args[0]
+            	Vault.getRecordFilteredOfType(Vault.tables.address, "_id", interestingRecord, function(data) {
+            		data[fieldEdited] = args[1][fieldEdited]
+            		return Vault.tables.address.put(data)
+            	})
+            }
             console.log(name, args);
         });
         $remove.click(function () {
@@ -157,4 +165,23 @@ var $table = $('#table'),
             '<i class="glyphicon glyphicon-eye-open"></i>',
             '</a>  '            
         ].join('');
+    }
+    
+    /* Click Binding */
+    function bindClicks(){
+        $("a[href='#lobby']").bind("click", function(){
+            joinLobby()
+        })
+        $(document).on('click', '#newKeysBtn', function() {
+    		Vault.page.saveAddress(function(out){console.log("Added address: ");console.log(out)})
+            loadAddressTable()
+    	})
+    }
+    
+    function checkHash(){
+        switch(location.hash){
+            case "#lobby" :
+                joinLobby()
+            break;
+        }
     }

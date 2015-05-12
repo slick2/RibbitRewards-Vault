@@ -8,6 +8,9 @@ Identity.generate = function(cb){
 Identity.getIdentity = function(cb) {
     return cb(foundIdentity[0].address.addressData)
 }
+Identity.getIdentityObject = function(cb) {
+    return cb(foundIdentity[0])
+}
 
 Identity.getIdentityPrivateKey = function(cb) {
         var privateKey
@@ -20,7 +23,7 @@ Identity.getIdentityPrivateKey = function(cb) {
 
 Identity.getIdentityPublicKey = function(cb) {
         Identity.getIdentityPrivateKey(function(record){
-                return cb( bitcore.HDPublicKey(record).toString())
+                return cb(bitcore.HDPublicKey(record).toString())
         })
 }
 

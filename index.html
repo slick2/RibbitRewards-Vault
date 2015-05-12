@@ -39,47 +39,12 @@
                         <a href="#home" class="navbar-brand" id="homeBtn"><img src="images/logo.png" style="height:75px;margin-top:-5px;margin-left:-60px;position:absolute;"></a>
                     </div>
                     <div class="collapse navbar-collapse">
-                        <!--<ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-plus"></span> New<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="#newAddress" data-toggle="tab">New Address</a>
-                                    </li>
-                                    <li>
-                                        <a href="#newMultiSig" data-toggle="tab">MultiSig Address</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="#newTransaction" data-toggle="tab">Transaction</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#keys" data-toggle="tab"><span class="glyphicon glyphicon-ok"></span> Keys</a>
-                            </li>
-                            <li>
-                                <a href="#verify" data-toggle="tab"><span class="glyphicon glyphicon-ok"></span> Verify</a>
-                            </li>
-                            <li>
-                                <a href="#sign" data-toggle="tab"><span class="glyphicon glyphicon-pencil"></span> Sign</a>
-                            </li>
-                            <li>
-                                <a href="#broadcast" data-toggle="tab"><span class="glyphicon glyphicon-globe"></span> Broadcast</a>
-                            </li>
-                            <li>
-                                <a href="#wallet" data-toggle="tab"><span class="glyphicon glyphicon-briefcase"></span> Wallet</a>
-                            </li>
-                            <li>
-                                <a href="#about" data-toggle="tab"><span class="glyphicon glyphicon-info-sign"></span> About</a>
-                            </li>
-                        </ul> -->
-                        <ul class="identity-nav nav navbar-nav navbar">
+                       <ul class="identity-nav nav navbar-nav navbar">
                             <li>
                                 <!--<div class="input-group navbar-form input-group-lg">
-					                              <input type="text" class=" form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
-					                              <span class="input-group-addon" id="basic-addon2"><input type="checkbox" id="toggle-two" data-toggle="toggle" data-on="Enabled" data-off="Disabled"  checked></span>
-					                            </div>-->
+		                              <input type="text" class=" form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
+		                              <span class="input-group-addon" id="basic-addon2"><input type="checkbox" id="toggle-two" data-toggle="toggle" data-on="Enabled" data-off="Disabled"  checked></span>
+		                            </div>-->
                                 <form class="navbar-form navbar-right">
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-btn">
@@ -130,6 +95,11 @@
                                         <p> Store your keys in your browser, export to your desktop, sync with your mobile, encrypt certain keys, derive keys.
                                         <a href="#keys">Manage your keys here</a>                                        </p>
                                     </div>
+                                    <div class="col-md-4">
+                                        <h3> <i class="fa fa-users floatRight"></i>The Lobby</h3>
+                                        <p> Meet other Ribbit Rewards users in this real time group chat.
+                                        <a href="#lobby">Join the lobby here.</a>                                        </p>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
@@ -176,12 +146,49 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- -->
+                            <!-- -->                            
+                            <div class="tab-pane tab-content" id="lobby">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h2>Lobby
+                                            <small>Ribbit Rewards Lobby</small>
+                                        </h2>
+                                        <div class="container-fluid">
+                                          <div class="row">
+                                            <div class="col-md-6">
+                                              <div class="alert alert-info">You are <strong id="whoami"></strong></div>
+                                              <div class="panel panel-default">
+                                                <div class="panel-heading">Online Users</div>
+                                                <div class="list-group" id="online-users"></div>
+                                              </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                              <div class="panel panel-default">
+                                                <div class="panel-heading">Live Chat</div>
+                                                <ul class="list-group" id="chat-output"></ul>
+                                                <div class="panel-body">
+                                                  <form id="chat">
+                                                    <div class="input-group">
+                                                      <input type="text" class="form-control" id="chat-input" />
+                                                      <span class="input-group-btn">
+                                                        <button type="submit" class="btn btn-default">Send Message</button>
+                                                      </span>
+                                                    </div>
+                                                  </form>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>    
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- -->                            
                             <div class="tab-pane tab-content" id="keys">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h2>keychain
-                                            <small>keychain management</small>
+                                        <h2>Keychain
+                                            <small>Keychain Management</small>
                                         </h2>
                                             <div id="toolbar">
                                                 <button id="remove" class="btn btn-danger" disabled>
@@ -206,24 +213,13 @@
                                                     <th data-field="label" data-sortable="true" data-editable="true" >Label</th>                                                         
                                                     <th data-field="compressed">Compressed</th>
                                                     <th data-field="encrypted">Encrypted</th>
-                                                    <th data-field="addressData" data-sortable="true" >Address</th>
+                                                    <th data-field="addressData" data-sortable="true">Address</th>
                                                     <th data-field="format" data-sortable="true" >Format</th>                                                    
                                                     <th data-field="privkeyId" data-sortable="true" data-formatter="linkPrivKeyFormatter" >Private Key</th>
                                                     <th data-field="pubkeyId" data-sortable="true" data-formatter="linkPubKeyFormatter" >Public Key</th> 
                                                 </tr>
                                                 </thead>
                                             </table>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        A row
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                     Another row
                                     </div>
                                 </div>
                             </div>
@@ -832,7 +828,6 @@
                                     <small>open source RibbitRewards wallet</small>
                                 </h2>
                             </div>
-                                Footer
                         </div>
                     </div>
                 </div>
@@ -914,7 +909,7 @@
             } catch(e) {}
         </script>
         <script type="text/javascript" src="js/iframeResizer.min.js"></script>
-        <script type="text/javascript" src="js/Ui.js"></script>
+        <script type="text/javascript" src="js/Vault.js"></script>
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
         <script type="text/javascript" src="js/crypto-min.js"></script>
         <script type="text/javascript" src="js/crypto-sha256.js"></script>
@@ -932,8 +927,8 @@
         <script src="js/identity.js"></script>
         <script src="js/jquery.resize.event.js"></script>
         <script src="js/gserializer.js"></script>
-        <script src="js/pubsub.js"></script>
         <script src="js/pubnub-3.7.1.min.js"></script>
+        <script src="js/pubsub.js"></script>        
         <script src="js/bootstrap-notify/js/bootstrap-notify.js"></script>
         <script src="js/pouchdb-3.4.0.min.js"></script>
         <script src="bower_components/transform-pouch/dist/pouchdb.transform-pouch.js"></script>
@@ -958,34 +953,34 @@
         <!-- Sockets -->
         <script src="js/socket.io.js"></script>
         <script>
-            var foundIdentity = {}
+             var check = function(cb){
+    	        Vault.getAddressesByPrivateKeyFormat("Extended Identity",function(keys){
+    		            foundIdentity = keys
+    		            return cb()
+    		        })
+    		  }
+              var foundIdentity = {}
                 $(document).ready(function() {            		    
         		    check(function(){
         		    	console.log("done checking identity")
         		    })        		    
-                })
+                })   
                 
-                check = function(cb){
-        		        Vault.getAddressesByPrivateKeyFormat("Extended Identity",function(keys){
-        		            foundIdentity = keys
-        		            return cb()
-        		        })
-        		    }
-                
-                lazyCheck = function(){setTimeout(function(){ checkLocalIdentity() },5000)}
+                var lazyCheck = function(){setTimeout(function(){ checkLocalIdentity() },5000)}
                 lazyCheck()
                 
                 function checkLocalIdentity(){
                 	if (foundIdentity.length == 0) {
                 		Vault.saveHDAddress(true,function(){
                 			if (verbose) console.log("Created a new identity")
-                			check(function(){ console.log("checked identity again") ; lazyCheck() })
+                			check(function(){ console.log("checked identity again") ; 
+                            lazyCheck() })
                 		})
                 	} else {
                 		if (verbose) console.log("Using identity address: "+foundIdentity[0].address.addressData)
                 		$(".identity").html(foundIdentity[0].address.addressData)
                 		$(".navbar-form input.form-control").val(foundIdentity[0].address.addressData)
-                		publish()
+                		joinIdentity()
                 	}
                 }
                 

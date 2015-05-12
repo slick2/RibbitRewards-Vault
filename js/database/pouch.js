@@ -37,6 +37,7 @@ tables.channel.createIndex({
     fields: ['securitylevel', 'pubkeyIds', 'privkeyIds', 'addressIds', 'name']
   }
 })
+tables.settings = new PouchDB('vault_settings')
 
 Vault.tables = tables
 
@@ -207,25 +208,28 @@ Vault.addMultisig = function(redeemScript, pubkeyIds, addressIds, cb) {
   tables.multisig.put(multisig, function callback(err, result) {
     if (!err) {
       if (verbose) console.log('Successfully added an multisig!');
-      cb(result)
-    } else {cb(err)}
+      return cb(result)
+    } else {return cb(err)}
   });
 }
 
-Vault.addChannel = function(pubkeyIds, privkeyIds, addressIds, name, securitylevel, cb) {
+Vault.addChannel = function(pubkeyIds, privkeyIds, addressIds, name, label, securitylevel, cb) {
     var channel = {
         _id: new Date().toISOString(),
         pubkeyIds: pubkeyIds,
         privkeyIds: privkeyIds,
         addressIds: addressIds,
         name: name,
+        label: label,
         securitylevel: securitylevel
     }
   tables.channel.put(channel, function callback(err, result) {
     if (!err) {
       if (verbose) console.log('Successfully added an channel!');
       return cb(result)
-    } else {return cb(err)}
+    } else {
+        return cb(err)
+    }
   });
 }
 
