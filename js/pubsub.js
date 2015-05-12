@@ -42,13 +42,14 @@ function initPubNub(uuid){
             //subscribe_key: 'sub-c-360460ce-eca5-11e4-aafa-0619f8945a4f',
             publish_key: 'demo',
             subscribe_key: 'demo',
-            uuid: uuid
+            uuid: JSON.stringify({"uuid": uuid, "name": "foo"}),
+            foo: 'bar'
         })
         return pubnub
 }
 
 function joinLobby() {
-    var channel = 'memewarz-lobby-demo-5'    
+    var channel = 'RibbitRewards-lobby3'    
     var $output = $('#chat-output');
     $('#whoami').text(uuid);
     if (pubnub != null) {
@@ -56,26 +57,30 @@ function joinLobby() {
           channel: channel,
           message: function(data) {
             
-            var $line = $('<li class="list-group-item"><strong>' + data.username + ':</strong> </span>');
+            var $line = $('<li class="list-group-item"  data-address="'+data.username+'" data-name="'+data.name+'" ><strong>' + data.username + ':</strong> </span>');
             var $message = $('<span class="text" />').text(data.text).html();
             
             $line.append($message);
             $output.append($line);
             
             $output.scrollTop($output[0].scrollHeight);
-        
+            //call display styler
+            toggleIdentityViewType($(".btn-radio > .btn.active"))
+            
           }, 
           presence: function(data) {
         
             console.log(data);
-        
+            var identityObject = JSON.parse(data.uuid)
+            if (verbose) console.log("Obj: ")
+            if (verbose) console.log(identityObject.name)
             // get notified when people join
             if(data.action == "join") {
         
-              var $new_user = $('<li id="' + data.uuid + '" class="list-group-item">' + data.uuid + '</li>')
+              var $new_user = $('<li data-address="' + identityObject.uuid + '" data-name="'+identityObject.name+'" class="list-group-item"><strong>' + identityObject.uuid + '</strong></li>')
         
               $('#online-users').append($new_user);
-              popMsg(data.uuid + "Joined the lobby")
+              popMsg(identityObject.uuid + "Joined the lobby")
             }
         
             // and when they leave
@@ -101,7 +106,8 @@ function setupChatButton(channel){
       channel: channel,
       message: {
         text: $input.val(),
-        username: uuid
+        username: uuid,
+        name: "foo"
       }
     });
     

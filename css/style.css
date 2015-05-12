@@ -81,3 +81,17 @@ body {
 	box-shadow: 0 3px 8px rgba(0, 0, 0, 0.22);
 	border: 1px solid transparent;
 }
+
+#chat-output {
+  height: 150px;
+  overflow-y: scroll;
+}
+
+.btn-group.pull-right {
+	margin-top: -3px;
+}
+
+.btn-group>.btn {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}

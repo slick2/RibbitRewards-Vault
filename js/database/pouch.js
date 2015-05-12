@@ -37,8 +37,13 @@ tables.channel.createIndex({
     fields: ['securitylevel', 'pubkeyIds', 'privkeyIds', 'addressIds', 'name']
   }
 })
-tables.settings = new PouchDB('vault_settings')
 
+tables.settings = new PouchDB('vault_settings')
+tables.settings.createIndex({
+  index: {
+    fields: ['key', 'value']
+  }
+})
 Vault.tables = tables
 
 
@@ -295,6 +300,12 @@ function getPubkeyAsDataTable(cb) {
 	getTableAsDataTableRows(tables.pubkey, function(rows){
 		cb(rows)
 	})
+}
+
+function getSettingValue(key,cb){
+    Vault.getRecordFilteredOfType(tables.settings, "key", key, function(settingRecord){
+        
+    })
 }
 
 function getPrivkeyAsDataTable(cb) {

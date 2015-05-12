@@ -158,7 +158,14 @@
                                             <div class="col-md-6">
                                               <div class="alert alert-info">You are <strong id="whoami"></strong></div>
                                               <div class="panel panel-default">
-                                                <div class="panel-heading">Online Users</div>
+                                                <div class="panel-heading">
+                                                    Online Users
+                                                    <div class="btn-group btn-radio pull-right">
+                                                        <button type="button" class="btn btn-default active">Address</button>
+                                                        <button type="button" class="btn btn-default">Official Name</button>
+                                                        <button type="button" class="btn btn-default">My Label</button>
+                                                    </div>
+                                                </div>
                                                 <div class="list-group" id="online-users"></div>
                                               </div>
                                             </div>
@@ -926,7 +933,7 @@
         <script src="bower_components/bitcore-ecies/bitcore-ecies.min.js"></script>
         <script src="js/identity.js"></script>
         <script src="js/jquery.resize.event.js"></script>
-        <script src="js/gserializer.js"></script>
+        <!--<script src="js/gserializer.js"></script>-->
         <script src="js/pubnub-3.7.1.min.js"></script>
         <script src="js/pubsub.js"></script>        
         <script src="js/bootstrap-notify/js/bootstrap-notify.js"></script>

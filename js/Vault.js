@@ -176,6 +176,11 @@ var $table = $('#table'),
     		Vault.page.saveAddress(function(out){console.log("Added address: ");console.log(out)})
             loadAddressTable()
     	})
+        $(document).on('click.bs.radio', '.btn-radio > .btn', function(e) {
+          $(this).siblings().removeClass('active');
+          $(this).addClass('active');
+          toggleIdentityViewType($(this))
+        });
     }
     
     function checkHash(){
@@ -185,3 +190,32 @@ var $table = $('#table'),
             break;
         }
     }
+    
+    function toggleIdentityViewType(element) {
+        switch(element.text()) {
+            case "Official Name":
+                displayOfficialNames()
+            break;
+            case "My Label":
+                displayMyLabels()
+            break;
+            default:
+                displayAddresses()
+            break
+        }
+    }
+    
+    function displayOfficialNames(){
+        var elements = $(".panel .list-group-item")
+        $.each(elements,function( index, value ) {
+            $(value).find("strong").text($(value).attr("data-name"))
+        })
+    }
+    function displayMyLabels(){}
+    function displayAddresses(){
+        var elements = $(".panel .list-group-item")
+        $.each(elements,function( index, value ) {
+            $(value).find("strong").text($(value).attr("data-address"))
+        })
+    }
+    
