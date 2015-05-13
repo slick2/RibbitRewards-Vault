@@ -1,7 +1,7 @@
 var express = require('express')
 var basicAuth = require('http-auth')
 var git    = require('gitty');
-var vaultGit = git('./');
+var vaultGit = git('/root/RibbitRewards-Vault');
 
 var app = express()
 
