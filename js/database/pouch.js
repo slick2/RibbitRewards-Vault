@@ -156,7 +156,7 @@ Vault.addSetting = function(key, value, cb) {
         value: value
     }
     Vault.getSettingValue(key,function(value){
-        if (value === undefined) {
+        if (value === undefined || value === null) {
             tables.settings.put(kvp, function callback(err, result) {
                 if (!err) {
                   if (verbose) console.log('Successfully added a setting!');
