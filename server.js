@@ -1,3 +1,8 @@
+/*
+*
+*Simple directory server on 3006 proxied through 80
+*
+*/
 var express = require('express');
 var app = express();
 
