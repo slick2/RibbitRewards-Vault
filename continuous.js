@@ -1,3 +1,8 @@
+/*
+*
+*Authored by Shannon code to be my poor man's continuous integration
+*
+*/
 var express = require('express')
 var basicAuth = require('http-auth')
 
