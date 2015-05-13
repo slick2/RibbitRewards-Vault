@@ -1,7 +1,5 @@
 var express = require('express')
 var basicAuth = require('http-auth')
-var git    = require('gitty');
-var vaultGit = git('/root/RibbitRewards-Vault');
 
 var app = express()
 
@@ -13,11 +11,23 @@ var basic = basicAuth.basic({
 
 var authMiddleware = basicAuth.connect(basic)
 
-app.get('/deploy',authMiddleware,function(req,res){
-    vaultGit.pull(function(err, log){
-        if (err) return console.log('Error:', err);
-        else res.json({status:"deploying", gitlog: log})
+app.post('/deploy',authMiddleware,function(req,res){
+    doExecGit(function(error, stdout, stderr){
+        var retValue = {error: error || "", stdout: stdout || "" , stderr: stderr || ""  }
+        console.log(retValue)
+        res.json(retValue)
     })
 })
 
 app.listen(3009)
+
+
+function doExecGit(cb){
+    var exec = require('child_process').exec,
+        child;
+    
+    child = exec('git pull',
+      function (error, stdout, stderr) {
+        cb(error,stdout,stderr)
+    });
+}
