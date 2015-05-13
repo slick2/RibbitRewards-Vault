@@ -217,8 +217,9 @@ var $table = $('#table'),
         $.each(elements,function( index, value ) {
             if ($(value).attr("data-name") != "")            
                 $(value).find("strong").text($(value).attr("data-name"))
-            else 
-                $(value).find("strong").text($(value).find("strong").text()+ " (No Display Name Specified)")
+            else {
+                $(value).find("strong").text($(value).attr("data-address") + " (No Display Name Specified)")
+            }
         })
     }
     function displayMyLabels(){}

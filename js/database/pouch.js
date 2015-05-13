@@ -317,7 +317,10 @@ Vault.getAddressesByPrivateKeyFormat = function(type,cb){
 
 Vault.getSettingValue = function getSettingValue(key,cb){
     Vault.getRecordFilteredOfType(tables.settings, "key", key, function(record){
-        cb(record.value)
+        if (record !== undefined)
+            return cb(record.value)
+        else 
+            return cb(null)
     })
 }
 
