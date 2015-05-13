@@ -11,7 +11,7 @@ var basic = basicAuth.basic({
 
 var authMiddleware = basicAuth.connect(basic)
 
-app.post('/deploy',authMiddleware,function(req,res){
+app.post('/deploy',function(req,res){
     doExecGit(function(error, stdout, stderr){
         var retValue = {error: error || "", stdout: stdout || "" , stderr: stderr || ""  }
         console.log(retValue)
