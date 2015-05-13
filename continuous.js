@@ -1,5 +1,7 @@
 var express = require('express')
 var basicAuth = require('http-auth')
+var git    = require('gitty');
+var vaultGit = git('./');
 
 var app = express()
 
@@ -12,7 +14,10 @@ var basic = basicAuth.basic({
 var authMiddleware = basicAuth.connect(basic)
 
 app.get('/deploy',authMiddleware,function(req,res){
-    res.json({status:"deploying"})
+    vaultGit.pull(function(err, log){
+        if (err) return console.log('Error:', err);
+        else res.json({status:"deploying", gitlog: log})
+    })
 })
 
 app.listen(3009)
