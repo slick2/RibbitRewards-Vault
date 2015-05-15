@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <script src="https://cdn.webrtc-experiment.com/DataChannel.js"> </script>
 <script src="http://104.236.100.208:8080/socket.io/socket.io.js"></script>
 
@@ -67,3 +68,89 @@
                              + chatOutput.innerHTML;
     };
 </script>
+=======
+<!--<script src="http://cdn.webrtc-experiment.com/DataChannel.js"></script>
+	<script>
+		var channel
+		var dataChannel = new DataChannel();
+		dataChannel.openSignalingChannel = function(config) {
+		   channel = config.channel || this.channel || 'default-channel';
+		
+		   var socket = io.connect('http://104.236.100.208:8888/?channel=' + channel);
+		   socket.channel = channel;
+		
+		   socket.on('connect', function () {
+		      if (config.callback) config.callback(socket);
+		   });
+		
+		   socket.send = function (message) {
+		        socket.emit('message', {
+		            sender: dataChannel.userid,
+		            data  : message
+		        });
+		    };
+		
+		   socket.on('message', config.onmessage);
+		};
+	</script>-->
+	
+<script src="http://cdn.webrtc-experiment.com/DataChannel.js"> </script>
+<script src="http://104.236.100.208:8888/socket.io/socket.io.js"></script>
+<button id="setup-datachannel" style="width:30%;">Open NEW DataChannel</button>
+<input type="text" id="chat-input" disabled style="font-size: 2em; width: 65%;"><br />
+<div id="chat-output"></div>
+
+<script>
+var chatOutput = document.getElementById('chat-output');
+var chatInput = document.getElementById('chat-input');
+chatInput.onkeypress = function (e) {
+    if (e.keyCode != 13) return;
+    channel.send(this.value);
+    chatOutput.innerHTML = 'Me: ' + this.value + '<hr />' + chatOutput.innerHTML;
+    this.value = '';
+};
+
+var channel = new DataChannel();
+channel.openSignalingChannel = function(config) {
+	chan = config.channel || this.channel || 'default-channel';
+		
+		   var socket = io.connect('http://104.236.100.208:8888/?channel=' + channel);
+		   socket.channel = channel;
+		
+		   socket.on('connect', function () {
+		      if (config.callback) config.callback(socket);
+		   });
+		
+		   socket.send = function (message) {
+		        socket.emit('message', {
+		            sender: chan.userid,
+		            data  : message
+		        });
+		    };
+		
+		   socket.on('message', config.onmessage);
+}
+
+channel.onopen = function (userid) {
+    chatInput.disabled = false;
+    chatInput.value = 'Hi, ' + userid;
+    chatInput.focus();
+};
+
+channel.onmessage = function (message, userid) {
+    chatOutput.innerHTML = userid + ': ' + message + '<hr />' + chatOutput.innerHTML;
+};
+
+channel.onleave = function (userid) {
+    chatOutput.innerHTML = userid + ' Left.<hr />' + chatOutput.innerHTML;
+};
+
+// search for existing data channels
+channel.connect();
+
+document.querySelector('button#setup-datachannel').onclick = function () {
+    // setup new data channel
+    channel.connect();
+};
+</script>
+>>>>>>> 711312afaf03c3eda40d180c986584beb8f3b68a
