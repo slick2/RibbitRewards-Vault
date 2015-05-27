@@ -27,7 +27,13 @@ function initAllTheThings() {
 function loadAddressTable() {
     getAllTablesAsDataTable(function (data) {
         $('#table').bootstrapTable('load', data.address)
-        console.log(data)
+        if (data.address.rows.length <= 1) {
+            $("#newKeysBtn").click()
+            setTimeout(function(){
+                saveGeneratedAddress()
+                console.log(data)
+            },2000)
+        }        
     })
 }
 
@@ -404,8 +410,8 @@ function saveNameSetting(){
 function saveGeneratedAddress() {
     Vault.page.saveAddress(function (out) {  
             popMsg("Saved address to local datastore.")
-    })
-    initAllTheThings()
+            initAllTheThings()
+    })    
 }
 
 function getKeyFromAddress(address,cb){

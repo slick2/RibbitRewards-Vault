@@ -142,4 +142,10 @@ body {
   background-color: #FFFFFF;
 }
 
+sup {
+  /* Move the superscripted text up */
+  top: -0.5em;
+  color:red;
+}
+
 
