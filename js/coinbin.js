@@ -240,7 +240,7 @@ $(document).ready(function() {
 
 	/* new -> address code */
 
-	$("#newKeysBtn").click(function(){
+	/*$("#newKeysBtn").click(function(){
 		coinjs.compressed = false;
 		if($("#newCompressed").is(":checked")){
 			coinjs.compressed = true;
@@ -249,10 +249,10 @@ $(document).ready(function() {
 		var coin = coinjs.newKeys(s);
 		$("#newBitcoinAddress").val(coin.address);
 		$("#newPubKey").val(coin.pubkey);
-		$("#newPrivKey").val(coin.wif);
+		$("#newPrivKey").val(coin.wif);*/
 
 		/* encrypted key code */
-		if((!$("#encryptKey").is(":checked")) || $("#aes256pass").val()==$("#aes256pass_confirm").val()){
+		/*if((!$("#encryptKey").is(":checked")) || $("#aes256pass").val()==$("#aes256pass_confirm").val()){
 			$("#aes256passStatus").addClass("hidden");
 			if($("#encryptKey").is(":checked")){
 				$("#aes256wifkey").removeClass("hidden");
@@ -261,9 +261,7 @@ $(document).ready(function() {
 			$("#aes256passStatus").removeClass("hidden");
 		}
 		$("#newPrivKeyEnc").val(CryptoJS.AES.encrypt(coin.wif, $("#aes256pass").val())+'');
-		//Vault.page.saveAddress(function(row, error){console.log(row || error)})
-
-	});
+	});*/
 
 	$("#newBrainwallet").click(function(){
 		if($(this).is(":checked")){
@@ -615,11 +613,14 @@ $(document).ready(function() {
 
 	/* broadcast a transaction */
 
-	$("#rawSubmitBtn").click(function(){
+	/*$("#rawSubmitBtn").click(function(){
 		var thisbtn = this;
-		var tx = coinjs.transaction();
+		//var tx = coinjs.transaction();
 		$(thisbtn).val('Please wait, loading...').attr('disabled',true);
-		tx.broadcast(function(data){
+		var tx = new bitcore.Transaction($("#verifyScript").val())
+		
+		/*tx.broadcast(function(data){
+		
 			$("#rawTransactionStatus").html(unescape($(data).find("response").text()).replace(/\+/g,' ')).removeClass('hidden');
 			if($(data).find("result").text()==1){
 				$("#rawTransactionStatus").addClass('alert-success').removeClass('alert-danger');
@@ -630,7 +631,8 @@ $(document).ready(function() {
 			$("#rawTransactionStatus").fadeOut().fadeIn();
 			$(thisbtn).val('Submit').attr('disabled',false);
 		}, $("#rawTransaction").val());
-	});
+		
+	});*/
 
 	/* verify script code */
 
@@ -854,7 +856,7 @@ $(document).ready(function() {
 	var _getBroadcast = _get("broadcast");
 	if(_getBroadcast[0]){
 		$("#rawTransaction").val(_getBroadcast[0]);
-		$("#rawSubmitBtn").click();
+		//$("#rawSubmitBtn").click();
 		window.location.hash = "#broadcast";
 	}
 

@@ -46,8 +46,6 @@ tables.settings.createIndex({
 })
 Vault.tables = tables
 
-
-
 /* Domain specific gets*/
 Vault.getAllRecordsOfType = function(table, cb){
     table.allDocs({include_docs: true, descending: true}, function(err, doc) {

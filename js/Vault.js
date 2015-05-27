@@ -1,3 +1,8 @@
+//Simply added for local editors
+if (Vault == null || Vault === undefined) {
+    var Vault
+}
+
 $(document).ready(function () {
     performImports("menu", function (html5Import) {
         $(".menuframe").iFrameResize({ log: false, enablePublicMethods: true, sizeWidth: true, sizeHeight: false, resizedCallback: resizeFromIframe })
@@ -92,7 +97,12 @@ function performImports(which, cb) {
 function supportsImports() {
     return 'import' in document.createElement('link');
 }
-/* DATATABLE STUFF */
+
+/************* DATATABLE STUFF ***********
+ * 
+ *              Much is boilerplate
+ * 
+ *****************************************/
 var $table = $('#table'),
     $remove = $('#remove'),
     selections = [];
@@ -198,28 +208,40 @@ function linkPubKeyFormatter(value, row, index) {
     ].join('');
 }
     
-/* Click Binding */
+/************* Click Binding ***************
+ * 
+ *   Namespaced to allow easy management
+ *    Bound to document click so we can
+ * bind to elements that might not yet exist
+ * 
+ * *****************************************/
 function bindClicks() {
-    /* Unbind */
+    
+    /* Unbind by localnamespace (Awesome way to unbind a selective everything) */
     $(document).unbind(".customBindings")
+    
+    /* Join Chat */
     $("a[href='#lobby']").bind("click.customBindings", function () {
         joinLobby()
     })
-    $(document).on('click.customBindings', '#newKeysBtn', function () {
-        Vault.page.saveAddress(function (out) { console.log("Added address: "); console.log(out) })
-        initAllTheThings()
+    
+    /* Save Generated Address */
+    $(document).on('click.customBindings', '#saveKeysBtn', function () {
+        saveGeneratedAddress()
     })
+    
+    /* UI hotness */
     $(document).on('click.bs.radio.customBindings', '.btn-radio > .btn', function (e) {
         $(this).siblings().removeClass('active');
         $(this).addClass('active');
         handleIdentityViewType($(this))
-    });
-    $(document).on('click.customBindings', '.displayNameSave', function () {
-        Vault.addSetting("DisplayName", $("#displayName").val(), function (result) {
-            initAllTheThings()
-            console.log(result)
-        })
     })
+    
+    /* Save name setting */
+    $(document).on('click.customBindings', '.displayNameSave', function () {
+        saveNameSetting()
+    })
+    
     /* Add / Remove UTXO to/from transaction */
     $(document).on('click.customBindings','.button-container a',function(){
         if ($(this).hasClass("hit")) {
@@ -238,24 +260,37 @@ function bindClicks() {
         }
     })
     
-    /* Add output to transaction */
+    /* Add output to transaction and sign */
     $(document).on('click.customBindings','.transaction-add-output',function(){
         var fromAddress = $(".address-view").text()
         var toAddress = $("#output-address").val()
         var amount = $("#output-amount").val()*100000000
         var key
-        transaction.to(toAddress,amount)
-        transaction.change(fromAddress)
-        getKeyFromAddress(fromAddress,function(keydata){
-            key = new bitcore.PrivateKey(keydata)
-            transaction.sign(key)
-            insight.broadcast(transaction,function(err,txid){
-                popMsg("Transaction Success: "+txid)
-                $(".transaction-hash").val("")
-            })
-            $(".transaction-hash").val(transaction.toString())
-        })
+        try {
+                transaction.to(toAddress,amount)
+                transaction.change(fromAddress)
+                getKeyFromAddress(fromAddress,function(keydata){
+                    key = new bitcore.PrivateKey(keydata)
+                    transaction.sign(key)            
+                    $(".transaction-hash").val(transaction.toString())
+                    if (transaction.isFullySigned()) {
+                        popMsg("Signed and verified")
+                    } else {
+                        popMsg("Transaction is not finished.")
+                    }            
+                    return
+                })
+         } catch(e) {
+             popMsg("Critical Error: "+e.message)
+         }
     })
+    
+    /* reset the transaction */
+     $(document).on('click.customBindings','.transaction-reset',function(){
+         resetTransaction()
+         var address = $(".address-view").text()
+         getBalance(address)
+     })
     
     /* QR rewrite */
     $(document).on('click.customBindings',".qrcodeBtn", function(){
@@ -265,8 +300,7 @@ function bindClicks() {
     
     /* Address Picker Magic */
     $(document).on('click.customBindings', '.wallet-address-picker .dropdown-menu .address-item', function (data) {
-        transaction = new bitcore.Transaction()
-        $(".transaction-hash").val(transaction.toString())
+        resetTransaction()
         /* Copy link text to root element */
         var address = data.currentTarget.text
         var label
@@ -284,6 +318,95 @@ function bindClicks() {
         generateQr(address)
         getBalance(address)
     })
+    
+    /* Broadcast TX */
+    $(document).on('click.customBindings', '.transaction-broadcast',function(data) {
+            try {
+                    insight.broadcast(transaction,function(err,txid){
+                        if (err) {
+                            popMsg("Broadcast Error: "+err)
+                        } else {
+                            popMsg("Broadcast Success: "+txid)  
+                        }          
+                    })
+            } catch(e){
+                popMsg("Critical: "+e.message)
+            }       
+    })
+    
+    
+    /* Port of old coinbin code to new libs
+     *
+     *            LEGACY CODE
+     *
+     **************************************/
+     
+    /* Legacy: Broadcast transaction */
+    $(document).on('click.customBindings', '#rawSubmitBtn', function (data) {
+		var thisbtn = this;
+		$(thisbtn).val('Please wait, loading...').attr('disabled',true)
+		var tx = $("#rawTransaction").val()
+        try {
+        		insight.broadcast(tx,function(err,txo){            
+                    if (err) {
+                        $("#rawTransactionStatus").html(err.toString()).removeClass('hidden')
+                        $("#rawTransactionStatus").addClass('alert-danger').removeClass('alert-success').prepend('<span class="glyphicon glyphicon-exclamation-sign"></span> ')
+                    } else {
+                        $("#rawTransactionStatus").addClass('alert-success').removeClass('alert-danger')
+        				$("#rawTransactionStatus").html('txid: '+txo)
+                    }            
+                    $("#rawTransactionStatus").fadeOut().fadeIn()
+        			$(thisbtn).val('Submit').attr('disabled',false)
+                })
+        } catch(e){
+            popMsg("Critical Error "+e.message)
+            $(thisbtn).val('Submit').attr('disabled',false)
+        }
+	});
+    
+    /* Legacy: Generate keys (needs to be ported to bitcore) */
+    $(document).on('click.customBindings', '#newKeysBtn', function (data) {
+		coinjs.compressed = false;
+		if($("#newCompressed").is(":checked")){
+			coinjs.compressed = true;
+		}
+		var s = ($("#newBrainwallet").is(":checked")) ? $("#brainwallet").val() : null;
+		var coin = coinjs.newKeys(s);
+		$("#newBitcoinAddress").val(coin.address);
+		$("#newPubKey").val(coin.pubkey);
+		$("#newPrivKey").val(coin.wif);
+
+		/* encrypted key code */
+		if((!$("#encryptKey").is(":checked")) || $("#aes256pass").val()==$("#aes256pass_confirm").val()){
+			$("#aes256passStatus").addClass("hidden");
+			if($("#encryptKey").is(":checked")){
+				$("#aes256wifkey").removeClass("hidden");
+			}
+		} else {
+			$("#aes256passStatus").removeClass("hidden");
+		}
+		$("#newPrivKeyEnc").val(CryptoJS.AES.encrypt(coin.wif, $("#aes256pass").val())+'');
+        
+        if ($("#autoSave").is(":checked")) {
+            saveGeneratedAddress()
+        } else {
+            popMsg("Generated new address. Don't forget to save.")
+        }
+	});
+}
+
+function saveNameSetting(){
+    Vault.addSetting("DisplayName", $("#displayName").val(), function (result) {
+        initAllTheThings()
+        console.log(result)
+    })
+}
+
+function saveGeneratedAddress() {
+    Vault.page.saveAddress(function (out) {  
+            popMsg("Saved address to local datastore.")
+    })
+    initAllTheThings()
 }
 
 function getKeyFromAddress(address,cb){
@@ -294,6 +417,10 @@ function getKeyFromAddress(address,cb){
             return cb(data.keydata)
         })
     })
+}
+function resetTransaction(){
+    transaction = new bitcore.Transaction()
+    $(".transaction-hash").val(transaction.toString())
 }
 
 function getBalance(address) {    
@@ -329,7 +456,7 @@ function getUtxos(address){
       } else {
           console.log("UTXOs")          
           $.each(utxos,function(index,value){
-              $(".button-container").append("<a data-index='"+index+"' data-utxo='"+JSON.stringify(value)+"' href=\"#\">"+value.satoshis*0.00000001+" RBR</a>")
+              $(".button-container").append("<a data-index='"+index+"' data-utxo='"+JSON.stringify(value)+"' >"+value.satoshis*0.00000001+" RBR</a>")
               console.log(value)
           })
           console.log(utxos)

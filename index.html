@@ -97,21 +97,21 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <h3>
-                                            <i class="fa fa-key floatRight"></i>Key Management</h3>
+                                            <i class="fa fa-key floatRight"></i> Key Management</h3>
                                         <p>Store your keys in your browser, export to your desktop, sync with your mobile, encrypt certain keys, derive keys.
                                             <a href="#keys">Manage your keys here</a>
                                         </p>
                                     </div>
                                     <div class="col-md-4">
                                         <h3>
-                                            <i class="fa fa-users floatRight"></i>The Lobby</h3>
+                                            <i class="fa fa-users floatRight"></i> The Lobby</h3>
                                         <p>Meet other Ribbit.me users in this real time group chat.
                                             <a href="#lobby">Join the lobby here.</a>
                                         </p>
                                     </div>
                                     <div class="col-md-4">
                                         <h3>
-                                            <span class="glyphicon glyphicon-piggy-bank"></span>New Wallet</h3>
+                                            <span class="glyphicon glyphicon-piggy-bank"></span> Wallet (New)</h3>
                                         <p>Quick access to your wallet where only you have access to your own private keys!
                                             <a href="#new-wallet">Access your Wallet here.</a>
                                         </p>
@@ -120,43 +120,43 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <h3>
-                                            <span class="glyphicon glyphicon-ok"></span>Open Source</h3>
+                                            <span class="glyphicon glyphicon-ok"></span> Open Source</h3>
                                         <p>RibbitRewards Vault is an open source web based wallet written in javascript and released under the
-                                            <a href="LICENCE">MIT licence</a>which means its free to use and edit.</p>
+                                            <a href="LICENCE">MIT licence</a> which means its free to use and edit.</p>
                                     </div>
                                     <div class="col-md-4">
                                         <h3>
-                                            <span class="glyphicon glyphicon-fullscreen"></span>MultiSig</h3>
+                                            <span class="glyphicon glyphicon-fullscreen"></span> MultiSig</h3>
                                         <p>We offer a fully transparent
-                                            <a href="#newMultiSig">multisig</a>solution which works seamlessly offline and with other clients.</p>
+                                            <a href="#newMultiSig">multisig</a> solution which works seamlessly offline and with other clients.</p>
                                     </div>
                                     <div class="col-md-4">
                                         <h3>
-                                            <span class="glyphicon glyphicon-bitcoin"></span>Raw Transactions</h3>
+                                            <span class="glyphicon glyphicon-bitcoin"></span> Raw Transactions</h3>
                                         <p>
                                             <a href="#newTransaction">Create</a>,
-                                            <a href="#verify">verify</a>,
-                                            <a href="#sign">sign</a>and
-                                            <a href="#broadcast">broadcast</a>custom raw transactions online with advanced features and minimal effort!</p>
+                                            <a href="#verify">verify</a> ,
+                                            <a href="#sign">sign</a> and
+                                            <a href="#broadcast">broadcast</a> custom raw transactions online with advanced features and minimal effort!</p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
                                         <h3>
-                                            <span class="glyphicon glyphicon-piggy-bank"></span>Wallet (Depricated)</h3>
+                                            <span class="glyphicon glyphicon-piggy-bank"></span >Wallet (Depricated)</h3>
                                         <p>Quick access to an
-                                            <a href="#wallet">online wallet</a>where only you have access to your own private keys!</p>
+                                            <a href="#wallet">online wallet</a> where only you have access to your own private keys!</p>
                                     </div>
                                     <div class="col-md-4">
                                         <h3>
-                                            <span class="glyphicon glyphicon-globe"></span>Addresses</h3>
+                                            <span class="glyphicon glyphicon-globe"></span> Addresses</h3>
                                         <p>We support
-                                            <a href="#newAddress">regular addresses</a>but also
-                                            <a href="#newMultiSig">multisig</a>and stealth, and access to your own private keys!</p>
+                                            <a href="#newAddress">regular addresses</a> but also
+                                            <a href="#newMultiSig">multisig</a> and stealth, and access to your own private keys!</p>
                                     </div>
                                     <div class="col-md-4">
                                         <h3>
-                                            <span class="glyphicon glyphicon-wrench"></span>Development</h3>
+                                            <span class="glyphicon glyphicon-wrench"></span> Development</h3>
                                         <p>Use what we've built to write your own projects! See our documention (coming soon), or contribute at
                                             <a href="https://github.com/genecyber/RibbitRewards-Vault">github</a>.</p>
                                     </div>
@@ -292,7 +292,7 @@
                                             </div>
                                         </div>
                                         <div class="container-fluid highlight">
-                                            <div class="menu-container collapse">
+                                            <div class="menu-container collapse">                                                
                                                 <label class="utxo-help ">Select one or more spendable amounts.</label>
                                                 <div class="button-container"></div>
                                                 <div>
@@ -317,7 +317,9 @@
                                                     <label for="output-amount">Amount</label>
                                                     <input type="text" class="form-control" id="output-amount" placeholder="111 RBR">
                                                   </div>
-                                                  <button class="btn btn-default transaction-add-output">Send</button>
+                                                  <button class="btn btn-default transaction-add-output">Sign</button>
+                                                  <button class="btn btn-default transaction-broadcast">Broadcast</button>
+                                                  <button class="btn btn-default transaction-reset">Reset</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -504,7 +506,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" id="autoSave" class="checkbox-inline">Auto Save generated keys</label>
+                                    <input type="text" class="form-control hidden" id="autosave">
+                                </div>
                                 <input type="button" class="btn btn-primary" value="Generate" id="newKeysBtn">
+                                <input type="button" class="btn btn-primary" value="Save" id="saveKeysBtn">
                                 <br>
                             </div>
                             <div class="tab-pane tab-content" id="newMultiSig">
@@ -512,7 +520,7 @@
                                     <small>Secure multisig address</small>
                                 </h2>
                                 <p>Public keys can be
-                                    <a href="#newAddress">generated in your browser</a>or from your RibbitRewards client</a>.</p>
+                                    <a href="#newAddress">generated in your browser</a> or from your RibbitRewards client</a>.</p>
                                 <p>Enter the public keys of all the participants, to create a
                                     <a href="https://en.bitcoin.it/wiki/Address#Multi-signature_addresses"
                                     target="_blank">multi signature address</a>. Maximum of 15 allowed. Compressed and uncompressed public keys are accepted.</p>
@@ -872,8 +880,8 @@
                                     <small>once a transaction has been verified</small>
                                 </h2>
                                 <p>Once you have
-                                    <a href="#verify">verified</a>a transaction you can sign and then
-                                    <a href="#broadcast">broadcast</a>it into the network.</p>
+                                    <a href="#verify">verified</a> a transaction you can sign and then
+                                    <a href="#broadcast">broadcast</a> it into the network.</p>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label for="signPrivateKey">Private key</label>
