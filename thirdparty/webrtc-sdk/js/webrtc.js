@@ -14,7 +14,7 @@ var PHONE = window.PHONE = function(config) {
     var mystream      = null;
     var myvideo       = document.createElement('video');
     var myconnection  = false;
-    var mediaconf     = config.media || { audio : true, video : true };
+    var mediaconf     = config.media || { audio : false, video : false };
     var conversations = {};
 
     // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

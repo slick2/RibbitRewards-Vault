@@ -3,11 +3,13 @@
   "version": "2.0.0",
   "main": "main.js",
   "dependencies": {
+    "bitcore": "^0.12.6",
+    "bitcore-explorers-multi": "git://github.com/RibbitFROG/bitcore-explorers-multi.git",
     "express": "~4.12.3",
-    "http-auth": "~2.2.5",
     "fieldtest": "git://github.com/nFocus-Labs/fieldtest.git",
-    "telehash": "~0.3.27",
+    "http-auth": "~2.2.5",
     "jake": "~8.0.12",
-    "socketio-over-nodejs": "~3.0.1"
+    "socketio-over-nodejs": "~3.0.1",
+    "telehash": "~0.3.27"
   }
 }

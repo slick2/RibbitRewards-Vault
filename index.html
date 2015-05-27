@@ -21,7 +21,7 @@
         <link href='css/font.css' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="js/multi-level-push-menu/demo/jquery.multilevelpushmenu.css" />
         <link rel="stylesheet" href="css/bootstrap-table.css">
-        <link rel="stylesheet" href="http:////rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css">
+        <link rel="stylesheet" href="http://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css">
     </head>
     
     <body>
@@ -29,17 +29,19 @@
             <!-- Fixed navbar -->
             <div id="header" class="navbar navbar-default " role="navigation">
                 <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a href="#home" class="navbar-brand" id="homeBtn"><img src="images/logo.png" style="height:75px;margin-top:-5px;margin-left:-60px;position:absolute;"></a>
-                    </div>
+                    <a href="#home" class="navbar-brand" id="homeBtn">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <img src="images/logo.png" style="height:75px;margin-top:-5px;margin-left:-60px;position:absolute;">
+                        </div>
+                    </a>
                     <div class="collapse navbar-collapse">
-                       <ul class="identity-nav nav navbar-nav navbar">
+                        <ul class="identity-nav nav navbar-nav navbar">
                             <li>
                                 <!--<div class="input-group navbar-form input-group-lg">
 		                              <input type="text" class=" form-control" placeholder="Recipient's username" aria-describedby="basic-addon2">
@@ -52,15 +54,16 @@
                                                 <span class="glyphicon glyphicon-qrcode"></span>
                                             </button>
                                         </span>
-                                        <input id="identityAddress" class="form-control" placeholder="Loading Identity Address" type="text" style="width:auto;" readonly>
+                                        <input id="identityAddress" class="form-control" placeholder="Loading Identity Address" type="text" style="width:auto;"
+                                        readonly>
                                         <input id="displayName" name="displayName" type="text" placeholder="DisplayName" class="form-control" style="width:auto;">
                                         <span class="input-group-btn">
-                                            <button type="button" class="displayNameSave btn btn-default" style="border-radius:0">Save</button>                                            
+                                            <button type="button" class="displayNameSave btn btn-default" style="border-radius:0">Save</button>
                                         </span>
                                         <span class="shannon input-group-addon" id="basic-addon2">
                                             <input class="shannon" checked data-off="Local Database Disabled" data-on="Local Database Enabled" data-toggle="toggle"
                                             id="toggle-two" type="checkbox">
-                                        </span>                                        
+                                        </span>
                                     </div>
                                 </form>
                             </li>
@@ -72,20 +75,18 @@
                 <noscript class="alert alert-danger center-block">
                     <span class="glyphicon glyphicon-exclamation-sign"></span>This page uses javascript, please enable it to continue!</noscript>
                 <div class="row">
-                    <div class="menu-col col-xs-1 col-sm-1 col-lg-1" style="position:absolute;left:0;padding-left:0;top:0">
-                        
-                    </div>
+                    <div class="menu-col col-xs-1 col-sm-1 col-lg-1" style="position:absolute;left:0;padding-left:0;top:0"></div>
                     <div class="content-col col-xs-16 col-lg-14">
                         <div class="tab-content">
                             <div class="tab-pane tab-content active" id="home">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <h2>RibbitRewards
-                                            <small>Welcome to the Rewardchain</small>
+                                        <h2>Ribbit.me
+                                            <small>Spend the way you want to.</small>
                                         </h2>
                                     </div>
                                 </div>
-                               <!-- <div class="jumbotron">
+                                <!-- <div class="jumbotron">
                                     <h1>All your rewards in one place.</h1>
                                     <p>Take control of your rewards and start using RibbitRewards today!</p>
                                     <p>
@@ -95,14 +96,25 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <h3> <i class="fa fa-key floatRight"></i>Key Management</h3>
-                                        <p> Store your keys in your browser, export to your desktop, sync with your mobile, encrypt certain keys, derive keys.
-                                        <a href="#keys">Manage your keys here</a>                                        </p>
+                                        <h3>
+                                            <i class="fa fa-key floatRight"></i>Key Management</h3>
+                                        <p>Store your keys in your browser, export to your desktop, sync with your mobile, encrypt certain keys, derive keys.
+                                            <a href="#keys">Manage your keys here</a>
+                                        </p>
                                     </div>
                                     <div class="col-md-4">
-                                        <h3> <i class="fa fa-users floatRight"></i>The Lobby</h3>
-                                        <p> Meet other Ribbit Rewards users in this real time group chat.
-                                        <a href="#lobby">Join the lobby here.</a>                                        </p>
+                                        <h3>
+                                            <i class="fa fa-users floatRight"></i>The Lobby</h3>
+                                        <p>Meet other Ribbit.me users in this real time group chat.
+                                            <a href="#lobby">Join the lobby here.</a>
+                                        </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h3>
+                                            <span class="glyphicon glyphicon-piggy-bank"></span>New Wallet</h3>
+                                        <p>Quick access to your wallet where only you have access to your own private keys!
+                                            <a href="#new-wallet">Access your Wallet here.</a>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -131,7 +143,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <h3>
-                                            <span class="glyphicon glyphicon-piggy-bank"></span>Wallet</h3>
+                                            <span class="glyphicon glyphicon-piggy-bank"></span>Wallet (Depricated)</h3>
                                         <p>Quick access to an
                                             <a href="#wallet">online wallet</a>where only you have access to your own private keys!</p>
                                     </div>
@@ -150,92 +162,170 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- -->                            
+                            <!-- -->
                             <div class="tab-pane tab-content" id="lobby">
                                 <div class="row">
+                                    <ol class="breadcrumb">
+                                        <li>
+                                            <a href="#home">Home</a>
+                                        </li>
+                                        <li class="active">Lobby</li>
+                                    </ol>
                                     <div class="col-md-12">
                                         <h2>Lobby
                                             <small>Ribbit Rewards Lobby</small>
                                         </h2>
                                         <div class="container-fluid">
-                                          <div class="row">
-                                            <div class="col-md-6">
-                                              <div class="alert alert-info">You are <strong id="whoami"></strong></div>
-                                              <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    Online Users
-                                                    <div class="btn-group btn-radio pull-right">
-                                                        <button type="button" class="btn btn-default active">Address</button>
-                                                        <button type="button" class="btn btn-default">Official Name</button>
-                                                        <button type="button" class="btn btn-default">My Label</button>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="alert alert-info">You are
+                                                        <strong id="whoami"></strong>
+                                                    </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">Online Users
+                                                            <div class="btn-group btn-radio pull-right">
+                                                                <button type="button" class="btn btn-default active">Address</button>
+                                                                <button type="button" class="btn btn-default">Official Name</button>
+                                                                <button type="button" class="btn btn-default">My Label</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="list-group" id="online-users"></div>
                                                     </div>
                                                 </div>
-                                                <div class="list-group" id="online-users"></div>
-                                              </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                              <div class="panel panel-default">
-                                                <div class="panel-heading">Live Chat</div>
-                                                <ul class="list-group" id="chat-output"></ul>
-                                                <div class="panel-body">
-                                                  <form id="chat">
-                                                    <div class="input-group">
-                                                      <input type="text" class="form-control" id="chat-input" />
-                                                      <span class="input-group-btn">
-                                                        <button type="submit" class="btn btn-default">Send Message</button>
-                                                      </span>
+                                                <div class="col-md-6">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">Live Chat</div>
+                                                        <ul class="list-group" id="chat-output"></ul>
+                                                        <div class="panel-body">
+                                                            <form id="chat">
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" id="chat-input" />
+                                                                    <span class="input-group-btn">
+                                                                        <button type="submit" class="btn btn-default">Send Message</button>
+                                                                    </span>
+                                                                </div>
+                                                            </form>
+                                                        </div>
                                                     </div>
-                                                  </form>
                                                 </div>
-                                              </div>
                                             </div>
-                                          </div>
-                                        </div>    
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- -->                            
+                            <!-- Ribbit Added -->
                             <div class="tab-pane tab-content" id="keys">
                                 <div class="row">
+                                    <ol class="breadcrumb">
+                                        <li>
+                                            <a href="#home">Home</a>
+                                        </li>
+                                        <li class="active">Keychain Mangement</li>
+                                    </ol>
                                     <div class="col-md-12">
                                         <h2>Keychain
                                             <small>Keychain Management</small>
                                         </h2>
-                                            <div id="toolbar">
-                                                <button id="remove" class="btn btn-danger" disabled>
-                                                    <i class="glyphicon glyphicon-remove"></i> Delete
-                                                </button>
-                                            </div>
-                                            <table id="table"
-                                                   data-toolbar="#toolbar"
-                                                   data-search="true"
-                                                   data-show-refresh="true"
-                                                   data-show-toggle="true"
-                                                   data-show-columns="true"
-                                                   data-show-export="true"
-                                                   data-show-pagination-switch="true"
-                                                   data-pagination="true"
-                                                   data-page-list="[10, 25, 50, 100, ALL]"
-                                                   data-show-footer="true"
-                                                   data-side-pagination="server"                                                   
-                                                   data-response-handler="responseHandler">
-                                                <thead><!--data-url="data/sample"-->
+                                        <div id="toolbar">
+                                            <button id="remove" class="btn btn-danger" disabled>
+                                                <i class="glyphicon glyphicon-remove"></i>Delete</button>
+                                        </div>
+                                        <table id="table" data-toolbar="#toolbar" data-search="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
+                                        data-show-export="true" data-show-pagination-switch="true" data-pagination="true" data-page-list="[10, 25, 50, 100, ALL]"
+                                        data-show-footer="true" data-side-pagination="server" data-response-handler="responseHandler">
+                                            <thead>
+                                                <!--data-url="data/sample"-->
                                                 <tr>
-                                                    <th data-field="label" data-sortable="true" data-editable="true" >Label</th>                                                         
+                                                    <th data-field="label" data-sortable="true" data-editable="true">Label</th>
                                                     <th data-field="compressed">Compressed</th>
                                                     <th data-field="encrypted">Encrypted</th>
                                                     <th data-field="addressData" data-sortable="true">Address</th>
-                                                    <th data-field="format" data-sortable="true" >Format</th>                                                    
-                                                    <th data-field="privkeyId" data-sortable="true" data-formatter="linkPrivKeyFormatter" >Private Key</th>
-                                                    <th data-field="pubkeyId" data-sortable="true" data-formatter="linkPubKeyFormatter" >Public Key</th> 
+                                                    <th data-field="format" data-sortable="true">Format</th>
+                                                    <th data-field="privkeyId" data-sortable="true" data-formatter="linkPrivKeyFormatter">Private Key</th>
+                                                    <th data-field="pubkeyId" data-sortable="true" data-formatter="linkPubKeyFormatter">Public Key</th>
                                                 </tr>
-                                                </thead>
-                                            </table>
+                                            </thead>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                             <!-- -->
-                            <div class="tab-pane tab-content" id="wallet">
+                            <!-- New Wallet -->
+                            <div class="tab-pane tab-content" id="new-wallet">
+                                <div class="row">
+                                    <ol class="breadcrumb">
+                                        <li>
+                                            <a href="#home">Home</a>
+                                        </li>
+                                        <li class="active">Wallet</li>
+                                    </ol>
+                                    <div class="col-md-12">
+                                        <h2>Wallet
+                                            <small>Send funds and manage accounts.</small>
+                                        </h2>
+                                        <div class="container-fluid highlight">
+                                            <div class="row">
+                                                <div class="col-xs-4 col-md-3">
+                                                    <span class="address-label label label-default"></span>
+                                                </div>
+                                                <div class="col-xs-8 col-md-6">
+                                                    <div class="btn-group wallet-address-picker">
+                                                        <button class="qrcodeBtn btn btn-default" type="button" data-toggle="modal" data-target="#modalQrcode">
+                                                            <span class="glyphicon glyphicon-qrcode"></span>
+                                                        </button>
+                                                        <button type="button" class="address-view btn btn-default">Choose Address</button>
+                                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                            <span class="caret"></span>
+                                                            <span class="sr-only">Toggle Dropdown</span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li class="divider"></li>
+                                                            <li>
+                                                                <a>Generate new address</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4 col-md-3">
+                                                    <span class="wallet-address-picker-balance label"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid highlight">
+                                            <div class="menu-container collapse">
+                                                <label class="utxo-help ">Select one or more spendable amounts.</label>
+                                                <div class="button-container"></div>
+                                                <div>
+                                                  <!--<h2>Form control: textarea</h2>
+                                                  <p>The form below contains a textarea for comments:</p>-->                                                 <form role="form">
+                                                    <div class="transaction-hash-form form-group collapse">
+                                                      <label for="comment">Transaction Hex:</label>
+                                                      <textarea class="transaction-hash form-control" rows="5" id="comment"></textarea>
+                                                    </div>
+                                                  </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container-fluid highlight">
+                                            <div class="output-container">
+                                                <form class="form-inline has-feedback">
+                                                  <div class="form-group">
+                                                    <label for="output-address">To Address</label>
+                                                    <input type="text" class="form-control" id="output-address" placeholder="Ribbit134">
+                                                  </div>
+                                                  <div class="form-group">
+                                                    <label for="output-amount">Amount</label>
+                                                    <input type="text" class="form-control" id="output-amount" placeholder="111 RBR">
+                                                  </div>
+                                                  <button class="btn btn-default transaction-add-output">Send</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- ------------------Wallet Depricated-------------------->
+                            <!--<div class="tab-pane tab-content" id="wallet">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h2>Open Wallet
@@ -352,7 +442,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="notifications top-right"></div>
                             <div class="tab-pane tab-content" id="newAddress">
                                 <h2>New Address
@@ -939,7 +1029,7 @@
         <script src="js/jquery.resize.event.js"></script>
         <!--<script src="js/gserializer.js"></script>-->
         <script src="js/pubnub-3.7.1.min.js"></script>
-        <script src="js/pubsub.js"></script>        
+        <script src="js/pubsub.js"></script>
         <script src="js/bootstrap-notify/js/bootstrap-notify.js"></script>
         <script src="js/pouchdb-3.4.0.min.js"></script>
         <script src="bower_components/transform-pouch/dist/pouchdb.transform-pouch.js"></script>
@@ -953,18 +1043,25 @@
         <script src="js/modernizr.js"></script>
         <script src="js/multi-level-push-menu/jquery.multilevelpushmenu.min.js"></script>
         <script src="bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
-        
         <script src="js/bootstrap-table.js"></script>
         <script src="js/extensions/export/bootstrap-table-export.js"></script>
         <script src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/tableExport.js"></script>
         <script src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jquery.base64.js"></script>
         <script src="js/extensions/editable/bootstrap-table-editable.js"></script>
+        <script src="node_modules/bitcore-explorers-multi/bitcore-explorers-multi.js"></script>
         <script src="https://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
-        
+        <script>
+            var bitcore = require('bitcore')
+            var ECIES = require('bitcore-ecies')
+            var explorers = require('bitcore-explorers-multi')
+        </script>
         <!-- Sockets -->
         <script src="js/socket.io.js"></script>
         <script>
-             var check = function(cb){
+            var insight = new explorers.Insight("ribbit");
+            var transaction = new bitcore.Transaction()
+            var qrcode = new QRCode("qrcode");
+            var check = function(cb){
     	        Vault.getAddressesByPrivateKeyFormat("Extended Identity",function(keys){
     		            foundIdentity = keys
     		            return cb()
@@ -1001,10 +1098,8 @@
                 		$("#identityAddress").val(foundIdentity[0].address.addressData)
                 		joinIdentity()
                 	}
-                }
-                
-                var bitcore = require('bitcore')
-                var ECIES = require('bitcore-ecies')
+                }     
+                var explorers = require('bitcore-explorers-multi')
         </script>
     </body>
 

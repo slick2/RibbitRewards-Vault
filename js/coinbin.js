@@ -865,12 +865,12 @@ $(document).ready(function() {
 		window.location.hash = "#verify";
 	}
 
-	$(".qrcodeBtn").click(function(){
+/*	$(".qrcodeBtn").click(function(){
 		$("#qrcode").html("");
 		var thisbtn = $(this).parent().parent();
 		var qrcode = new QRCode("qrcode");
 		qrcode.makeCode("bitcoin:"+$('.address',thisbtn).val());
-	});
+	});*/
 
 	$('input[title!=""], abbr[title!=""]').tooltip({'placement':'bottom'});
 
