@@ -6,7 +6,6 @@ if (Vault == null || Vault === undefined) {
 $(document).ready(function () {
     performImports("menu", function (html5Import) {
         $(".menuframe").iFrameResize({ log: false, enablePublicMethods: true, sizeWidth: true, sizeHeight: false, resizedCallback: resizeFromIframe })
-        console.log("Need to fix up this iframe")
     })
 
     initAllTheThings()
@@ -42,12 +41,12 @@ function loadAddressPicker() {
         $.each(rows, function (row) {
             var r = rows[row]
             var label
-            console.log(r.label == "")
+            //console.log(r.label == "")
             if (r.label != "")
                 label = r.label + " | "
             if (r.format != "Identity") {
                 $("<li><a class=\"address-item\">" + (label || "") + r.addressData + "</a></li>").insertBefore(".wallet-address-picker .dropdown-menu .divider");
-                console.log(row)
+                //console.log(row)
             }
         })
     })
@@ -128,7 +127,7 @@ $(function () {
                 return Vault.tables.address.put(data)
             })
         }
-        console.log(name, args);
+        if (verbose) console.log(name, args);
     });
     $remove.click(function () {
         var ids = getIdSelections();
