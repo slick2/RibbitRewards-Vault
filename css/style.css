@@ -24,6 +24,13 @@ body {
 	padding-top: 7px!important ;
 }
 
+.nav select.form-control {
+	/*border-radius: 4px !important;*/
+	width: 250px !important;
+	border-top-left-radius: 4px !important;
+    border-bottom-left-radius: 4px !important;
+}
+
 .shannon .toggle {
 	width: 185px;
 }
@@ -147,5 +154,6 @@ sup {
   top: -0.5em;
   color:red;
 }
+
 
 

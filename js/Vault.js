@@ -29,11 +29,11 @@ function loadAddressTable() {
         $('#table').bootstrapTable('load', data.address)
         if (data.address.rows.length <= 1) {
             $("#newKeysBtn").click()
-            setTimeout(function(){
+            setTimeout(function () {
                 saveGeneratedAddress()
                 console.log(data)
-            },2000)
-        }        
+            }, 2000)
+        }
     })
 }
 
@@ -248,60 +248,28 @@ function bindClicks() {
     })
     
     /* Add / Remove UTXO to/from transaction */
-    $(document).on('click.customBindings','.button-container a',function(){
+    $(document).on('click.customBindings', '.button-container a', function () {
         if ($(this).hasClass("hit")) {
             $(this).removeClass("hit")
             transaction.removeInput(Number(JSON.parse(JSON.parse($(this).data("index")))))
         } else {
             $(this).addClass("hit")
-            transaction.from(JSON.parse(JSON.parse($(this).data("utxo"))))            
+            transaction.from(JSON.parse(JSON.parse($(this).data("utxo"))))
         }
         $(".transaction-hash").val(transaction.toString())
-        if (transaction.toString() == "01000000000000000000"){        
+        if (transaction.toString() == "01000000000000000000") {
             $(".transaction-hash-form").addClass("collapse")
         }
         else {
             $(".transaction-hash-form").removeClass("collapse")
         }
     })
-    
-    /* Add output to transaction and sign */
-    $(document).on('click.customBindings','.transaction-add-output',function(){
-        var fromAddress = $(".address-view").text()
-        var toAddress = $("#output-address").val()
-        var amount = $("#output-amount").val()*100000000
-        var key
-        try {
-                transaction.to(toAddress,amount)
-                transaction.change(fromAddress)
-                getKeyFromAddress(fromAddress,function(keydata){
-                    key = new bitcore.PrivateKey(keydata)
-                    transaction.sign(key)            
-                    $(".transaction-hash").val(transaction.toString())
-                    if (transaction.isFullySigned()) {
-                        popMsg("Signed and verified")
-                    } else {
-                        popMsg("Transaction is not finished.")
-                    }            
-                    return
-                })
-         } catch(e) {
-             popMsg("Critical Error: "+e.message)
-         }
-    })
-    
-    /* reset the transaction */
-     $(document).on('click.customBindings','.transaction-reset',function(){
-         resetTransaction()
-         var address = $(".address-view").text()
-         getBalance(address)
-     })
-    
+     
     /* QR rewrite */
-    $(document).on('click.customBindings',".qrcodeBtn", function(){
+    $(document).on('click.customBindings', ".qrcodeBtn", function () {
         var address = $('.wallet-address-picker .address-view').text()
-		generateQr(address)
-	});
+        generateQr(address)
+    });
     
     /* Address Picker Magic */
     $(document).on('click.customBindings', '.wallet-address-picker .dropdown-menu .address-item', function (data) {
@@ -312,7 +280,7 @@ function bindClicks() {
         if (address.indexOf(' | ') > -1) {
             var splitAddress = address.split(' | ')
             address = splitAddress[1]
-            label = splitAddress[0] 
+            label = splitAddress[0]
         }
         $(data.currentTarget.parentNode.parentNode.parentElement).find(".address-view").text(address)
         if (label != null && label !== undefined) {
@@ -324,19 +292,55 @@ function bindClicks() {
         getBalance(address)
     })
     
+    /* Add output to transaction and sign */
+    $(document).on('click.customBindings', '.transaction-add-output', function () {
+        var fromAddress = $(".address-view").text()
+        var toAddress = $("#output-address").val()
+        var amount = $("#output-amount").val() * 100000000
+        var key
+        try {
+            transaction.to(toAddress, amount)
+            transaction.change(fromAddress)
+            getKeyFromAddress(fromAddress, function (keydata) {
+                key = new bitcore.PrivateKey(keydata)
+                transaction.sign(key)
+                $(".transaction-hash").val(transaction.toString())
+                if (transaction.isFullySigned()) {
+                    popMsg("Signed and verified")
+                } else {
+                    popMsg("Transaction is not finished.")
+                }
+                return
+            })
+        } catch (e) {
+            popMsg("Critical Error: " + e.message)
+        }
+    })
+    
+    /* reset the transaction */
+    $(document).on('click.customBindings', '.transaction-reset', function () {
+        resetTransaction()
+        var address = $(".address-view").text()
+        getBalance(address)
+    })
+    
     /* Broadcast TX */
-    $(document).on('click.customBindings', '.transaction-broadcast',function(data) {
-            try {
-                    insight.broadcast(transaction,function(err,txid){
-                        if (err) {
-                            popMsg("Broadcast Error: "+err)
-                        } else {
-                            popMsg("Broadcast Success: "+txid)  
-                        }          
-                    })
-            } catch(e){
-                popMsg("Critical: "+e.message)
-            }       
+    $(document).on('click.customBindings', '.transaction-broadcast', function (data) {
+        try {
+            if (!transaction.isFullySigned()) {
+                console.log("forgot to sign")
+                $(".transaction-add-output").click()
+            }
+            insight.broadcast(transaction, function (err, txid) {
+                if (err) {
+                    popMsg("Broadcast Error: " + err)
+                } else {
+                    popMsg("Broadcast Success: " + txid)
+                }
+            })
+        } catch (e) {
+            popMsg("Critical: " + e.message)
+        }
     })
     
     
@@ -348,59 +352,59 @@ function bindClicks() {
      
     /* Legacy: Broadcast transaction */
     $(document).on('click.customBindings', '#rawSubmitBtn', function (data) {
-		var thisbtn = this;
-		$(thisbtn).val('Please wait, loading...').attr('disabled',true)
-		var tx = $("#rawTransaction").val()
+        var thisbtn = this;
+        $(thisbtn).val('Please wait, loading...').attr('disabled', true)
+        var tx = $("#rawTransaction").val()
         try {
-        		insight.broadcast(tx,function(err,txo){            
-                    if (err) {
-                        $("#rawTransactionStatus").html(err.toString()).removeClass('hidden')
-                        $("#rawTransactionStatus").addClass('alert-danger').removeClass('alert-success').prepend('<span class="glyphicon glyphicon-exclamation-sign"></span> ')
-                    } else {
-                        $("#rawTransactionStatus").addClass('alert-success').removeClass('alert-danger')
-        				$("#rawTransactionStatus").html('txid: '+txo)
-                    }            
-                    $("#rawTransactionStatus").fadeOut().fadeIn()
-        			$(thisbtn).val('Submit').attr('disabled',false)
-                })
-        } catch(e){
-            popMsg("Critical Error "+e.message)
-            $(thisbtn).val('Submit').attr('disabled',false)
+            insight.broadcast(tx, function (err, txo) {
+                if (err) {
+                    $("#rawTransactionStatus").html(err.toString()).removeClass('hidden')
+                    $("#rawTransactionStatus").addClass('alert-danger').removeClass('alert-success').prepend('<span class="glyphicon glyphicon-exclamation-sign"></span> ')
+                } else {
+                    $("#rawTransactionStatus").addClass('alert-success').removeClass('alert-danger')
+                    $("#rawTransactionStatus").html('txid: ' + txo)
+                }
+                $("#rawTransactionStatus").fadeOut().fadeIn()
+                $(thisbtn).val('Submit').attr('disabled', false)
+            })
+        } catch (e) {
+            popMsg("Critical Error " + e.message)
+            $(thisbtn).val('Submit').attr('disabled', false)
         }
-	});
+    });
     
     /* Legacy: Generate keys (needs to be ported to bitcore) */
     $(document).on('click.customBindings', '#newKeysBtn', function (data) {
-		coinjs.compressed = false;
-		if($("#newCompressed").is(":checked")){
-			coinjs.compressed = true;
-		}
-		var s = ($("#newBrainwallet").is(":checked")) ? $("#brainwallet").val() : null;
-		var coin = coinjs.newKeys(s);
-		$("#newBitcoinAddress").val(coin.address);
-		$("#newPubKey").val(coin.pubkey);
-		$("#newPrivKey").val(coin.wif);
+        coinjs.compressed = false;
+        if ($("#newCompressed").is(":checked")) {
+            coinjs.compressed = true;
+        }
+        var s = ($("#newBrainwallet").is(":checked")) ? $("#brainwallet").val() : null;
+        var coin = coinjs.newKeys(s);
+        $("#newBitcoinAddress").val(coin.address);
+        $("#newPubKey").val(coin.pubkey);
+        $("#newPrivKey").val(coin.wif);
 
-		/* encrypted key code */
-		if((!$("#encryptKey").is(":checked")) || $("#aes256pass").val()==$("#aes256pass_confirm").val()){
-			$("#aes256passStatus").addClass("hidden");
-			if($("#encryptKey").is(":checked")){
-				$("#aes256wifkey").removeClass("hidden");
-			}
-		} else {
-			$("#aes256passStatus").removeClass("hidden");
-		}
-		$("#newPrivKeyEnc").val(CryptoJS.AES.encrypt(coin.wif, $("#aes256pass").val())+'');
-        
+        /* encrypted key code */
+        if ((!$("#encryptKey").is(":checked")) || $("#aes256pass").val() == $("#aes256pass_confirm").val()) {
+            $("#aes256passStatus").addClass("hidden");
+            if ($("#encryptKey").is(":checked")) {
+                $("#aes256wifkey").removeClass("hidden");
+            }
+        } else {
+            $("#aes256passStatus").removeClass("hidden");
+        }
+        $("#newPrivKeyEnc").val(CryptoJS.AES.encrypt(coin.wif, $("#aes256pass").val()) + '');
+
         if ($("#autoSave").is(":checked")) {
             saveGeneratedAddress()
         } else {
             popMsg("Generated new address. Don't forget to save.")
         }
-	});
+    });
 }
 
-function saveNameSetting(){
+function saveNameSetting() {
     Vault.addSetting("DisplayName", $("#displayName").val(), function (result) {
         initAllTheThings()
         console.log(result)
@@ -408,27 +412,27 @@ function saveNameSetting(){
 }
 
 function saveGeneratedAddress() {
-    Vault.page.saveAddress(function (out) {  
-            popMsg("Saved address to local datastore.")
-            initAllTheThings()
-    })    
+    Vault.page.saveAddress(function (out) {
+        popMsg("Saved address to local datastore.")
+        initAllTheThings()
+    })
 }
 
-function getKeyFromAddress(address,cb){
-   Vault.getRecordFilteredOfType(tables.address,"addressData",address,function(data){
+function getKeyFromAddress(address, cb) {
+    Vault.getRecordFilteredOfType(tables.address, "addressData", address, function (data) {
         console.log(data)
-        Vault.getRecordFilteredOfType(tables.privkey,"_id",data.privkeyId,function(data){
+        Vault.getRecordFilteredOfType(tables.privkey, "_id", data.privkeyId, function (data) {
             console.log(data.keydata)
             return cb(data.keydata)
         })
     })
 }
-function resetTransaction(){
+function resetTransaction() {
     transaction = new bitcore.Transaction()
     $(".transaction-hash").val(transaction.toString())
 }
 
-function getBalance(address) {    
+function getBalance(address) {
     var balanceSelector = ".wallet-address-picker-balance"
     $(balanceSelector).removeClass("label-success")
     $(balanceSelector).removeClass("label-warning")
@@ -439,33 +443,33 @@ function getBalance(address) {
             if (Number(balance) == 0) {
                 $(balanceSelector).addClass("label-warning")
                 $(".button-container").html("")
-                $(balanceSelector).text("Balance: 0")                
+                $(balanceSelector).text("Balance: 0")
                 $(".menu-container").addClass("collapse")
             } else {
                 $(balanceSelector).addClass("label-success")
-                $(balanceSelector).text("Balance: "+balance*0.00000001+" "+insight.network.alias.toUpperCase())
+                $(balanceSelector).text("Balance: " + balance * 0.00000001 + " " + insight.network.alias.toUpperCase())
                 $(".menu-container").removeClass("collapse")
                 getUtxos(address)
-                
+
             }
         }
     })
 }
 
-function getUtxos(address){
+function getUtxos(address) {
     var utxoSelector = ".wallet-utxo-picker"
-    insight.getUnspentUtxos(address, function(err, utxos) {
+    insight.getUnspentUtxos(address, function (err, utxos) {
         $(".button-container").html("")
-      if (err) {
-        console.log(err)
-      } else {
-          console.log("UTXOs")          
-          $.each(utxos,function(index,value){
-              $(".button-container").append("<a data-index='"+index+"' data-utxo='"+JSON.stringify(value)+"' >"+value.satoshis*0.00000001+" RBR</a>")
-              console.log(value)
-          })
-          console.log(utxos)
-      }
+        if (err) {
+            console.log(err)
+        } else {
+            console.log("UTXOs")
+            $.each(utxos, function (index, value) {
+                $(".button-container").append("<a data-index='" + index + "' data-utxo='" + JSON.stringify(value) + "' >" + value.satoshis * 0.00000001 + " RBR</a>")
+                console.log(value)
+            })
+            console.log(utxos)
+        }
     });
 }
 
@@ -477,12 +481,12 @@ function checkHash() {
     }
 }
 
-function generateQr(data){
+function generateQr(data) {
     $("#qrcode").html("");
     $(".modal-title").text(data)
     qrcode = new QRCode("qrcode");
-	qrcode.makeCode("bitcoin:"+data);
-    
+    qrcode.makeCode("bitcoin:" + data);
+
 }
 
 function handleIdentityViewType(element) {
