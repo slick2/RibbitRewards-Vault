@@ -5,7 +5,7 @@
 <table>
     <tr>
         <td>
-			<img height="250" style="float:left; padding: 15px" src="./Introduction/start3.PNG">
+			<img style="float:left; padding: 15px" src="./Introduction/start3.PNG">
 		</td>
 		<td>
 			**Throughout the development** of our yet to be named wallet, we borrow concepts and improve upon designs such as Copay and other popular wallets. One of the features that has proven both convenient and a major pain is the option to store data on the user's browser. This is commonly known as browser storage or localstorage. One of the lessons learned from using the Copay wallet was that not everyone understans the implications of utilizing localstorage.
@@ -31,7 +31,7 @@
 			<br><br> *You can alternatively open the index.html file in your favorite web browser.*
 		</td>
 		<td>
-			<img style="padding: 15px" height="250px" src="./Introduction/start2.PNG">
+			<img style="padding: 15px" src="./Introduction/start2.PNG">
 		</td>
     </tr>
 </table>
@@ -43,7 +43,7 @@
 <table>
     <tr>
         <td>
-			<img style="padding: 15px; clear: both;" width="400px" src="./Introduction/manage1.PNG">
+			<img style="padding: 15px;" src="./Introduction/manage1.PNG">
 		</td>
 		<td>
 			**Your keys of all type** are maintained on the management page. The actual key data is hidden from immediate view. If you chose to protect the key using a seperate layer of encryption, you will be required to enter the decryption password in order to sign transactions or export the key data. *(multisig forthcoming)*
@@ -52,7 +52,7 @@
 			<br><br>
 		</td>
 		<td>
-			<img style="padding: 15px;" height="200px" src="./Introduction/manage3.PNG">
+			<img style="padding: 15px;" src="./Introduction/manage3.PNG">
 		</td>
     </tr>
 </table>
@@ -64,7 +64,7 @@
 <table>
     <tr>
         <td>
-			<img style="padding: 15px;" width="400p" src="./Introduction/manage2.PNG">				
+			<img style="padding: 15px;" src="./Introduction/manage2.PNG">				
 		</td>
 		<td>
 			**Labeling keys** is currently the way to set one apart from each other. You will eventually store other people's pubkeys and associated addresses in the same datastore and will want to be able to tag these identity addresses and tell one from the other as well.  
@@ -74,7 +74,7 @@
 			**Export** in order for you to have control over your keys, it's important for you to be able to transport them where you want, how you want. To facilitate that, right off the bat we are offering the ability to export your keys in a variety of formats. 
 		</td>
 		<td>
-			<img style="padding: 15px; clear: both;" width="300p" src="./Introduction/export.PNG">
+			<img style="padding: 15px" src="./Introduction/export.PNG">
 		</td>
     </tr>
 </table>
@@ -89,13 +89,13 @@ Transactions can be created, signed and broadcast independantly and mostly offli
 <table>
     <tr>
 		<td>
-			<img style="float: left; padding: 15px; clear: both;" width="400p" src="./Introduction/wallet1.PNG">
+			<img style="padding: 15px" src="./Introduction/wallet1.PNG">
 		</td>
 		<td>
-			<img style="float: left; padding: 15px; clear: both;" width="400p" src="./Introduction/validate1.PNG">
+			<img style="padding: 15px" src="./Introduction/validate1.PNG">
 		</td>
 		<td>
-			<img style="float: left; padding: 15px; clear: both;" width="400p" src="./Introduction/wallet5.PNG">
+			<img style="padding: 15px" src="./Introduction/wallet5.PNG">
 		</td>
     </tr>
 </table>
@@ -110,10 +110,10 @@ Transactions can be created, signed and broadcast independantly and mostly offli
 			Currently a small proof of concept is included. We will utilize WebRTC to allow for secure P2P communications across devices. 
 		</td>
 		<td>
-			<img style="float: left; padding: 15px; clear: both;" width="400p" src="./Introduction/chat2.PNG">	
+			<img style="padding: 15px;" src="./Introduction/chat2.PNG">	
 		</td>
 		<td>
-			<img style="float: left; padding: 15px; clear: both;" width="400p" src="./Introduction/chat3.PNG">
+			<img style="padding: 15px;" src="./Introduction/chat3.PNG">
 		</td>
     </tr>
 </table>
