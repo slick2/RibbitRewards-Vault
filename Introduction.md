@@ -25,7 +25,7 @@
 			<b>Keeping in mind problems</b> users have had with previous wallets we decided to focus on ways to mitigate the loss of data. 
 			<br>
 			One of those is having a browser instance dedicated to only the wallet. 
-			<br><br>We are utilizing the [Electron](http://electron.atom.io/) project to achieve this. What electron is, is a slimmed down version of Chromium for Windows, Linux and Mac. The majority of the junk is removed and the ability to run nodejs locally was added. 
+			<br><br>We are utilizing the <a href="http://electron.atom.io/">Electron</a> project to achieve this. What electron is, is a slimmed down version of Chromium for Windows, Linux and Mac. The majority of the junk is removed and the ability to run nodejs locally was added. 
 				<br><br>
 					Electron used to be called Atom shell and is used in the Slack desktop client, Microsoft Code IDE, and many others. Included in our repo is a batch file that will launch the win32 version of the wallet wrapped up into the electron shell. 
 			<br><br> <em>You can alternatively open the index.html file in your favorite web browser.</em>
