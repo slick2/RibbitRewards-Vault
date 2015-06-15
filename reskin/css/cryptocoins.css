@@ -1,0 +1,265 @@
+@font-face {
+	font-family: 'Cryptocoins';
+	src:url('../fonts/Cryptocoins.eot?pbcptd');
+	src:url('../fonts/Cryptocoins.eot?#iefixpbcptd') format('embedded-opentype'),
+		url('../fonts/Cryptocoins.ttf?pbcptd') format('truetype'),
+		url('../fonts/Cryptocoins.woff?pbcptd') format('woff'),
+		url('../fonts/Cryptocoins.svg?pbcptd#Cryptocoins') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+i {
+	font-family: 'Cryptocoins';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.cc-XBS:before {
+	content: "\e64e";
+}
+.cc-XBS-alt:before {
+	content: "\e64f";
+}
+.cc-ARCH:before {
+	content: "\e606";
+}
+.cc-ARCH-alt:before {
+	content: "\e607";
+}
+.cc-DASH:before {
+	content: "\e63e";
+}
+.cc-DASH-alt:before {
+	content: "\e63f";
+}
+.cc-GEMZ:before {
+	content: "\e640";
+}
+.cc-GEMZ-alt:before {
+	content: "\e641";
+}
+.cc-IFC:before {
+	content: "\e642";
+}
+.cc-IFC-alt:before {
+	content: "\e643";
+}
+.cc-NOTE:before {
+	content: "\e644";
+}
+.cc-NOTE-alt:before {
+	content: "\e645";
+}
+.cc-RBT:before {
+	content: "\e646";
+}
+.cc-RBT-alt:before {
+	content: "\e647";
+}
+.cc-VRC:before {
+	content: "\e648";
+}
+.cc-VRC-alt:before {
+	content: "\e649";
+}
+.cc-VTC:before {
+	content: "\e64a";
+}
+.cc-VTC-alt:before {
+	content: "\e64b";
+}
+.cc-XEM:before {
+	content: "\e64c";
+}
+.cc-XEM-alt:before {
+	content: "\e64d";
+}
+.cc-BCN:before {
+	content: "\e602";
+}
+.cc-BCN-alt:before {
+	content: "\e603";
+}
+.cc-BTS:before {
+	content: "\e62e";
+}
+.cc-BTS-alt:before {
+	content: "\e62f";
+}
+.cc-GRC:before {
+	content: "\e630";
+}
+.cc-GRC-alt:before {
+	content: "\e631";
+}
+.cc-KORE:before {
+	content: "\e632";
+}
+.cc-KORE-alt:before {
+	content: "\e633";
+}
+.cc-MAID:before {
+	content: "\e634";
+}
+.cc-MAID-alt:before {
+	content: "\e635";
+}
+.cc-QRK:before {
+	content: "\e636";
+}
+.cc-QRK-alt:before {
+	content: "\e637";
+}
+.cc-UNITY:before {
+	content: "\e638";
+}
+.cc-UNITY-alt:before {
+	content: "\e639";
+}
+.cc-VIOR:before {
+	content: "\e63a";
+}
+.cc-VIOR-alt:before {
+	content: "\e63b";
+}
+.cc-VPN:before {
+	content: "\e63c";
+}
+.cc-VPN-alt:before {
+	content: "\e63d";
+}
+.cc-BANX:before {
+	content: "\e615";
+}
+.cc-BANX-alt:before {
+	content: "\e616";
+}
+.cc-BC:before {
+	content: "\e617";
+}
+.cc-BC-alt:before {
+	content: "\e618";
+}
+.cc-BTCD:before {
+	content: "\e619";
+}
+.cc-BTCD-alt:before {
+	content: "\e61a";
+}
+.cc-FC2:before {
+	content: "\e61b";
+}
+.cc-FC2-alt:before {
+	content: "\e61c";
+}
+.cc-FTC:before {
+	content: "\e61d";
+}
+.cc-FTC-alt:before {
+	content: "\e61e";
+}
+.cc-MSC:before {
+	content: "\e61f";
+}
+.cc-MSC-alt:before {
+	content: "\e620";
+}
+.cc-NBT:before {
+	content: "\e621";
+}
+.cc-OPAL:before {
+	content: "\e622";
+}
+.cc-OPAL-alt:before {
+	content: "\e623";
+}
+.cc-POT:before {
+	content: "\e624";
+}
+.cc-POT-alt:before {
+	content: "\e625";
+}
+.cc-SDC:before {
+	content: "\e626";
+}
+.cc-SDC-alt:before {
+	content: "\e627";
+}
+.cc-STR:before {
+	content: "\e628";
+}
+.cc-STR-alt:before {
+	content: "\e629";
+}
+.cc-SYNC:before {
+	content: "\e62a";
+}
+.cc-SYNC-alt:before {
+	content: "\e62b";
+}
+.cc-YBC:before {
+	content: "\e62c";
+}
+.cc-YBC-alt:before {
+	content: "\e62d";
+}
+.cc-BTC:before {
+	content: "\e600";
+}
+.cc-BTC-alt:before {
+	content: "\e601";
+}
+.cc-DOGE:before {
+	content: "\e604";
+}
+.cc-DOGE-alt:before {
+	content: "\e605";
+}
+.cc-LTC:before {
+	content: "\e608";
+}
+.cc-LTC-alt:before {
+	content: "\e609";
+}
+.cc-NMC:before {
+	content: "\e60a";
+}
+.cc-NMC-alt:before {
+	content: "\e60b";
+}
+.cc-NXT:before {
+	content: "\e60c";
+}
+.cc-NXT-alt:before {
+	content: "\e60d";
+}
+.cc-PPC:before {
+	content: "\e60e";
+}
+.cc-PPC-alt:before {
+	content: "\e60f";
+}
+.cc-XCP:before {
+	content: "\e610";
+}
+.cc-XCP-alt:before {
+	content: "\e611";
+}
+.cc-XMR:before {
+	content: "\e612";
+}
+.cc-XRP:before {
+	content: "\e613";
+}
+.cc-XRP-alt:before {
+	content: "\e614";
+}

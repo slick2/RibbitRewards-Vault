@@ -1,0 +1,187 @@
+<head>
+	<!--<link rel="shortcut icon" href="../favicon.ico">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css" />-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.3.0/css/font-awesome.min.css" />
+	<!--<link rel="stylesheet" type="text/css" href="css/demo.css" />-->
+	<link rel="stylesheet" type="text/css" href="css/menu.css" />
+	<link rel="stylesheet" type="text/css" href="css/dropdown.style4.css" />
+	<!-- ICONS -->
+	<link rel="stylesheet" type="text/css" href="css/default.css" />
+	<link rel="stylesheet" type="text/css" href="css/component.css" />
+	<script>
+		var dd;
+	</script>
+	<!--<script src="js/modernizr.custom.js"></script>-->
+	<!-- END ICONS -->
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<script src="js/TweenMax.min.js"></script>
+</head>
+<body>
+	<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="filters hidden">
+		<defs>
+			<filter id="blur" x="-20%" y="0" width="140%" height="100%">
+				<feGaussianBlur in="SourceGraphic" stdDeviation="0,0" />
+			</filter>
+		</defs>
+	</svg>
+	<div class="container">
+		<div class="menu-sm">
+			<!-- Coin Select -->
+			<select id="cd-dropdown2" class="menu-sm cd-select">
+				<option value="-1" selected>Currency type</option>
+				<option value="1" class="icon-btc">RibbitRewards (Livenet)</option>
+				<option value="2" class="icon-finder">Mac</option>
+				<option value="3" class="icon-windows">Windows</option>
+				<option value="4" class="icon-android">Android</option>
+			</select>
+			<!-- /Coin Select -->
+			<div class="menu-profile js-blur">
+				<ul>
+					<li>
+						<a href="#" class="menu-item-sm">
+							<i class="fa fa-lg fa-user"></i>							
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="menu-sm-bg js-blur"></div>
+			<nav class="menu-items">
+				<ul>
+					<li>
+						<a href="#" class="menu-item-sm">
+							<i class="fa fa-lg fa-university"></i>							
+						</a>
+					</li>
+					<li>
+						<a href="#" class="menu-item-sm">
+							<i class="fa fa-lg fa-key"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="menu-item-sm">
+							<i class="fa-double fa fa-lg fa-weixin"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="menu-item-sm">
+							<i class="fa fa-lg fa-cogs"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="menu-item-sm">
+							<i class="fa-double fa fa-lg fa-download"></i>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<div class="menu">
+			<!-- Coin Select -->
+			<select id="cd-dropdown" class="menu cd-select">
+				<option value="-1" class="icon-finder">Currency type</option>
+				<option value="1" class="icon-btc">RibbitRewards (Livenet)</option>
+				<option value="2" class="icon-finder">Mac</option>
+				<option value="3" class="icon-windows">Windows</option>
+				<option value="4" class="icon-android">Android</option>
+			</select>
+			<!-- /Coin Select -->
+			<div class="menu-profile js-blur">
+				<ul class="menu-items">
+					<li>
+						<a href="#" class="menu-item">
+							<!--<i class="fa fa-double fa-lg fa-user"></i>-->
+							<img height="70px" src="images/profile.png"/>
+							<br />
+							<span class="js-blur">Profile</span>					
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="menu-bg js-blur"></div>
+			<nav class="menu-items">
+				<ul>					
+					<li>
+						<a href="#" class="menu-item">
+							<i class="fa fa-lg fa-university"></i>
+							<br />
+							<span class="js-blur">Wallet</span>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="menu-item">
+							<i class="fa fa-lg fa-key"></i>
+							<br />
+							<span class="js-blur">Key Management</span>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="menu-item">
+							<i class="fa-double fa fa-lg fa-weixin"></i>							
+							<i class="fa-double fa fa-lg fa-video-camera"></i>
+							<br />
+							<span class="js-blur">Chat  /  Video</span>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="menu-item">
+							<i class="fa fa-lg fa-cogs"></i>
+							<br />
+							<span class="js-blur">Raw Transactions</span>
+						</a>
+					</li>
+					<li>
+						<a href="#" class="menu-item">
+							<i class="fa-double fa fa-lg fa-download"></i>
+							<i class="fa-double fa fa-lg fa-upload"></i>
+							<br />
+							<span class="js-blur">Import / Export</span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+		<!--<button class="menu-toggle"><span>Open Menu</span></button>-->
+		<a class="menu-toggle js-blur">			
+			<i class="fa-double fa fa-lg fa-bars"></i>
+		</a>
+		<div>
+			<!--<i class="fa fa-lg fa-spinner"></i>
+			<i class="fa fa-lg fa-home"></i>
+			<i class="fa fa-lg fa-toggle-off"></i>
+			<i class="fa fa-lg fa-toggle-on"></i>
+			<i class="fa fa-lg fa-users"></i>
+			<i class="fa fa-lg fa-wrench"></i>
+			<i class="fa fa-lg fa-cloud-upload"></i>
+			<i class="fa fa-lg fa-eye"></i>
+			<i class="fa fa-lg fa-bars"></i>
+			<i class="fa fa-lg fa-bell"></i>
+			<i class="fa fa-lg fa-comment"></i>
+			<i class="fa fa-lg fa-envelope"></i>
+			<i class="fa fa-lg fa-download"></i>
+			<i class="fa fa-lg fa-inbox"></i>
+			<i class="fa fa-lg fa-paper-plane"></i>
+			<i class="fa fa-lg fa-dashboard"></i>-->
+		</div>
+	</div>
+	<!-- /container -->
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="js/modernizr.custom.63321.js"></script>
+	<script src="js/app.js"></script>
+	<script type="text/javascript" src="js/jquery.dropdown.js"></script>
+	<script type="text/javascript">
+		$( function() {
+			
+			dd = $( '#cd-dropdown' ).dropdown();
+
+		});
+		$( function() {
+			
+			$( '#cd-dropdown2' ).dropdown();
+
+		});
+	</script>
+	<script src="js/motionblur.js"></script>
+	<script src="js/menu.js"></script>
+</body>
