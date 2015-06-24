@@ -24,6 +24,14 @@ function initAllTheThings() {
     getDisplayName($("#displayName"))
 }
 
+function getDisplayName(element) {
+    Vault.getSettingValue("DisplayName", function (setting) {
+        if (setting !== undefined) {
+            element.val(setting)
+        }
+    })
+}
+
 function loadAddressTable() {
     getAllTablesAsDataTable(function (data) {
         $('#table').bootstrapTable('load', data.address)

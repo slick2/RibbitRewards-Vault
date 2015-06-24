@@ -1,0 +1,1 @@
+﻿var joinIdentity = function() {console.log("Mocked joinIdentity")}

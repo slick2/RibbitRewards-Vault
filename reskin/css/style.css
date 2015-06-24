@@ -1,0 +1,93 @@
+html, body {
+	height: 100%;
+}
+
+body {
+	background-color:#ffffff;
+      overflow-x: hidden;
+}
+
+iframe {
+    overflow: auto;
+    margin: 0;
+    padding: 0;
+    border: none;
+    width: 100%;
+}
+
+.navbar-toggle {
+    z-index: 1;
+}
+
+.logo {
+  background-image: url(../images/RBR.svg);
+  left: 0;
+  height: 55px;
+  background-size: 55px 55px;
+  background-repeat: no-repeat;
+  opacity: 0.4;
+}
+
+.coin-sellect {
+    top: -40px;
+}
+
+.logo:hover {
+  
+  background-image: url(../images/ribbit-transparent.svg);
+  left: 0;
+  height: 55px;
+  background-size: 55px 55px;
+  background-repeat: no-repeat;
+  opacity: 1;
+}
+
+.btn.dropdown-toggle {
+    width: 0; 
+}
+
+#header .navbar-right {
+    z-index: 2;
+    visibility: collapse;
+}
+
+.canvas {
+    padding-top: 0 !important;
+}
+
+.container {
+    margin-left: 0 !important;
+    width: auto !important;
+}
+
+.page-header {
+    width: auto !important;
+    text-align: center !important;
+    margin-top: 0 !important;
+}
+
+.page-header h1 {
+    color: #868d99;
+    font-weight: bolder !important;
+    font-size: 4.2vw !important;
+}
+
+.header-profile {
+      margin-top: 19px;
+}
+
+sup {
+  top: -0.5em;
+  color:red;
+}
+
+/* Screensize tweaks */
+@media (min-width: 770px) {
+    #header .navbar-right {
+        visibility: visible;
+    }
+}
+
+
+
+

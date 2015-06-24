@@ -1,0 +1,216 @@
+@charset "UTF-8";/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+
+
+#img {
+    margin: 3rem auto 2rem;
+    text-align: center
+}
+
+#img .item {
+    display: inline-block;
+    width: 80px;
+    margin: 13px 9px
+}
+
+#img .item:hover .icon {
+    transform: rotate(-14deg);
+    transform-origin: 50% 40%
+}
+
+#img .item:hover .name {
+    color: #202020
+}
+
+#img .item:hover .key input {
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 0 0 1px #ccc;
+    color: #202020
+}
+
+#img .item:hover .cc-ARCH,#img .item:hover .cc-ARCH-alt {
+    color: #002652
+}
+
+#img .item:hover .cc-BANX,#img .item:hover .cc-BANX-alt {
+    color: #225BA6
+}
+
+#img .item:hover .cc-BC,#img .item:hover .cc-BC-alt {
+    color: #202121
+}
+
+#img .item:hover .cc-BCN,#img .item:hover .cc-BCN-alt {
+    color: #964F51
+}
+
+#img .item:hover .cc-BTC,#img .item:hover .cc-BTC-alt {
+    color: #F7931A
+}
+
+#img .item:hover .cc-BTCD,#img .item:hover .cc-BTCD-alt {
+    color: #2A72DC
+}
+
+#img .item:hover .cc-BTS,#img .item:hover .cc-BTS-alt {
+    color: #03A9E0
+}
+
+#img .item:hover .cc-DASH,#img .item:hover .cc-DASH-alt {
+    color: #1c75bc
+}
+
+#img .item:hover .cc-DOGE,#img .item:hover .cc-DOGE-alt {
+    color: #BA9F33
+}
+
+#img .item:hover .cc-FC2,#img .item:hover .cc-FC2-alt {
+    color: #040405
+}
+
+#img .item:hover .cc-FTC,#img .item:hover .cc-FTC-alt {
+    color: #679EF1
+}
+
+#img .item:hover .cc-GEMZ,#img .item:hover .cc-GEMZ-alt {
+    color: #e86060
+}
+
+#img .item:hover .cc-GRC,#img .item:hover .cc-GRC-alt {
+    color: #88A13C
+}
+
+#img .item:hover .cc-IFC,#img .item:hover .cc-IFC-alt {
+    color: #ed272d
+}
+
+#img .item:hover .cc-KORE,#img .item:hover .cc-KORE-alt {
+    color: #DF4124
+}
+
+#img .item:hover .cc-LTC,#img .item:hover .cc-LTC-alt {
+    color: #838383
+}
+
+#img .item:hover .cc-MAID,#img .item:hover .cc-MAID-alt {
+    color: #5492D6
+}
+
+#img .item:hover .cc-MSC,#img .item:hover .cc-MSC-alt {
+    color: #1D4983
+}
+
+#img .item:hover .cc-NBT {
+    color: #FFC93D
+}
+
+#img .item:hover .cc-NMC,#img .item:hover .cc-NMC-alt {
+    color: #6787B7
+}
+
+#img .item:hover .cc-NOTE,#img .item:hover .cc-NOTE-alt {
+    color: #42daff
+}
+
+#img .item:hover .cc-NXT,#img .item:hover .cc-NXT-alt {
+    color: #008FBB
+}
+
+#img .item:hover .cc-OPAL,#img .item:hover .cc-OPAL-alt {
+    color: #7193AA
+}
+
+#img .item:hover .cc-POT,#img .item:hover .cc-POT-alt {
+    color: #105B2F
+}
+
+#img .item:hover .cc-PPC,#img .item:hover .cc-PPC-alt {
+    color: #3FA30C
+}
+
+#img .item:hover .cc-QRK,#img .item:hover .cc-QRK-alt {
+    color: #22AABF
+}
+
+#img .item:hover .cc-RBT,#img .item:hover .cc-RBT-alt {
+    color: #0d4982
+}
+
+#img .item:hover .cc-SDC,#img .item:hover .cc-SDC-alt {
+    color: #981D2D
+}
+
+#img .item:hover .cc-STR,#img .item:hover .cc-STR-alt {
+    color: #08B5E5
+}
+
+#img .item:hover .cc-SYNC,#img .item:hover .cc-SYNC-alt {
+    color: #008DD2
+}
+
+#img .item:hover .cc-UNITY,#img .item:hover .cc-UNITY-alt {
+    color: #ED8527
+}
+
+#img .item:hover .cc-VIOR,#img .item:hover .cc-VIOR-alt {
+    color: #1F52A4
+}
+
+#img .item:hover .cc-VPN,#img .item:hover .cc-VPN-alt {
+    color: #589700
+}
+
+#img .item:hover .cc-VRC,#img .item:hover .cc-VRC-alt {
+    color: #418bca
+}
+
+#img .item:hover .cc-VTC,#img .item:hover .cc-VTC-alt {
+    color: #1b5c2e
+}
+
+#img .item:hover .cc-XBS,#img .item:hover .cc-XBS-alt {
+    color: #dc2a25
+}
+
+#img .item:hover .cc-XCP,#img .item:hover .cc-XCP-alt {
+    color: #EC1550
+}
+
+#img .item:hover .cc-XEM,#img .item:hover .cc-XEM-alt {
+    color: #41bf76
+}
+
+#img .item:hover .cc-XMR {
+    color: #F60
+}
+
+#img .item:hover .cc-XRP,#img .item:hover .cc-XRP-alt {
+    color: #346AA9
+}
+
+#img .item:hover .cc-YBC,#img .item:hover .cc-YBC-alt {
+    color: #D6C154
+}
+
+#img .icon {
+    font-size: 3.2rem;
+    color: #202020
+}
+
+#img .name {
+    font-size: .9rem;
+    font-weight: 600
+}
+
+#img .key input {
+    width: 4.5rem;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    font-family: monospace;
+    font-size: .7rem;
+    color: #aaa;
+    background: 0 0;
+    border: none
+}
+

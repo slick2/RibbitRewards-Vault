@@ -1,0 +1,1206 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Off Canvas Reveal Menu Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/jasny-bootstrap.css" rel="stylesheet">
+    <!-- Include roboto.css to use the Roboto web font, material.css to include the theme and ripples.css to style the ripple effect -->
+    <link href="css/roboto.min.css" rel="stylesheet">
+    <link href="css/material.min.css" rel="stylesheet">
+    <link href="css/ripples.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/navmenu-reveal.css" rel="stylesheet">
+    <link href="css/menu.css" rel="stylesheet">
+    <link href="fonts/font-awesome-4.3.0/css/font-awesome.min.css"  rel="stylesheet">
+    <link rel="stylesheet" href="css/demo.cryptocoins.css">
+    <link rel="stylesheet" href="css/cryptocoins.css">
+    
+    <!-- bring over css from wallet -->
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.3.0/css/font-awesome.min.css" />
+	<!--<link rel="stylesheet" type="text/css" href="css/demo.css" />-->
+	<link rel="stylesheet" type="text/css" href="css/menu.css" />
+	<!--<link rel="stylesheet" type="text/css" href="css/dropdown.style4.css" />-->
+	<!-- ICONS -->
+	<!--<link rel="stylesheet" type="text/css" href="css/default.css" />
+	<link rel="stylesheet" type="text/css" href="css/component.css" />-->
+	<!-- RTC -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="css/pubnub.css" rel="stylesheet" type="text/css">
+    <!--<link rel="stylesheet" href="css/bootstrap.min.css" media="screen">-->
+    <!--<link rel="stylesheet" href="css/style.css" media="screen">-->
+    <link href="bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.7.0/bootstrap-table.min.css" rel="stylesheet">
+    <link href="js/bootstrap-notify/css/styles/alert-blackgloss.css" rel="stylesheet">
+    <link rel="stylesheet" href="js/bootstrap-notify/css/bootstrap-notify.css">
+    <!--<link rel="stylesheet" href="css/font-awesome.min.css">-->
+    <!--<link rel="stylesheet" href="js/multi-level-push-menu/demo/bootstrap/bootstrap_integration.css">-->
+    <!--<link href='css/font.css' rel='stylesheet' type='text/css'>-->
+    <!--<link rel="stylesheet" href="js/multi-level-push-menu/demo/jquery.multilevelpushmenu.css" />-->
+    <link rel="stylesheet" href="css/bootstrap-table.css">
+    <link rel="stylesheet" href="http://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/css/bootstrap-editable.css">
+    <!-- Material Design -->
+    <!--<link href="css/bootstrap.min.css" rel="stylesheet">-->
+    <!-- Include roboto.css to use the Roboto web font, material.css to include the theme and ripples.css to style the ripple effect -->
+    <!--<link href="css/roboto.min.css" rel="stylesheet">
+    <link href="css/material.min.css" rel="stylesheet">
+    <link href="css/ripples.min.css" rel="stylesheet">-->
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+      <div class="navmenu navmenu-default navmenu-fixed-left">
+          <!-- Coin Select -->
+          <div class="btn-group js-blur">
+              <a href="javascript:void(0)" class="btn btn-primary selectitem">Ribbit Rewards</a>
+              <a href="bootstrap-elements.html" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                  <li><a href="javascript:void(0)">Action</a></li>
+                  <li><a href="javascript:void(0)">Another action</a></li>
+                  <li><a href="javascript:void(0)">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="javascript:void(0)">Separated link</a></li>
+              </ul>
+          </div>
+          <!-- /Coin Select -->
+          <div class="menu-profile js-blur menu-items">
+              <ul>
+                  <li>
+                      <a href="#" class="menu-item">
+                          <!--<i class="fa fa-double fa-lg fa-user"></i>-->
+                          <img height="70px" src="images/profile.png" />
+                          <br />
+                          <span class="js-blur">Profile</span>
+                      </a>
+                  </li>
+              </ul>
+          </div>
+          <div class="menu-bg js-blur"></div>
+          <nav class="menu-items">
+              <ul>
+                  <li>
+                      <a href="#" class="menu-item">
+                          <i class="fa fa-lg fa-university"></i>
+                          <br />
+                          <span class="js-blur">Wallet</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="#" class="menu-item">
+                          <i class="fa fa-lg fa-key"></i>
+                          <br />
+                          <span class="js-blur">Key Management</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="#video-chat" class="menu-item">
+                          <i class="fa-double fa fa-lg fa-weixin"></i>
+                          <i class="fa-double fa fa-lg fa-video-camera"></i>
+                          <br />
+                          <span class="js-blur">Chat  /  Video</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="#" class="menu-item">
+                          <i class="fa fa-lg fa-cogs"></i>
+                          <br />
+                          <span class="js-blur">Raw Transactions</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="#" class="menu-item">
+                          <i class="fa-double fa fa-lg fa-download"></i>
+                          <i class="fa-double fa fa-lg fa-upload"></i>
+                          <br />
+                          <span class="js-blur">Import / Export</span>
+                      </a>
+                  </li>
+              </ul>
+          </nav>
+      </div>
+      <div class="canvas" style="left:60px;">
+
+          <div id="header" class="navbar navbar-default " role="navigation">
+              <button style="left:0px;" type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+              </button>
+
+              <ul class="nav navbar-nav navbar-right">
+                  <!--<li><a href="javascript:void(0)">Link</a></li>-->
+                  <li class="dropdown">
+                      <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Satoshi <b class="caret"></b><div class="ripple-wrapper"></div></a>
+                      <ul class="dropdown-menu">
+                          <li><a href="javascript:void(0)">Action</a></li>
+                          <li><a href="javascript:void(0)">Another action</a></li>
+                          <li><a href="javascript:void(0)">Something else here</a></li>
+                          <li class="divider"></li>
+                          <li><a href="javascript:void(0)">Separated link</a></li>
+                      </ul>
+                  </li>
+              </ul>
+          </div>
+
+
+          <div class="container">
+
+              <div class="tab-content">
+                  <div class="tab-pane tab-content active" id="home">
+                      <div class="row">
+                          <div class="col-md-12">
+                              <h2>
+                                  Ribbit.me
+                                  <small>Spend the way you want to.</small>
+                              </h2>
+                          </div>
+                      </div>
+                      <!-- <div class="jumbotron">
+                        <h1>All your rewards in one place.</h1>
+                        <p>Take control of your rewards and start using RibbitRewards today!</p>
+                        <p>
+                            <a class="btn btn-primary btn-lg" href="#about" role="button">Learn more &raquo;</a>
+                        </p>
+                    </div> -->
+                      <hr>
+                      <div class="row">
+                          <div class="col-md-4">
+                              <h3>
+                                  <i class="fa fa-key floatRight"></i> Key Management
+                                  <sup>New</sup>
+                              </h3>
+                              <p>
+                                  Store your keys in your browser, export to your desktop, sync with your mobile, encrypt certain keys, derive keys.
+                                  <a href="#keys">Manage your keys here</a>
+                              </p>
+                          </div>
+                          <div class="col-md-4">
+                              <h3>
+                                  <i class="fa fa-users floatRight"></i> The Lobby
+                                  <sup>New</sup>
+                              </h3>
+                              <p>
+                                  Meet other Ribbit.me users in this real time group chat.
+                                  <a href="#lobby">Join the lobby here.</a>
+                              </p>
+                          </div>
+                          <div class="col-md-4">
+                              <h3>
+                                  <span class="glyphicon glyphicon-piggy-bank"></span> Wallet
+                                  <sup>New</sup>
+                                  <!--</span>
+                                </span>-->
+                              </h3>
+                              <p>
+                                  Quick access to your wallet where only you have access to your own private keys!
+                                  <a href="#new-wallet">Access your Wallet here.</a>
+                              </p>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-4">
+                              <h3>
+                                  <span class="glyphicon glyphicon-ok"></span> Open Source
+                              </h3>
+                              <p>
+                                  RibbitRewards Vault is an open source web based wallet written in javascript and released under the
+                                  <a href="LICENCE">MIT licence</a>which means its free to use and edit.
+                              </p>
+                          </div>
+                          <div class="col-md-4">
+                              <h3>
+                                  <span class="glyphicon glyphicon-fullscreen"></span> MultiSig
+                              </h3>
+                              <p>
+                                  We offer a fully transparent
+                                  <a href="#newMultiSig">multisig</a>solution which works seamlessly offline and with other clients.
+                              </p>
+                          </div>
+                          <div class="col-md-4">
+                              <h3>
+                                  <span class="glyphicon glyphicon-bitcoin"></span> Raw Transactions
+                              </h3>
+                              <p>
+                                  <a href="#newTransaction">Create</a>,
+                                  <a href="#verify">verify</a>,
+                                  <a href="#sign">sign</a>and
+                                  <a href="#broadcast">broadcast</a>custom raw transactions online with advanced features and minimal effort!
+                              </p>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-4">
+                              <h3>
+                                  <span class="glyphicon glyphicon-piggy-bank"></span> Wallet (Depricated)
+                              </h3>
+                              <p>
+                                  Quick access to an
+                                  <a href="#wallet">online wallet</a>where only you have access to your own private keys!
+                              </p>
+                          </div>
+                          <div class="col-md-4">
+                              <h3>
+                                  <span class="glyphicon glyphicon-globe"></span> Addresses
+                              </h3>
+                              <p>
+                                  We support
+                                  <a href="#newAddress">regular addresses</a>but also
+                                  <a href="#newMultiSig">multisig</a>and stealth, and access to your own private keys!
+                              </p>
+                          </div>
+                          <div class="col-md-4">
+                              <h3>
+                                  <span class="glyphicon glyphicon-wrench"></span> Development
+                              </h3>
+                              <p>
+                                  Use what we've built to write your own projects! See our documention (coming soon), or contribute at
+                                  <a href="https://github.com/genecyber/RibbitRewards-Vault">github</a>.
+                              </p>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- -->
+                  <div class="tab-pane tab-content" id="lobby">
+                      <div class="row">
+                          <ol class="breadcrumb">
+                              <li>
+                                  <a href="#home">Home</a>
+                              </li>
+                              <li class="active">Lobby</li>
+                          </ol>
+                          <div class="col-md-12">
+                              <h2>
+                                  Lobby
+                                  <small>Ribbit Rewards Lobby</small>
+                              </h2>
+                              <div class="container-fluid">
+                                  <div class="row">
+                                      <div class="col-md-6">
+                                          <div class="alert alert-info">
+                                              You are
+                                              <strong id="whoami"></strong>
+                                          </div>
+                                          <div class="panel panel-default">
+                                              <div class="panel-heading">
+                                                  Online Users
+                                                  <div class="btn-group btn-radio pull-right">
+                                                      <button type="button" class="btn btn-default active">Address</button>
+                                                      <button type="button" class="btn btn-default">Official Name</button>
+                                                      <button type="button" class="btn btn-default">My Label</button>
+                                                  </div>
+                                              </div>
+                                              <div class="list-group" id="online-users"></div>
+                                          </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <div class="panel panel-default">
+                                              <div class="panel-heading">Live Chat</div>
+                                              <ul class="list-group" id="chat-output"></ul>
+                                              <div class="panel-body">
+                                                  <form id="chat">
+                                                      <div class="input-group">
+                                                          <input type="text" class="form-control" id="chat-input" />
+                                                          <span class="input-group-btn">
+                                                              <button type="submit" class="btn btn-default">Send Message</button>
+                                                          </span>
+                                                      </div>
+                                                  </form>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- Ribbit Added -->
+                  <div class="tab-pane tab-content" id="keys">
+                      <div class="row">
+                          <ol class="breadcrumb">
+                              <li>
+                                  <a href="#home">Home</a>
+                              </li>
+                              <li class="active">Keychain Mangement</li>
+                          </ol>
+                          <div class="col-md-12">
+                              <h2>
+                                  Keychain
+                                  <small>Keychain Management</small>
+                              </h2>
+                              <div id="toolbar">
+                                  <button id="remove" class="btn btn-danger" disabled>
+                                      <i class="glyphicon glyphicon-remove"></i>Delete
+                                  </button>
+                              </div>
+                              <table id="table" data-toolbar="#toolbar" data-search="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
+                                     data-show-export="true" data-show-pagination-switch="true" data-pagination="true" data-page-list="[10, 25, 50, 100, ALL]"
+                                     data-show-footer="true" data-side-pagination="server" data-response-handler="responseHandler">
+                                  <thead>
+                                      <!--data-url="data/sample"-->
+                                      <tr>
+                                          <th data-field="label" data-sortable="true" data-editable="true">Label</th>
+                                          <th data-field="compressed">Compressed</th>
+                                          <th data-field="encrypted">Encrypted</th>
+                                          <th data-field="addressData" data-sortable="true">Address</th>
+                                          <th data-field="format" data-sortable="true">Format</th>
+                                          <th data-field="privkeyId" data-sortable="true" data-formatter="linkPrivKeyFormatter">Private Key</th>
+                                          <th data-field="pubkeyId" data-sortable="true" data-formatter="linkPubKeyFormatter">Public Key</th>
+                                      </tr>
+                                  </thead>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- -->
+                  <!-- New Wallet -->
+                  <div class="tab-pane tab-content" id="new-wallet">
+                      <div class="row">
+                          <ol class="breadcrumb">
+                              <li>
+                                  <a href="#home">Home</a>
+                              </li>
+                              <li class="active">Wallet</li>
+                          </ol>
+                          <div class="col-md-12">
+                              <h2>
+                                  Wallet
+                                  <small>Send funds and manage accounts.</small>
+                              </h2>
+                              <div class="container-fluid highlight">
+                                  <div class="row">
+                                      <div class="col-xs-4 col-md-3">
+                                          <span class="address-label label label-default"></span>
+                                      </div>
+                                      <div class="col-xs-8 col-md-6">
+                                          <div class="btn-group wallet-address-picker">
+                                              <button class="qrcodeBtn btn btn-default" type="button" data-toggle="modal" data-target="#modalQrcode">
+                                                  <span class="glyphicon glyphicon-qrcode"></span>
+                                              </button>
+                                              <button type="button" class="address-view btn btn-default">Choose Address</button>
+                                              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                  <span class="caret"></span>
+                                                  <span class="sr-only">Toggle Dropdown</span>
+                                              </button>
+                                              <ul class="dropdown-menu" role="menu">
+                                                  <li class="divider"></li>
+                                                  <li>
+                                                      <a>Generate new address</a>
+                                                  </li>
+                                              </ul>
+                                          </div>
+                                      </div>
+                                      <div class="col-xs-4 col-md-3">
+                                          <span class="wallet-address-picker-balance label"></span>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="container-fluid highlight">
+                                  <div class="menu-container collapse">
+                                      <label class="utxo-help ">Select one or more spendable amounts.</label>
+                                      <div class="button-container"></div>
+                                      <div>
+                                          <!--<h2>Form control: textarea</h2>
+                                        <p>The form below contains a textarea for comments:</p>-->
+                                          <form role="form">
+                                              <div class="transaction-hash-form form-group collapse">
+                                                  <label for="comment">Transaction Hex:</label>
+                                                  <textarea class="transaction-hash form-control" rows="5" id="comment"></textarea>
+                                              </div>
+                                          </form>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="container-fluid highlight">
+                                  <div class="output-container">
+                                      <form class="form-inline has-feedback">
+                                          <div class="form-group">
+                                              <label for="output-address">To Address</label>
+                                              <input type="text" class="form-control" id="output-address" placeholder="Ribbit134">
+                                          </div>
+                                          <div class="form-group">
+                                              <label for="output-amount">Amount</label>
+                                              <input type="text" class="form-control" id="output-amount" placeholder="111 RBR">
+                                          </div>
+                                          <button class="btn btn-default transaction-add-output">Sign</button>
+                                          <button class="btn btn-default transaction-broadcast">Broadcast</button>
+                                          <button class="btn btn-default transaction-reset">Reset</button>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- Video Chat -->
+                  <div class="tab-pane tab-content" id="video-chat">
+                      <div class="row">
+                          <ol class="breadcrumb">
+                              <li>
+                                  <a href="#home">Home</a>
+                              </li>
+                              <li class="active">Wallet</li>
+                          </ol>
+                          <div class="col-md-12">
+                              <h2>Video Chat</h2>
+                              <!-- video chat here -->
+                              <div class="col-md-12">
+                                  <input id="displayName" name="displayName" type="text" placeholder="DisplayName" class="form-control" style="width: auto;" data-original-title="" title="">
+                                  <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+                                  <!-- MY PHONE NUMBER -->
+                                  <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+                                  <div class="row col-md-6">
+                                      <div id="my-number-section" class="text-center">
+                                          <div id="my-number-title" class="hidden-sm hidden-xs">
+                                              This is <strong>Your Contact Address</strong>
+                                          </div>
+                                          <div id="my-number">LOADING</div>
+
+                                          <div id="my-number-permalink">
+                                              <span class="glyphicon glyphicon-link"></span>
+                                              call link:
+                                              <a id="my-number-link" href="...">http://...</a>
+                                          </div>
+                                      </div>
+                                      <div id="pubnub-chat-section" class="text-center">
+                                          <input id="pubnub-chat-input" type="text" placeholder="chat here">
+                                          <div id="pubnub-chat-output">
+                                              <div></div>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
+                                  <!-- Video -->
+                                  <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-->
+                                  <div class="col-sm-6">
+                                      <!-- DISPLAY -->
+                                      <div class="row">
+                                          <div class="col-xs-12 text-center">
+                                              <div id="video-border">
+                                                  <div class="pubnub-relative">
+                                                      <div id="video-self">...834y8uask</div>
+                                                  </div>
+                                                  <div id="video-display">
+                                                      <span class="glyphicon glyphicon-flash"></span>
+                                                  </div>
+                                              </div>
+                                              <div id="pubnub-relative">
+                                                  <div id="video-thumbnail"></div>
+                                                  <div id="pubnub-logo">
+                                                      <div id="pubnub-logo-img"></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <!-- DIAL CONTROLS -->
+                                      <div class="row">
+                                          <div class="col-sm-6 col-xs-7">
+                                              <div class="form-group">
+                                                  <div class="input-group">
+                                                      <div class="input-group-addon">
+                                                          <span class="glyphicon glyphicon-th"></span>
+                                                      </div>
+                                                      <input id="number" class="form-control" type="number" placeholder="Type Recipient's #">
+                                                  </div>
+                                              </div>
+                                          </div>
+                                          <div class="col-sm-6 col-xs-5 dial-buttons">
+                                              <button id="dial" class="btn btn-primary">
+                                                  <span class="glyphicon glyphicon-earphone"></span>
+                                              </button>
+                                              <button id="snap" class="btn btn-success">
+                                                  <span class="glyphicon glyphicon-camera"></span>
+                                              </button>
+                                              <button id="hangup" class="btn btn-danger">
+                                                  <span class="glyphicon glyphicon-ban-circle"></span>
+                                              </button>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="tab-pane tab-content" id="newAddress">
+                      <h2>
+                          New Address
+                          <small>create a new address</small>
+                      </h2>
+                      <p>Any keys used you will need to manually store safely as they will be needed later to redeem the bitcoins.</p>
+                      <label>Address (Share)</label>
+                      <div class="input-group">
+                          <input id="newBitcoinAddress" type="text" class="form-control address" value="" readonly>
+                          <span class="input-group-btn">
+                              <button class="qrcodeBtn btn btn-default" type="button" data-toggle="modal" data-target="#modalQrcode">
+                                  <span class="glyphicon glyphicon-qrcode"></span>
+                              </button>
+                          </span>
+                      </div>
+                      <label>Public key (Share)</label>
+                      <input id="newPubKey" type="text" class="form-control" readonly>
+                      <label>Private key (WIF key)</label>
+                      <div class="input-group">
+                          <input id="newPrivKey" type="password" class="form-control" value="" readonly>
+                          <span class="input-group-btn">
+                              <button class="showKey btn btn-default" type="button">Show</button>
+                          </span>
+                      </div>
+                      <div id="aes256wifkey" class="hidden">
+                          <label>AES-256 Encrypted WIF key</label>
+                          <input id="newPrivKeyEnc" type="text" class="form-control" value="" readonly>
+                      </div>
+                      <h3>Address Options</h3>
+                      <p>You can use the advanced options below to generate different kind of keys and addresses.</p>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" id="newCompressed" class="checkbox-inline" checked>Compress
+                              <span class="text-muted">(recommended)</span>
+                          </label>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" id="newBrainwallet" class="checkbox-inline">Custom Seed or Brain Wallet
+                          </label>
+                          <input type="text" class="form-control hidden" id="brainwallet">
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" id="encryptKey" class="checkbox-inline">Encrypt Private Key with AES-256 Password
+                          </label>
+                          <div id="aes256passform" class="row hidden">
+                              <div class="col-md-6">
+                                  <input type="password" class="form-control" id="aes256pass" placeholder="Password">
+                                  <!-- </label>-->
+                              </div>
+                              <div class="col-md-6">
+                                  <input type="password" class="form-control" id="aes256pass_confirm" placeholder="Confirm Password">
+                              </div>
+                          </div>
+                          <div id="aes256passStatus" class="row hidden">
+                              <div class="col-md-12">
+                                  <br>
+                                  <div class="alert alert-danger">
+                                      <span class="glyphicon glyphicon-exclamation-sign"></span>Your passwords do not match, please try again!
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="checkbox">
+                          <label>
+                              <input type="checkbox" id="autoSave" class="checkbox-inline">Auto Save generated keys
+                          </label>
+                          <input type="text" class="form-control hidden" id="autosave">
+                      </div>
+                      <input type="button" class="btn btn-primary" value="Generate" id="newKeysBtn">
+                      <input type="button" class="btn btn-primary" value="Save" id="saveKeysBtn">
+                      <br>
+                  </div>
+                  <div class="tab-pane tab-content" id="newMultiSig">
+                      <h2>
+                          New Multisig Address
+                          <small>Secure multisig address</small>
+                      </h2>
+                      <p>
+                          Public keys can be
+                          <a href="#newAddress">generated in your browser</a> or from your RibbitRewards client.
+                      </p>
+                      <p>
+                          Enter the public keys of all the participants, to create a
+                          <a href="https://en.bitcoin.it/wiki/Address#Multi-signature_addresses"
+                             target="_blank">multi signature address</a>. Maximum of 15 allowed. Compressed and uncompressed public keys are accepted.
+                      </p>
+                      <div id="multisigPubKeys" class="row">
+                          <div class="form-horizontal">
+                              <div class="col-xs-11">
+                                  <input type="text" class="form-control pubkey">
+                              </div>
+                              <a href="javascript:;" class="pubkeyAdd"><span class="glyphicon glyphicon-plus"></span></a>
+                              <br>
+                              <br>
+                          </div>
+                      </div>
+                      <p>Enter the amount of signatures required to release the coins</p>
+                      <div class="row">
+                          <div class="col-xs-3">
+                              <select id="releaseCoins" class="form-control">
+                                  <option>1</option>
+                                  <option selected>2</option>
+                                  <option>3</option>
+                                  <option>4</option>
+                                  <option>5</option>
+                                  <option>6</option>
+                                  <option>7</option>
+                                  <option>8</option>
+                                  <option>9</option>
+                                  <option>10</option>
+                                  <option>11</option>
+                                  <option>12</option>
+                                  <option>13</option>
+                                  <option>14</option>
+                                  <option>15</option>
+                              </select>
+                          </div>
+                      </div>
+                      <br>
+                      <div id="multiSigErrorMsg" class="alert alert-danger" style="display: none;"></div>
+                      <div class="alert alert-success hidden" id="multiSigData">
+                          <label>Address</label>
+                          <p>Payment should be made to this address:</p>
+                          <div class="row">
+                              <div class="col-lg-6">
+                                  <div class="input-group">
+                                      <input type="text" class="form-control address" value="" readonly>
+                                      <span class="input-group-btn">
+                                          <button class="qrcodeBtn btn btn-default" type="button" data-toggle="modal" data-target="#modalQrcode">
+                                              <span class="glyphicon glyphicon-qrcode"></span>
+                                          </button>
+                                      </span>
+                                  </div>
+                              </div>
+                          </div>
+                          <label>Redeem Script</label>
+                          <p>
+                              This script should be
+                              <i>saved and should be shared with all the participants before a payment is made</i>, so they may validate the authenticity
+                              of the address, it will also be used later to release the bitcoins.
+                          </p>
+                          <textarea class="form-control script" style="height: 160px"
+                                    readonly></textarea>
+                          <label>Shareable URL</label>
+                          <input type="text" class="scriptUrl form-control" disabled>
+                      </div>
+                      <input type="button" class="btn btn-primary" value="Submit" id="newMultiSigAddress">
+                      <br>
+                  </div>
+                  <div class="tab-pane tab-content" id="newTransaction">
+                      <h2>
+                          Transaction
+                          <small>Create a new transaction</small>
+                      </h2>
+                      <p>Use this page to create a raw transaction</p>
+                      <b>Address, WIF key or Multisig Redeem Script</b>:
+                      <div class="input-group">
+                          <span class="input-group-btn">
+                              <button class="btn btn-info qrcodeScanner" type="button" data-toggle="modal" data-target="#modalQrcodeScanner" forward-result="#redeemFrom">
+                                  <span class="glyphicon glyphicon-camera"></span>
+                              </button>
+                          </span>
+                          <input type="text" id="redeemFrom" class="form-control" value="">
+                          <span class="input-group-btn">
+                              <button id="redeemFromBtn" class="btn btn-info" type="button">Load</button>
+                          </span>
+                      </div>
+                      <br>
+                      <div class="hidden alert alert-danger" id="redeemFromStatus"></div>
+                      <div class="hidden alert alert-info" id="redeemFromAddress"></div>
+                      <div>
+                          <a href="javascript:;" id="optionsCollapse">
+                              <div class="well well-sm">
+                                  <span class="glyphicon glyphicon-collapse-down" id="glyphcollapse"></span> Advanced Options
+                              </div>
+                          </a>
+                          <div class="hidden" id="optionsAdvanced">
+                              <label>Clear Inputs</label>
+                              <p class="checkbox">
+                                  <label>
+                                      <input type="checkbox" id="clearInputsOnLoad" class="checkbox-inline" checked>Clear existing inputs when new inputs are loaded.
+                                  </label>
+                              </p>
+                              <hr>
+                              <label>Null Data</label>
+                              <span class="text-muted text-normal">(40 byte limit)</span>
+                              <p class="checkbox">
+                                  <label>
+                                      <input type="checkbox" id="opReturn" class="checkbox-inline">Allow data to be sent within the transaction and stored in the blockchain by using
+                                      <a href="https://bitcoin.org/en/developer-guide#null-data"
+                                         target="blank">OP_RETURN</a>.
+                                  </label>
+                                  <div class="text-muted">When using this option you may enter a hex string or address into the address field on the output tab.</div>
+                              </p>
+                              <hr>
+                              <label>Lock Time</label>
+                              <p>
+                                  The
+                                  <a href="https://bitcoin.org/en/developer-guide#locktime-and-sequence-number">locktime</a>indicates the earliest time a transaction can be added to the block chain.
+                              </p>
+                              <input type="text" class="form-control" value="0"
+                                     id="nLockTime">
+                              <hr>
+                          </div>
+                      </div>
+                      <ul class="nav nav-tabs" id="putTabs">
+                          <li class="active">
+                              <a href="#txoutputs" data-toggle="tab">Outputs <small>(<span id="totalOutput">0.00000000</span>)</small></a>
+                          </li>
+                          <li>
+                              <a href="#txinputs" data-toggle="tab">Inputs <small>(<span id="totalInput">0.00000000</span>)</small></a>
+                          </li>
+                      </ul>
+                      <br>
+                      <div class="tab-content">
+                          <div class="tab-pane fade in active" id="txoutputs">
+                              <p>Enter the address and amount you wish to make a payment to.</p>
+                              <div class="row">
+                                  <div class="col-xs-8">
+                                      <label>
+                                          <abbr title="Address to send to">Address</abbr>
+                                      </label>
+                                  </div>
+                                  <div class="col-xs-3">
+                                      <label>
+                                          <abbr title="Amount to send">Amount</abbr>
+                                      </label>
+                                  </div>
+                                  <div class="col-xs-1"></div>
+                              </div>
+                              <div id="recipients">
+                                  <div class="row recipient">
+                                      <div class="col-xs-8">
+                                          <input type="text" class="form-control address" placeholder="1">
+                                      </div>
+                                      <div class="col-xs-3">
+                                          <input type="text" class="form-control amount" placeholder="0.00">
+                                      </div>
+                                      <div class="col-xs-1">
+                                          <a href="javascript:;" class="addressAddTo"><span class="glyphicon glyphicon-plus"></span></a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="tab-pane fade" id="txinputs">
+                              <p>Enter the details of inputs you wish to spend.</p>
+                              <div class="row">
+                                  <div class="col-xs-5">
+                                      <label>
+                                          <abbr title="Transaction ID">Transaction ID:</abbr>
+                                      </label>
+                                  </div>
+                                  <div class="col-xs-1">
+                                      <label>
+                                          <abbr title="Transaction Input Number">N</abbr>
+                                      </label>
+                                  </div>
+                                  <div class="col-xs-3">
+                                      <label>Script</label>
+                                  </div>
+                                  <div class="col-xs-2">
+                                      <label>
+                                          <abbr title="This field is for accounting purposes only - the entire input will be spent!">Amount</abbr>
+                                      </label>
+                                  </div>
+                                  <div class="col-xs-1"></div>
+                              </div>
+                              <div id="inputs">
+                                  <div class="row inputs">
+                                      <div class="col-xs-5">
+                                          <input type="text" class="form-control txId" placeholder="">
+                                      </div>
+                                      <div class="col-xs-1">
+                                          <input type="text" class="form-control txIdN" placeholder="0">
+                                      </div>
+                                      <div class="col-xs-3">
+                                          <input type="text" class="form-control txIdScript">
+                                      </div>
+                                      <div class="col-xs-2">
+                                          <input type="text" class="form-control txIdAmount" placeholder="0.00">
+                                      </div>
+                                      <div class="col-xs-1">
+                                          <a href="javascript:;" class="txidAdd"><span class="glyphicon glyphicon-plus"></span></a>
+                                          <a href="javascript:;" class="txidClear"><span class="glyphicon glyphicon-minus"></span></a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <br>
+                      <div class="row">
+                          <div class="col-xs-3">
+                              <label>
+                                  <abbr title="What is not spent will be used as a transaction fee">Transaction Fee</abbr>
+                              </label>
+                              <input type="text" id="transactionFee" class="form-control" value="0.0000" readonly>
+                          </div>
+                      </div>
+                      <br>
+                      <div id="transactionCreate" class="alert alert-success hidden">
+                          <label>Transaction</label>
+                          <p>The transaction below has been generated and encoded. It can be broadcasted once it has been signed.</p>
+                          <br>
+                          <textarea class="form-control" style="height: 150px" readonly></textarea>
+                          <p class="text-muted">
+                              Size:
+                              <span class="txSize">0</span>
+                              <i>bytes</i>
+                          </p>
+                      </div>
+                      <input type="button" value="Submit" class="btn btn-primary" id="transactionBtn">
+                      <br>
+                  </div>
+                  <div class="tab-pane tab-content" id="verify">
+                      <h2>
+                          Verify
+                          <small>transactions and other scripts</small>
+                      </h2>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <p>Enter the raw transaction, redeem script, pubkey or wif key to convert it into a readable format that can be verified manually.</p>
+                              <textarea type="text" id="verifyScript" class="form-control" style="height: 125px"></textarea>
+                          </div>
+                      </div>
+                      <br>
+                      <div class="hidden verifyData" id="verifyRsData">
+                          <h4>Redeem Script</h4>
+                          <p>
+                              <span style="float: right">
+                                  <a href="javascript:;" target="_blank" class="verifyLink" title="Link to this page"><span class="glyphicon glyphicon-link"></span></a>
+                              </span>The above redeem script has been decoded
+                          </p>
+                          <label>Multi Signature Address</label>
+                          <div class="row">
+                              <div class="col-lg-6">
+                                  <div class="input-group">
+                                      <input type="text" class="form-control address multisigAddress" value="" readonly>
+                                      <span class="input-group-btn">
+                                          <button class="qrcodeBtn btn btn-default" type="button" data-toggle="modal" data-target="#modalQrcode">
+                                              <span class="glyphicon glyphicon-qrcode"></span>
+                                          </button>
+                                      </span>
+                                  </div>
+                              </div>
+                          </div>
+                          <label>Required Signatures</label>
+                          <p class="signaturesRequired">?</p>
+                          <label>Signatures Required from</label>
+                          <table class="table table-striped table-hover">
+                              <tbody></tbody>
+                          </table>
+                      </div>
+                      <div class="hidden verifyData" id="verifyTransactionData">
+                          <h4>Transaction Script</h4>
+                          <p>
+                              <span style="float: right">
+                                  <a href="" target="_blank" class="verifyLink" title="Link to this page"><span class="glyphicon glyphicon-link"></span></a>
+                              </span>The above script has been decoded
+                          </p>
+                          <div>
+                              <b>Version</b>:
+                              <span class="transactionVersion"></span>
+                          </div>
+                          <div>
+                              <b>Transaction Size</b>:
+                              <span class="transactionSize"></span>
+                          </div>
+                          <div>
+                              <b>Lock time</b>:
+                              <span class="transactionLockTime"></span>
+                          </div>
+                          <hr>
+                          <label>Inputs</label>
+                          <table class="table table-striped table-hover ins">
+                              <thead>
+                                  <tr style="font-weight: bold;">
+                                      <td>
+                                          <abbr title="the transaction id">Txid</abbr>
+                                      </td>
+                                      <td>
+                                          <abbr title="index id of the the transaction">N</abbr>
+                                      </td>
+                                      <td>
+                                          <abbr title="transaction script">Script</abbr>
+                                      </td>
+                                      <td>
+                                          <abbr title="is input signed?">Signed?</abbr>
+                                      </td>
+                                      <td>
+                                          <abbr title="is transaction a multisig transaction?">MultiSig?</abbr>
+                                      </td>
+                                  </tr>
+                              </thead>
+                              <tbody></tbody>
+                          </table>
+                          <label>Outputs</label>
+                          <table class="table table-striped table-hover outs">
+                              <thead>
+                                  <tr style="font-weight: bold;">
+                                      <td>
+                                          <abbr title="address the funds are being sent to">Address</abbr>
+                                      </td>
+                                      <td>
+                                          <abbr title="the amount the address is being sent">Amount</abbr>
+                                      </td>
+                                      <td>
+                                          <abbr title="the script of the transaction">Script</abbr>
+                                      </td>
+                                  </tr>
+                              </thead>
+                              <tbody></tbody>
+                          </table>
+                      </div>
+                      <div class="hidden verifyData" id="verifyPrivKey">
+                          <h4>WIF key</h4>
+                          <p>The above wif key has been decoded</p>
+                          <p>
+                              <b>Address</b>:
+                              <input type="text" class="form-control address" readonly>
+                          </p>
+                          <p>
+                              <b>Public key</b>:
+                              <input type="text" class="form-control pubkey" readonly>
+                          </p>
+                          <p>
+                              <b>Private key</b>:
+                              <input type="text" class="form-control privkey" readonly>
+                          </p>
+                          <p>
+                              <b>Is compressed</b>:
+                              <span class="iscompressed"></span>
+                          </p>
+                      </div>
+                      <div class="hidden verifyData" id="verifyPubKey">
+                          <h4>Public key</h4>
+                          <p>
+                              <span style="float: right">
+                                  <a href="" target="_blank" class="verifyLink" title="Link to this page"><span class="glyphicon glyphicon-link"></span></a>
+                              </span>The above public key has been encoded to its address
+                          </p>
+                          <p>
+                              <b>Address</b>:
+                              <input type="text" class="form-control address" readonly>
+                          </p>
+                      </div>
+                      <div id="verifyStatus" class="alert alert-danger hidden">
+                          <span class="glyphicon glyphicon-exclamation-sign"></span>Unable to decode
+                      </div>
+                      <input type="button" value="Submit" class="btn btn-primary" id="verifyBtn">
+                      <br>
+                  </div>
+                  <div class="tab-pane tab-content" id="sign">
+                      <h2>
+                          Sign Transaction
+                          <small>once a transaction has been verified</small>
+                      </h2>
+                      <p>
+                          Once you have
+                          <a href="#verify">verified</a>a transaction you can sign and then
+                          <a href="#broadcast">broadcast</a>it into the network.
+                      </p>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <label for="signPrivateKey">Private key</label>
+                              <div class="input-group">
+                                  <input id="signPrivateKey" type="password" class="form-control" value="">
+                                  <span class="input-group-btn">
+                                      <button class="showKey btn btn-default" type="button">Show</button>
+                                  </span>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <label for="signTransaction">Transaction</label>
+                              <textarea type="text" id="signTransaction" class="form-control" style="height: 125px"></textarea>
+                          </div>
+                      </div>
+                      <br>
+                      <div class="alert alert-danger hidden" id="signedDataError">
+                          <span class="glyphicon glyphicon-exclamation-sign"></span>There is a problem with one or more of your inputs, please check and try again
+                      </div>
+                      <div class="alert alert-success hidden"
+                           id="signedData">
+                          <label>Signed transaction</label>
+                          <p>The above transaction has been signed:</p>
+                          <textarea class="form-control script" style="height: 160px" readonly></textarea>
+                          <p class="text-muted">
+                              Size:
+                              <span class="txSize">0</span>
+                              <i>bytes</i>
+                          </p>
+                      </div>
+                      <input type="button" value="Submit" class="btn btn-primary" id="signBtn">
+                      <br>
+                  </div>
+                  <div class="tab-pane tab-content" id="broadcast">
+                      <h2>
+                          Broadcast Transaction
+                          <small>into the RibbitRewards network</small>
+                      </h2>
+                      <p>Enter your hex encoded RibbitRewards transaction</p>
+                      <textarea class="form-control" style="height: 125px" id="rawTransaction"></textarea>
+                      <br>
+                      <div id="rawTransactionStatus" class="alert hidden"></div>
+                      <input type="button" value="Submit" id="rawSubmitBtn" class="btn btn-primary">
+                      <br>
+                  </div>
+                  <div class="tab-pane tab-content" id="dev">
+                      <h2>
+                          Development
+                          <small>Javascript framework, API and more</small>
+                      </h2>
+                      <div class="alert alert-info">This section is currently under development and is subject to change.</div>
+                  </div>
+                  <div class="tab-pane tab-content" id="about">
+                      <h2>
+                          About
+                          <small>open source RibbitRewards wallet</small>
+                      </h2>
+                  </div>
+              </div>
+              <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+              <!-- TABS-->
+              <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+          </div>
+          <!-- /container -->
+      </div>
+	<!--</div>-->
+	    <div id="footer">
+            <div class="container text-right">
+                <p class="text-muted">Version 1.1</p>
+            </div>
+        </div>
+        <!-- wallet confirm send modal -->
+        <div class="modal fade" id="modalWalletConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Please confirm</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>You are about to send a transaction to the value of
+                            <span id="spendAmount">0.00</span>RBR</p>
+                        <br>
+                        <div id="walletSendConfirmStatus" class="alert alert-danger hidden"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="walletConfirmSend">Send</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="confirmClose">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- wallet confirm send modal -->
+        <!-- qrcode modal -->
+        <div class="modal fade" id="modalQrcode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">qrcode</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <div id="qrcode"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="qrCodeClose">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- qrcode modal -->
+        <!-- qrcode scanner modal -->
+        <div class="modal fade" id="modalQrcodeScanner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">qrcode scanner</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <select id="videoSource" class="form-control"></select>
+                        <div id="videoReaderError" class="hidden">Your browser does not offer camera support</div>
+                        <video id="videoReader" muted autoplay style="width:100%;height:100%"></video>
+                        <div id="qrcode-scanner-callback-to" class="hidden"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="qrScanClose">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--</div>-->
+	<div class="hidden" id="entropybucket"></div>
+
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jasny-bootstrap.js"></script>
+    <!--<script src="js/app.js"></script>-->
+    <script src="js/ripples.min.js"></script>
+    <script src="js/material.min.js"></script>
+    
+    
+    <!-- Bringing over wallet -->
+    <!--<script src="js/modernizr.custom.63321.js"></script>-->
+	<script src="js/app.js"></script>
+    <script src="https://cdn.pubnub.com/pubnub-dev.js"></script>
+	<script src="js/webrtc.js"></script>
+	<script src="js/sound.js"></script>
+    <script type="text/javascript" src="js/iframeResizer.min.js"></script>
+	<script type="text/javascript" src="js/Vault.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/crypto-min.js"></script>
+	<script type="text/javascript" src="js/crypto-sha256.js"></script>
+	<script type="text/javascript" src="js/crypto-sha256-hmac.js"></script>
+	<script type="text/javascript" src="js/ripemd160.js"></script>
+	<script type="text/javascript" src="js/aes.js"></script>
+	<script type="text/javascript" src="js/qrcode.js"></script>
+	<script type="text/javascript" src="js/qcode-decoder.min.js"></script>
+	<script type="text/javascript" src="js/jsbn.js"></script>
+	<script type="text/javascript" src="js/ellipticcurve.js"></script>
+	<script type="text/javascript" src="js/coin.js"></script>
+	<script type="text/javascript" src="js/coinbin.js"></script>
+	<script src="bower_components/bitcore/bitcore.min.js"></script>
+	<script src="bower_components/bitcore-ecies/bitcore-ecies.min.js"></script>
+	<script src="js/identity.js"></script>
+	<script src="js/jquery.resize.event.js"></script>
+	<script src="js/pubnub-3.7.1.min.js"></script>
+	<script src="js/pubsub.js"></script>
+	<script src="js/bootstrap-notify/js/bootstrap-notify.js"></script>
+	<script src="js/pouchdb-3.4.0.min.js"></script>
+	<script src="bower_components/transform-pouch/dist/pouchdb.transform-pouch.js"></script>
+	<script src="bower_components/pouchdb-find/dist/pouchdb.find.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.7.0/bootstrap-table.min.js"></script>
+	<script src="js/database/pouch-crypto.js"></script>
+	<!-- https://github.com/nolanlawson/transform-pouch -->
+	<!-- https://github.com/calvinmetcalf/crypto-pouch -->
+	<script src="js/database/pouch.js"></script>
+	<!--<script src="js/database/pouchdb-extend.js"></script>-->
+	<script src="node_modules/bitcore-explorers-multi/bitcore-explorers-multi.js"></script>
+	<!--<script src="js/modernizr.js"></script>-->
+	<script src="js/multi-level-push-menu/jquery.multilevelpushmenu.min.js"></script>
+	<script src="bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+	<script src="js/bootstrap-table.js"></script>
+	<script src="js/extensions/export/bootstrap-table-export.js"></script>
+	<script src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/tableExport.js"></script>
+	<script src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jquery.base64.js"></script>
+	<script src="js/extensions/editable/bootstrap-table-editable.js"></script>
+	<script src="https://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
+	<script src="js/socket.io.js"></script>
+	<script src="js/app.js"></script>
+    <script src="js/ripples.min.js"></script>
+    <script src="js/material.min.js"></script>
+	<!--=-=-=-=-=-=-=-=-=-=- ->
+	<!-- From First Vault -->
+	<script>
+		preInit()
+	</script>
+  </body>
+</html>

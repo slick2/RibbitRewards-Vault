@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/jasny-bootstrap.css" rel="stylesheet">
+    <!-- Include roboto.css to use the Roboto web font, material.css to include the theme and ripples.css to style the ripple effect -->
+    <link href="css/roboto.min.css" rel="stylesheet">
+    <link href="css/material.min.css" rel="stylesheet">
+    <link href="css/ripples.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/navmenu-reveal.css" rel="stylesheet">
+    <link href="css/menu.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- Crypto icons -->
+    <link href="css/demo.cryptocoins.css" rel="stylesheet">
+    <link href="css/cryptocoins.css" rel="stylesheet">
+    <!-- Bootstrap Notify -->
+    <link href="css/alert-bangtidy.css" rel="stylesheet">
+    <link href="css/bootstrap-notify.css" rel="stylesheet">
+    <!-- Normalize -->
+    <link href="css/normalize.css" rel="stylesheet">
+    <!-- Animate -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body height="750px">
+<div class="notifications top-right"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container-fluid highlight">
+                <div class="row">
+                    <div class="col-xs-2 col-md-1">
+                        <span class="address-label label label-default"></span>
+                    </div>
+                    <div class="col-xs-10 col-md-8">
+                        <div class="btn-group wallet-address-picker">
+                            <button class="qrcodeBtn btn btn-default" type="button" data-toggle="modal" data-target="#modalQrcode">
+                                <span class="glyphicon glyphicon-qrcode"></span>
+                            </button>
+                            <button type="button" class="address-view btn btn-default">Choose Address</button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li class="divider"></li>
+                                <li>
+                                    <a class="wallet-action">Generate new address</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-md-3">
+                        <span class="wallet-address-picker-balance label"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid highlight">
+                <div class="menu-container collapse">
+                    <label class="utxo-help ">Select one or more spendable amounts.</label>
+                    <div class="button-container"></div>
+                    <div>
+                        <!--<h2>Form control: textarea</h2>
+                        <p>The form below contains a textarea for comments:</p>-->
+                        <form role="form">
+                            <div class="transaction-hash-form form-group collapse">
+                                <label for="comment">Transaction Hex:</label>
+                                <textarea class="transaction-hash form-control" rows="5" id="comment"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid highlight">
+                <div class="output-container">
+                    <form class="form-inline has-feedback">
+                        <div class="form-group">
+                            <label for="output-address">To Address</label>
+                            <input type="text" class="form-control" id="output-address" placeholder="Ribbit134">
+                        </div>
+                        <div class="form-group">
+                            <label for="output-amount">Amount</label>
+                            <input type="text" class="form-control" id="output-amount" placeholder="111 RBR">
+                        </div>
+                        <button onclick=" return false " class="btn btn-default transaction-add-output">Sign</button>
+                        <button onclick=" return false " class="btn btn-default transaction-broadcast">Broadcast</button>
+                        <button onclick=" return false " class="btn btn-default transaction-reset">Reset</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- wallet confirm send modal -->
+<div class="modal fade" id="modalWalletConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Please confirm</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    You are about to send a transaction to the value of
+                    <span id="spendAmount">0.00</span>RBR
+                </p>
+                <br>
+                <div id="walletSendConfirmStatus" class="alert alert-danger hidden"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="walletConfirmSend">Send</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="confirmClose">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- wallet confirm send modal -->
+<!-- qrcode modal -->
+<div class="modal fade" id="modalQrcode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">qrcode</h4>
+            </div>
+            <div class="modal-body" align="center">
+                <div id="qrcode"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="qrCodeClose">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- qrcode modal -->
+<!-- qrcode scanner modal -->
+<div class="modal fade" id="modalQrcodeScanner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">qrcode scanner</h4>
+            </div>
+            <div class="modal-body" align="center">
+                <select id="videoSource" class="form-control"></select>
+                <div id="videoReaderError" class="hidden">Your browser does not offer camera support</div>
+                <video id="videoReader" muted autoplay style="width: 100%; height: 100%"></video>
+                <div id="qrcode-scanner-callback-to" class="hidden"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="qrScanClose">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Elements that libs require exist (depricate us) -->
+
+<div class="hidden" id="entropybucket"></div>
+<div class="hidden" id="my-number"></div>
+<div class="hidden" id="my-number-link"></div>
+<!-- ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery-1.10.2.min.js"></script>
+<!-- Iframe Resize -->
+<script src="js/iframeResizer.contentWindow.min.js"></script>
+<!-- Vault specifics -->
+<script src="js/Vault.js"></script>
+<script src="js/app.js"></script>
+<script src="js/identity.js"></script>
+<!-- Socket.io -->
+<script src="js/socket.io.js"></script>
+<!-- Database -->
+<script src="js/database/pouchdb-3.4.0.min.js"></script>
+<script type="text/javascript" src="js/pouchdb.transform-pouch.js"></script>
+<script type="text/javascript" src="js/pouchdb.find.js"></script>
+<script src="js/database/pouch-crypto.js"></script>
+<script src="js/database/pouch.js"></script>
+<!-- Bitcore -->
+<script type="text/javascript" src="js/crypto-min.js"></script>
+<script type="text/javascript" src="js/crypto-sha256.js"></script>
+<script type="text/javascript" src="js/crypto-sha256-hmac.js"></script>
+<script type="text/javascript" src="js/ripemd160.js"></script>
+<script type="text/javascript" src="js/aes.js"></script>
+<script type="text/javascript" src="js/qrcode.js"></script>
+<script type="text/javascript" src="js/qcode-decoder.min.js"></script>
+<script type="text/javascript" src="js/jsbn.js"></script>
+<script type="text/javascript" src="js/ellipticcurve.js"></script>
+<script type="text/javascript" src="js/coin.js"></script>
+<script type="text/javascript" src="js/coinbin.js"></script>
+<script type="text/javascript" src="js/bitcore.min.js"></script>
+<script type="text/javascript" src="js/bitcore-ecies.min.js"></script>
+<script type="text/javascript" src="js/bitcore-explorers-multi.js"></script>
+<!-- Bootstrap and Material Design -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jasny-bootstrap.js"></script>
+<script src="js/ripples.min.js"></script>
+<script src="js/material.min.js"></script>
+<!-- Bootstrap Table -->
+<script src="js/bootstrap-table.js"></script>
+<script src="js/extensions/export/bootstrap-table-export.js"></script>
+<script src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/tableExport.js"></script>
+<script src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jquery.base64.js"></script>
+<script src="js/extensions/editable/bootstrap-table-editable.js"></script>
+<script src="https://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
+<!-- Bootstrap Notify -->
+<script src="js/bootstrap-notify.js"></script>
+<!-- Mock -->
+<script src="js/mock.js"></script>
+<!-- PubSub -->
+<!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+<!-- WebRTC Peer Connections -->
+<!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+<!--<script src="https://cdn.pubnub.com/pubnub-dev.js"></script>
+<script src="js/webrtc.js"></script>
+<script src="js/sound.js"></script-->
+<!--<script src="js/pubnub-3.7.1.min.js"></script> -->
+<!--<script src="js/pubsub.js"></script>-->
+</body>
+</html>
