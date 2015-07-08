@@ -287,7 +287,23 @@ function handleProfileImageUpload(context) {
     } else {
         top.popMsg("File not supported!")
     }
+}
 
+function renderChatList() {
+    newtables.peers.allRecords(function (rows) {
+        $(".chatlist").html("")
+        $.each(rows, function () {
+            var data = $(this).get(0)
+            var photo = data.photo
+            var url
+            if (photo.location === "stock") {
+                url = "./images/avatars/characters_"+photo.id+".png"
+            } else if (photo.location === "base64") {
+                url = photo.data
+            }
+             $(".chatlist").append('<div class="row"><img width="35px" src="'+url+'"></div>')
+         })
+    })
 }
 
 function matchPageSettingsToDatastore() {

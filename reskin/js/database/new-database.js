@@ -25,7 +25,7 @@ function setupTableObject(tablename) {
 function peerJoin(data) {
     data.online = true;
     newtables.peers.insert(data.address, data, function(err, doc) {
-        
+        renderChatList()
     })
 }
 

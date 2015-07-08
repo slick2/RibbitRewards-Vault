@@ -96,7 +96,7 @@ var signaler
             
             model.on('change', function (key, value) {
                 console.log('captured change key: "' + key + '" set to :' + JSON.stringify(value));
-                if (key === "msgbus-join") {
+                if (key === "msgbus-join" || key === "msgbus-update") {
                     peerJoin(value)
                 }
             });
