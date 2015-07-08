@@ -1,13 +1,285 @@
 ﻿<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css\pingendo.css">
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/jasny-bootstrap.css" rel="stylesheet">
+        <!-- Include roboto.css to use the Roboto web font, material.css to include
+        the theme and ripples.css to style the ripple effect -->
+        <link href="css/roboto.min.css" rel="stylesheet">
+        <link href="https://fezvrasta.github.io/bootstrap-material-design/dist/css/material-fullpalette.css"
+        rel="stylesheet">
+        <link href="css/ripples.min.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/navmenu-reveal.css" rel="stylesheet">
+        <link href="css/menu.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <!-- Crypto icons -->
+        <link href="css/demo.cryptocoins.css" rel="stylesheet">
+        <link href="css/cryptocoins.css" rel="stylesheet">
+        <!-- Bootstrap Notify -->
+        <link href="css/alert-bangtidy.css" rel="stylesheet">
+        <link href="css/bootstrap-notify.css" rel="stylesheet">
+        <!-- Normalize -->
+        <link href="css/normalize.css" rel="stylesheet">
+        <!-- Animate -->
+        <link rel="stylesheet" href="css/animate.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media
+        queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    
+    <body style="background-color: rgba(255,255,255,0);">﻿
+        <div class="section">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Profile
+                                    <br>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="section">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-3 col-xs-3">
+                                                <div class="col-md-6">
+                                                    <label class="control-label">Profile Picture</label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="togglebutton">
+                                                        <label>Public
+                                                            <input type="checkbox" for="picture" toggletype="public">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <img for="profileImage" src="images\profile.png" class="circular img-responsive" id="profileImage">
+                                                <p></p>
+                                                <div class="form-group">
+                                                    <div class="col-sm-3">
+                                                        <input type="file">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 col-xs-8">
+                                                <form class="form-horizontal" role="form">
+                                                    <div class="form-group">
+                                                        <div class="col-sm-2">
+                                                            <label for="inputName" class="control-label">Name
+                                                                <br>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <input for="name" type="text" class="form-control input-lg" id="inputName" placeholder="John Connor">
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <div class="togglebutton">
+                                                                <label>Public
+                                                                    <input type="checkbox" for="name" toggletype="public">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-2">
+                                                            <label for="inputNickname" class="control-label">Nickname</label>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <input for="nickname" type="text" class="form-control input-lg" id="inputNickname" placeholder="Cyberdyne">
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <div class="togglebutton">
+                                                                <label>Public
+                                                                    <input type="checkbox" for="nickname" toggletype="public">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-2">
+                                                            <label for="inputSocial" class="control-label">Social Media&nbsp;
+                                                                <br>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <input for="social" type="text" class="form-control input-lg" id="inputSocial" placeholder="twitter.com/@jconnor">
+                                                        </div>
+                                                        <!-- <div class="col-sm-offset-2 col-sm-10">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-    <script src="js/porthole.js"></script>
-    <script src="js/porthole.guest.js"></script>
-</head>
-<body>
-    Profile Page
-</body>
+                                                        <p class="help-block">Twitter, Facebook, Github, LinkedIn</p>
+
+                                                    </div>-->
+                                                        <div class="col-sm-2">
+                                                            <div class="togglebutton">
+                                                                <label>Public
+                                                                    <input type="checkbox" for="social" toggletype="public">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-offset-2 col-sm-10"></div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Display
+                                    <br>
+                                </h3>
+                            </div>
+                            <div class="panel-body"></div>
+                        </div>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Display
+                                    <br>
+                                </h3>
+                            </div>
+                            <div class="panel-body"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- qrcode modal -->
+            <div class="modal fade" id="modalQrcode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">qrcode</h4>
+                        </div>
+                        <div class="modal-body" align="center">
+                            <div id="qrcode"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="qrCodeClose">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- qrcode modal -->
+            <!-- qrcode scanner modal -->
+            <div class="modal fade" id="modalQrcodeScanner" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">qrcode scanner</h4>
+                        </div>
+                        <div class="modal-body" align="center">
+                            <select id="videoSource" class="form-control"></select>
+                            <div id="videoReaderError" class="hidden">Your browser does not offer camera support</div>
+                            <video id="videoReader"
+                            muted="" autoplay="" style="width:100%;height:100%"></video>
+                            <div id="qrcode-scanner-callback-to" class="hidden"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="qrScanClose">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--==================================================- ->
+
+
+
+        <script src="js/porthole.js"></script>
+
+
+
+        <script src="js/porthole.guest.js"></script>
+
+
+
+        <!-- Placed at the end of the document so the pages load faster -->
+            <script src="js/jquery-1.10.2.min.js"></script>
+            <!-- Iframe Resize -->
+            <script src="js/iframeResizer.contentWindow.min.js"></script>
+            <!-- Vault specifics -->
+            <script src="js/Vault.js"></script>
+            <script src="js/app.js"></script>
+            <script src="js/identity.js"></script>
+            <!-- Socket.io -->
+            <script src="js/socket.io.js"></script>
+            <!-- Database -->
+            <script src="js/database/pouchdb-3.4.0.min.js"></script>
+            <script type="text/javascript" src="js/pouchdb.transform-pouch.js"></script>
+            <script type="text/javascript" src="js/pouchdb.find.js"></script>
+            <script src="js/database/pouch-crypto.js"></script>
+            <script src="js/database/pouch.js"></script>
+            <!-- Bitcore -->
+            <script type="text/javascript" src="js/crypto-min.js"></script>
+            <script type="text/javascript" src="js/crypto-sha256.js"></script>
+            <script type="text/javascript" src="js/crypto-sha256-hmac.js"></script>
+            <script type="text/javascript" src="js/ripemd160.js"></script>
+            <script type="text/javascript" src="js/aes.js"></script>
+            <script type="text/javascript" src="js/qrcode.js"></script>
+            <script type="text/javascript" src="js/qcode-decoder.min.js"></script>
+            <script type="text/javascript" src="js/jsbn.js"></script>
+            <script type="text/javascript" src="js/ellipticcurve.js"></script>
+            <script type="text/javascript" src="js/coin.js"></script>
+            <script type="text/javascript" src="js/coinbin.js"></script>
+            <script type="text/javascript" src="js/bitcore.min.js"></script>
+            <script type="text/javascript" src="js/bitcore-ecies.min.js"></script>
+            <script type="text/javascript" src="js/bitcore-explorers-multi.js"></script>
+            <script type="text/javascript" src="js/bitcore-p2p.js"></script>
+            <script type="text/javascript" src="js/bitcore-message.js"></script>
+            <!-- Bootstrap and Material Design -->
+            <script src="js/bootstrap.min.js"></script>
+            <script src="js/jasny-bootstrap.js"></script>
+            <script src="js/ripples.min.js"></script>
+            <script src="js/material.min.js"></script>
+            <!-- Bootstrap Table -->
+            <script src="js/bootstrap-table.js"></script>
+            <script src="js/extensions/export/bootstrap-table-export.js"></script>
+            <script src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/tableExport.js"></script>
+            <script src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jquery.base64.js"></script>
+            <script src="js/extensions/editable/bootstrap-table-editable.js"></script>
+            <script src="https://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.js"></script>
+            <!-- Bootstrap Notify -->
+            <script src="js/bootstrap-notify.js"></script>
+            <!-- Mock -->
+        <script src="js/mock.js"></script>
+        <script src="js/database/new-database.js"></script>
+            <script src="js/mesh.js"></script>
+            <!-- PubSub -->
+            <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+            -->
+            <!-- WebRTC Peer Connections -->
+            <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+            -->
+            <!--<script src="https://cdn.pubnub.com/pubnub-dev.js"></script>
+
+
+
+        <script src="js/webrtc.js"></script>
+
+
+
+        <script src="js/sound.js"></script-->
+            <!--<script src="js/pubnub-3.7.1.min.js"></script> -->
+            <!--<script src="js/pubsub.js"></script>-->
+        </div>
+    </body>
+
 </html>

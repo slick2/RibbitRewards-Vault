@@ -178,6 +178,7 @@ var preInit = function(cb) {
             $(".identity").html(foundIdentity[0].address.addressData)
             $("#identityAddress").val(foundIdentity[0].address.addressData)
             joinIdentity()
+            meshnet.checkInit()
         }
     }
     explorers = require('bitcore-explorers-multi')
@@ -223,9 +224,9 @@ var loadPageByHash = function () {
     if ($("iframe").length > 0) {
         $("iframe").attr("src", pageData.page)
         $(".page-header h1").text(pageData.title)
-    } else {
+    } //else {
         setTimeout(function(){handleSettingsElementFromStore()},500)
-    }
+    //}
     handleSettings(function() {})
 }
 
@@ -243,6 +244,10 @@ function adjustDesign() {
     $(".canvas .container").css("min-height", $(window).height() - ($("footer").height() + 60))
     $(".togglebutton input").css("margin", "5px")
     $("iframe").height($(".canvas .container").height() - $("footer").height())
+    $(".profile-item.menu-item-sm img").height("165px")
+    $(".profile-item.menu-item-sm img").css("top", "-60px")
+    $(".profile-item.menu-item-sm img").css("position", "absolute")
+    $(".profile-item.menu-item-sm img").css("left", "-43px")
 /*    $(".togglebutton label").css("margin-top","15px")*/
 }
 
@@ -282,6 +287,7 @@ function handleToggleSettingAction(context) {
 }
 
 function matchPageSettingsToDatastore() {
+    /* Toggles */
     $.each($(".togglebutton input"), function () {
         var togglefor = $(this).attr("for")
         var target = $(this).attr("toggletype")
@@ -292,6 +298,26 @@ function matchPageSettingsToDatastore() {
                 $(".advanced").show()
             }
         })
+    })
+    /* Images */
+    $.each($("img[for]"), function () {
+        var target = $(this).attr("for")
+        var img = $(this)
+        newtables.settings.get(target, function (err, out) {
+            var url = out.value
+            if (url.location === "stock") {
+                img.attr("src", "./images/avatars/characters_" + url.id + ".png")
+            }
+        })
+    })
+    /* Text Inputs */
+    $.each($("input[for][type='text']"), function() {
+        var target = $(this).attr("for")
+        var input = $(this)
+        newtables.settings.get(target, function(err, out) {
+            input.val(out.value)
+        })
+
     })
 }
 
@@ -366,7 +392,7 @@ function bindClicks() {
     
     $(document).on('click.customBindings', '.togglebutton input', function () {
         handleToggleSettingAction($(this))
-
+        meshnet.publicUpdateIdentity()
     })
 
     $(document).on('click.customBindings', '.coinPicker', function () {
@@ -452,10 +478,13 @@ function bindClicks() {
        handleAmountInput()
     })
     
-    $(document).on('change.customBindings', '#output-address', function() {
-        if ($(this).val().length > 0) {
-            setSubmitButtonDisabled(false)
-        }
+    $(document).on('change.customBindings', "input[type='text'][for]", function () {
+        var target = $(this)
+        newtables.settings.insert(target.attr("for"), target.val(), function(doc) {
+            console.log(doc)
+            meshnet.publicUpdateIdentity()
+        })
+        
     })
     
     /* Address Picker Actions */
@@ -711,8 +740,9 @@ function changeProfileImageStock() {
     var rnd = randomIntFromInterval(1, 94)
     $("#profileImage").attr("src", "./images/avatars/characters_" + rnd + ".png")
     top.$(".profile-item img").attr("src", "./images/avatars/characters_" + rnd + ".png")
-    newtables.settings.insert("profileImage", $("#profileImage").attr("src"), function(err,doc) {
+    newtables.settings.insert("profileImage", {location: "stock", id: rnd}, function(doc) {
         console.log(doc)
+        meshnet.publicUpdateIdentity()
     })
 }
 

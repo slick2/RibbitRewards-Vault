@@ -32,9 +32,17 @@ var meshnet
             }
             
             function checkInit() {
-                console.log("Joining the webRTC store/bus")
-				if (identityAddress !== undefined && !settings.inFrame())
-                meshnet.issueCommand("join", {id: identityAddress})
+                    getPublicIdentity(function (ident) {
+                        ident.address = foundIdentity[0].address.addressData
+                        meshnet.issueCommand("join", ident)
+                })
+            }
+            
+            function publicUpdateIdentity() {
+                getPublicIdentity(function (ident) {
+                    ident.address = foundIdentity[0].address.addressData
+                    meshnet.issueCommand("update", ident)
+                })
             }
             
             function updateState(evt) {
@@ -53,7 +61,9 @@ var meshnet
                    console.log({ error: err, result: result })
                 })
             }
-
+            
+            meshnet.checkInit = checkInit
+            meshnet.publicUpdateIdentity = publicUpdateIdentity
 
         function remoteUpdate(data, clock, srcId) {
                 var key;
@@ -61,14 +71,14 @@ var meshnet
             }
             
             model.on('update', remoteUpdate);
-            model.on('sync', checkInit);
+            /*model.on('sync', checkInit);*/
             
             model.on('change', function (key, value) {
-                popMsg('captured change key: "' + key + '" set to :'+ JSON.stringify(value));
+                console.log('captured change key: "' + key + '" set to :'+ JSON.stringify(value));
             });
             
             model.on('add', function (row) {
-                popMsg('new row created: '+ JSON.stringify(row));
+                console.log('new row created: '+ JSON.stringify(row));
             });
             
             model.on('closed' + name, function(data) {console.log(data)});
@@ -76,7 +86,7 @@ var meshnet
             qc.on('roominfo', function (data) {
 				$(".header-profile .badge").text(data.memberCount)
 				console.log(data)
-                popMsg('room info: '+ JSON.stringify(data));
+                console.log('room info: '+ JSON.stringify(data));
             });
             
             /*document.body.appendChild(crel('canvas', {

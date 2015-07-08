@@ -64,7 +64,9 @@ function getgetOrDefault(database) {
 function getOrDefault(db, key, defaultvalue, cb){
     get(db,key, function(err, doc) {
         if (err) {
-            return insert(db, key, defaultvalue,cb)
+            return insert(db, key, defaultvalue, function(response) {
+                cb(err, response)
+            })
         } else {
             return cb(err, doc)
         }
@@ -211,6 +213,40 @@ function allRecords(db, cb) {
             })
         }
     })
+}
+
+function getPublicIdentity(cb) {
+    var payload = {}
+    //public picture
+    newtables.settings.get("picturepublic", function(err, publicdata) {
+        newtables.settings.get("profileImage", function (err, data) {
+            if (publicdata.value) {payload.photo = data.value}
+            newtables.settings.get("namepublic", function (err, publicdata) {
+                newtables.settings.getOrDefault("name","", function (err, data) {
+                    if (publicdata.value) { payload.name = data.value }
+                    newtables.settings.get("nicknamepublic", function (err, publicdata) {
+                        newtables.settings.getOrDefault("nickname", "", function (err, data) {
+                            if (publicdata.value) { payload.nickname = data.value }
+                            newtables.settings.get("socialpublic", function (err, publicdata) {
+                                newtables.settings.getOrDefault("social", "", function (err, data) {
+                                    if (publicdata.value) { payload.social = data.value }
+                                    return cb(payload)
+                                })
+                            })
+                        })
+                    })
+                })
+            })
+        })
+    })
+    /*if (data.value) {
+        newtables.settings.get("profileImage", function (err, data) {
+            payload.photo = (data.value)
+            return cb(payload)
+        })
+    } else {
+        cb(payload)
+    }*/
 }
 
 function simple(out) {
