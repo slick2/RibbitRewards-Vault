@@ -131,13 +131,32 @@ iframe {
 }
 
 .circular {
-	/*width: 300px;*/
-	/*height: 300px;*/
+	width: 200px;
+	height: 200px;
 	border-radius: 150px;
 	-webkit-border-radius: 150px;
 	-moz-border-radius: 150px;
-	/*background: url(http://link-to-your/image.jpg) no-repeat;*/
-	}
+     background-size: cover;
+     top: 5px;
+     position: relative;
+}
+
+.square {
+    width: 222px;
+    height: 165px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    top: -21px;
+    left: -7px;
+    position: relative;
+}
+
+.menu-item-sm .square {
+    left: -100px !important;
+    top: -60px !important;
+}
 
 .circular img {
 	opacity: 0;

@@ -244,46 +244,50 @@ function adjustDesign() {
     $(".canvas .container").css("min-height", $(window).height() - ($("footer").height() + 60))
     $(".togglebutton input").css("margin", "5px")
     $("iframe").height($(".canvas .container").height() - $("footer").height())
-    $(".profile-item.menu-item-sm img").height("165px")
+   /* $("img[for='profileImage']").height("165px")
+    $("img[for='profileImage']").css("top", "-60px")
+    $("img[for='profileImage']").css("position", "absolute")
+    $("img[for='profileImage']").css("left", "-43px")*/
+
+
+    /*$(".profile-item.menu-item-sm img").height("165px")
     $(".profile-item.menu-item-sm img").css("top", "-60px")
     $(".profile-item.menu-item-sm img").css("position", "absolute")
-    $(".profile-item.menu-item-sm img").css("left", "-43px")
+    $(".profile-item.menu-item-sm img").css("left", "-43px")*/
 /*    $(".togglebutton label").css("margin-top","15px")*/
 }
 
 function handleSettingsElementFromStore() {
     matchPageSettingsToDatastore($(this))
-    /*$.each($(".togglebutton input"), function () {
-        var togglefor = $(this).attr("for")
-        var target = $(this).attr("toggletype")
-        
-        $(this).prop("checked", settings[togglefor + target])
-        if (target === "advanced" && settings[togglefor + target]) {
-            $(".advanced").show()
-        }
-    })*/
 }
 
 function handleToggleSettingAction(context) {
     persistSettingToggleToDatastore(context)
-    /*var type = context.attr("toggletype")
-    var target = context.attr("for")
-    var toggle = context
-    if (settings.inFrame()) {
-        top.setSetting(toggle.is(":checked"), target, type, function () {
-            handleSettings(function () { })
-        })
-            
+}
+
+function handleProfileImageUpload(context) {
+    var fileInput = context.get(0)
+    var fileDisplayArea = $("div[for='profileImage']")
+    var file = fileInput.files[0];
+    var imageType = /image.*/;
+    
+    if (file.type.match(imageType)) {
+        var reader = new FileReader();
+        
+        reader.onload = function (e) {
+            newtables.settings.insert("profileImage", { location: "base64", data: reader.result }, function (doc) {
+                fileDisplayArea.css('background-image', 'url(' + reader.result + ')')
+                console.log(doc)
+                meshnet.publicUpdateIdentity()
+                top.matchPageSettingsToDatastore()
+            })
+        }
+        
+        reader.readAsDataURL(file);
     } else {
-        setSetting(context.is(":checked"), target, type, function () {
-            handleSettings(function () { })
-        })
+        top.popMsg("File not supported!")
     }
-    if (toggle.is(":checked")) {
-        $(".advanced").show()
-    } else {
-        $(".advanced").hide()
-    }*/
+
 }
 
 function matchPageSettingsToDatastore() {
@@ -299,6 +303,21 @@ function matchPageSettingsToDatastore() {
             }
         })
     })
+    /* Background Images */
+    $.each($("div[for]"), function () {
+        var target = $(this).attr("for")
+        var img = $(this)
+        newtables.settings.get(target, function (err, out) {
+            var url = out.value
+            if (url.location === "stock") {
+                //img.attr("src", "./images/avatars/characters_" + url.id + ".png")
+                img.css('background-image', 'url(./images/avatars/characters_' + url.id + '.png)')
+            } else if (url.location === "base64") {
+                //img.attr("src", url.data)
+                img.css('background-image', 'url(' + url.data + ')')
+            }
+        })
+    })
     /* Images */
     $.each($("img[for]"), function () {
         var target = $(this).attr("for")
@@ -306,7 +325,13 @@ function matchPageSettingsToDatastore() {
         newtables.settings.get(target, function (err, out) {
             var url = out.value
             if (url.location === "stock") {
-                img.attr("src", "./images/avatars/characters_" + url.id + ".png")
+                //img.attr("src", "./images/avatars/characters_" + url.id + ".png")
+                img.css('background-image', 'url(./images/avatars/characters_' + url.id + '.png)')
+                img.attr("src", "")
+            } else if (url.location === "base64") {
+                //img.attr("src", url.data)
+                img.attr("src", "")
+                img.css('background-image', 'url(' + url.data + ')')
             }
         })
     })
@@ -317,7 +342,14 @@ function matchPageSettingsToDatastore() {
         newtables.settings.get(target, function(err, out) {
             input.val(out.value)
         })
-
+    })
+    /* Links */
+    $.each($("a[for]"), function () {
+        var target = $(this).attr("for")
+        var input = $(this)
+        newtables.settings.get(target, function (err, out) {
+            input.text(out.value)
+        })
     })
 }
 
@@ -368,9 +400,9 @@ function bindClicks() {
     $(document).on('click.customBindings', '.navbar-toggle', function() {
         handleMenuToggle()
     })
-
-    $(document).on('click.customBindings', '#profileImage', function () {
-       changeProfileImageStock()
+    /* Toggle Profile Pic */
+    $(document).on('click.customBindings', 'div[for="profileImage"]', function () {
+       changeProfileImageStock($(this))
     })
     
     /* Change Coin */
@@ -398,7 +430,11 @@ function bindClicks() {
     $(document).on('click.customBindings', '.coinPicker', function () {
         showCoinSelection()
     })
-
+    
+    /* Upload Image */
+    $(document).on('change.customBindings', "input[type='file']", function () {
+        handleProfileImageUpload($(this))
+    })
     /* Join Chat */
     $("a[href='#lobby']").bind("click.customBindings", function() {
         joinLobby()
@@ -480,11 +516,18 @@ function bindClicks() {
     
     $(document).on('change.customBindings', "input[type='text'][for]", function () {
         var target = $(this)
-        newtables.settings.insert(target.attr("for"), target.val(), function(doc) {
-            console.log(doc)
+       /* newtables.settings.insert(target.attr("for"), target.val(), function(doc) {
+            console.log(doc)*/
             meshnet.publicUpdateIdentity()
+            top.matchPageSettingsToDatastore()
+       /* })*/
+    })
+    
+    $(document).on('keyup.customBindings', "input[type='text'][for]", function () {
+        var target = $(this)
+        newtables.settings.insert(target.attr("for"), target.val(), function (doc) {
+            top.matchPageSettingsToDatastore()
         })
-        
     })
     
     /* Address Picker Actions */
@@ -736,10 +779,11 @@ function autoUtxo() {
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
-function changeProfileImageStock() {
+function changeProfileImageStock(context) {
     var rnd = randomIntFromInterval(1, 94)
-    $("#profileImage").attr("src", "./images/avatars/characters_" + rnd + ".png")
-    top.$(".profile-item img").attr("src", "./images/avatars/characters_" + rnd + ".png")
+    context.css("background-image", "url(./images/avatars/characters_" + rnd + ".png)")
+    top.$(".profile-item img").attr("src","")
+    top.$(".profile-item img").css("background-image", "url(./images/avatars/characters_" + rnd + ".png)")
     newtables.settings.insert("profileImage", {location: "stock", id: rnd}, function(doc) {
         console.log(doc)
         meshnet.publicUpdateIdentity()
