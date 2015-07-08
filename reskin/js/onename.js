@@ -1,0 +1,2 @@
+﻿var AppId = "f2892257f2cce6dc6ab84fe79dbbd81c"
+var Secret = "fcfb5d5c9da739b3673c8e44431f01829d0d997be1d17e028c339c37d0412524"

@@ -8,7 +8,7 @@ $(document).ready(function () {
         $(".menuframe").iFrameResize({ log: false, enablePublicMethods: true, sizeWidth: true, sizeHeight: false, resizedCallback: resizeFromIframe })
     })*/
 
-    initAllTheThings()
+    //initAllTheThings()
 
 })
 
@@ -36,11 +36,9 @@ function loadAddressTable() {
     getAllTablesAsDataTable(function (data) {
         $('#table').bootstrapTable('load', data.address)
         if (data.address.rows.length <= 1) {
-            $("#newKeysBtn").click()
-            setTimeout(function () {
-                saveGeneratedAddress()
-                console.log(data)
-            }, 2000)
+            Vault.saveHDAddress(false, function () {
+                loadAddressTable()
+            })
         }
     })
 }
@@ -48,6 +46,7 @@ function loadAddressTable() {
 function loadAddressPicker() {
     getAllTablesAsDataTable(function (data) {
         var rows = data.address.rows
+        var targetNetwork = settings.currentcoin.name
         //remove list items
         $(".wallet-address-picker .dropdown-menu li").remove()
         $(".wallet-address-picker .dropdown-menu").append("<li class=\"divider\"></li>")
@@ -55,12 +54,18 @@ function loadAddressPicker() {
         $.each(rows, function (row) {
             var r = rows[row]
             var label
-            //console.log(r.label == "")
-            if (r.label != "")
-                label = r.label + " | "
-            if (r.format != "Identity") {
-                $("<li><a class=\"address-item\">" + (label || "") + r.addressData + "</a></li>").insertBefore(".wallet-address-picker .dropdown-menu .divider");
-                //console.log(row)
+            var address = bitcore.Address(r.addressData)
+            var addressNetwork = address.network.name
+            if (addressNetwork === "livenet") {
+                addressNetwork = "bitcoin"
+            }
+
+            if (addressNetwork === targetNetwork) {
+                if (r.label !== "")
+                    label = r.label
+                if (r.format !== "Identity") {
+                    $("<li><a class=\"address-item\" data=\"" + r.addressData + "\">" + (label || r.addressData) + "</a></li>").insertBefore(".wallet-address-picker .dropdown-menu .divider");
+                }
             }
         })
     })
@@ -222,7 +227,7 @@ function linkPubKeyFormatter(value, row, index) {
 }
 
 function saveNameSetting() {
-    Vault.addSetting("DisplayName", $("#displayName").val(), function (result) {
+    Vault.addSetting("displayname", $("#inputName").val(), function (result) {
         initAllTheThings()
         console.log(result)
     })
@@ -247,6 +252,9 @@ function getKeyFromAddress(address, cb) {
 function resetTransaction() {
     transaction = new bitcore.Transaction()
     $(".transaction-hash").val(transaction.toString())
+    $.each($(".utxo a"), function() {
+        $(this).removeClass("hit")
+    })
 }
 
 function getBalance(address) {
@@ -257,17 +265,18 @@ function getBalance(address) {
         if (err) {
             // Handle errors...
         } else {
-            if (Number(balance) == 0) {
+            if (Number(balance) === 0) {
                 $(balanceSelector).addClass("label-warning")
                 $(".button-container").html("")
                 $(balanceSelector).text("Balance: 0")
                 $(".menu-container").addClass("collapse")
+                disableSpendFields()
             } else {
                 $(balanceSelector).addClass("label-success")
                 $(balanceSelector).text("Balance: " + balance * 0.00000001 + " " + insight.network.alias.toUpperCase())
                 $(".menu-container").removeClass("collapse")
                 getUtxos(address)
-
+                enableSpendFields()
             }
         }
     })

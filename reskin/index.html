@@ -1,346 +1,564 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Ribbit.Me Rewards Wallet</title>
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/jasny-bootstrap.css" rel="stylesheet">
-    <!-- Include roboto.css to use the Roboto web font, material.css to include the theme and ripples.css to style the ripple effect -->
-    <link href="css/roboto.min.css" rel="stylesheet">
-    <link href="css/material.min.css" rel="stylesheet">
-    <link href="css/ripples.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/navmenu-reveal.css" rel="stylesheet">
-    <link href="css/menu.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <!-- Crypto icons -->
-    <link href="css/demo.cryptocoins.css" rel="stylesheet">
-    <link href="css/cryptocoins.css" rel="stylesheet">
-    <!-- Bootstrap Notify -->
-    <link href="css/alert-bangtidy.css" rel="stylesheet">
-    <link href="css/bootstrap-notify.css" rel="stylesheet">
-    <!-- Normalize -->
-    <link href="css/normalize.css" rel="stylesheet">
-    <!-- Animate -->
-    <link rel="stylesheet" href="css/animate.css">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <script src="js/jquery-1.10.2.min.js"></script>
-</head>
-<body>
-    <div class="navmenu navmenu-default navmenu-fixed-left" style="display: none">
-        <!-- Coin Select -->
-        <div class="logo small-menu" width="55px" height="55px"></div>
-        <!--<div class="btn-group coin-sellect">
-            <a href="javascript:void(0)" class="btn btn-primary selectitem">Ribbit Rewards</a>
-            <a href="#" data-target="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li><a href="javascript:void(0)">Action</a></li>
-                <li><a href="javascript:void(0)">Another action</a></li>
-                <li><a href="javascript:void(0)">Something else here</a></li>
-                <li class="divider"></li>
-                <li><a href="javascript:void(0)">Separated link</a></li>
-            </ul>
-        </div>-->
-        <!-- /Coin Select -->
-        <div class="menu-profile menu-items">
-            <ul>
-                <li>
-                   <!-- <a href="#" class="menu-item">
-                        $1$<i class="fa fa-double fa-lg fa-user"></i>#1#
-                        <img height="70" src="images/profile.png"/>
-                        <br/>
-                        <span >Profile</span>
-                    </a>-->
-                </li>
-            </ul>
-        </div>
-        <!--<div class="menu-profile menu-items-sm">
-            <ul>
-                <li>
-                    <a href="#" class="menu-item">
-                        $1$<i class="fa fa-double fa-lg fa-user"></i>#1#
-                        <img height="70" src="images/profile.png" />
-                        <br />
-                        <span></span>
-                    </a>
-                </li>
-            </ul>
-        </div>-->
-        <div class="menu-bg "></div>
-        <div style="width: 480px">
-            <nav style="width: 240px; float: left;" class="menu-items">
-                <ul>
-                    <li>
-                        <a href="#" class="profile-item menu-item">
-                            <!--<i class="fa fa-double fa-lg fa-user"></i>-->
-                            <img height="70" src="images/profile.png" />
-                            <br />
-                            <span>Profile</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#wallet" class="menuu menu-item">
-                            <i class="fa fa-lg fa-university"></i>
-                            <br/>
-                            <span>Wallet</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#keys" class="menu-item">
-                            <i class="fa fa-lg fa-key"></i>
-                            <br/>
-                            <span>Key Management</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#video-chat" class="menu-item">
-                            <i class="fa-double fa fa-lg fa-weixin"></i>
-                            <i class="fa-double fa fa-lg fa-video-camera"></i>
-                            <br/>
-                            <span>Chat  /  Video</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#raw" class="menu-item">
-                            <i class="fa fa-lg fa-cogs"></i>
-                            <br/>
-                            <span>Raw Transactions</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#import" class="menu-item">
-                            <i class="fa-double fa fa-lg fa-download"></i>
-                            <i class="fa-double fa fa-lg fa-upload"></i>
-                            <br/>
-                            <span>Import / Export</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <nav style="width: 240px; float: left;" class="menu-items-sm">
-                <ul>
-                    <li>
-                        <a href="#" class="profile-item menu-item-sm">
-                            <!--<i class="fa fa-double fa-lg fa-user"></i>-->
-                            <img height="30" src="images/profile.png" />
-                            <br />
-                            <span></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#wallet" class="menuu menu-item-sm">
-                            <i class="fa fa-lg fa-university"></i>
-                            <br />
-                            <span></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#keys" class="menu-item-sm">
-                            <i class="fa fa-lg fa-key"></i>
-                            <br/>
-                            <span></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#video-chat" class="menu-item-sm">
-                            <i class="fa-double fa fa-lg fa-weixin"></i>
-                            <br/>
-                            <span></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#raw" class="menu-item-sm">
-                            <i class="fa fa-lg fa-cogs"></i>
-                            <br/>
-                            <span></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#import" class="menu-item-sm">
-                            <i class="fa-double fa fa-lg fa-download"></i>
-                            <br/>
-                            <span></span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-    <div class="canvas" style="left:60px;">
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Ribbit.Me Rewards Wallet</title>
+        <script src="js/jquery-1.10.2.min.js"></script>
+        <script>
+            try {
+                $ = jQuery = module.exports;
+                // If you want module.exports to be empty, uncomment:
+                // module.exports = {};
+            } catch (e) { }
+        </script>
+        <!-- Bootstrap core CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/jasny-bootstrap.css" rel="stylesheet">
+        <!-- Include roboto.css to use the Roboto web font, material.css to include
+        the theme and ripples.css to style the ripple effect -->
+        <link href="css/roboto.min.css" rel="stylesheet">
+        <link href="css/material.min.css" rel="stylesheet">
+        <link href="css/ripples.min.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/navmenu-reveal.css" rel="stylesheet">
+        <link href="css/menu.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <!-- Crypto icons -->
+        <link href="css/demo.cryptocoins.css" rel="stylesheet">
+        <link href="css/cryptocoins.css" rel="stylesheet">
+        <!-- Bootstrap Notify -->
+        <link href="css/alert-bangtidy.css" rel="stylesheet">
+        <link href="css/bootstrap-notify.css" rel="stylesheet">
+        <!-- Normalize -->
+        <link href="css/normalize.css" rel="stylesheet">
+        <!-- Animate -->
+        <link rel="stylesheet" href="css/animate.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media
+        queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    
+    <body>
+        <div id="wrap">
+            <div class="navmenu navmenu-default navmenu-fixed-left" style="display: none">
+                <!-- Coin Select -->
+                <div class="logo coinPicker small-menu" data="rbr" name="ribbit"></div>
+                <div class="coin-menu" style="display: none">
+                    <div class="">
+                        <div class="logo coinSelect" data="btc" name="bitcoin" style="background-image: url(./images/SVG/BTC.svg)"></div>
+                    </div>
+                    <div class="">
+                        <div class="logo coinSelect" data="ltc" name="litecoin" style="background-image: url(./images/SVG/LTC.svg)"></div>
+                    </div>
+                    <div class="">
+                        <div class="logo coinSelect" data="doge" name="dogecoin" style="background-image: url(./images/SVG/DOGE.svg)"></div>
+                    </div>
+                </div>
+                <div class="menu-profile menu-items">
+                    <ul>
+                        <li></li>
+                    </ul>
+                </div>
+                <div class="menu-bg "></div>
+                <div style="width: 480px">
+                    <nav style="width: 240px; float: left;" class="menu-items">
+                        <ul>
+                            <li>
+                                <a href="#" class="navlink profile-item menu-item">
 
-        <div id="header" class="navbar navbar-default " role="navigation">
-            <button style="left:0;" type="button" class="navbar-toggle" data-toggle="offcanvas" data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <div class="navbar-right">
-                <ul class="nav navbar-nav">
-                    <li><i class="fa-double fa fa-lg fa-weixin header-profile"></i></li>
-                    <li><i class="fa-double fa fa-lg fa-gear header-profile"></i></li>
-                    <li class="dropdown">
-                        <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Satoshi <b class="caret"></b><div class="ripple-wrapper"></div></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="javascript:void(0)">Action</a></li>
-                            <li><a href="javascript:void(0)">Another action</a></li>
-                            <li><a href="javascript:void(0)">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="javascript:void(0)">Separated link</a></li>
+
+
+                                <!--<i class="fa fa-double fa-lg fa-user"></i>-->
+
+
+
+                                <img height="70" src="images/profile.png">
+
+
+
+                                <br>
+
+
+
+                                <span>Profile</span>
+
+                            </a>
+                            </li>
+                            <li>
+                                <a href="#wallet" class="navlink menuu menu-item">
+
+
+
+                                <i class="fa fa-lg fa-university"></i>
+
+
+
+                                <br>
+
+
+
+                                <span>Wallet</span>
+
+                            </a>
+                            </li>
+                            <li>
+                                <a href="#keys" class="navlink menu-item">
+
+
+
+                                <i class="fa fa-lg fa-key"></i>
+
+
+
+                                <br>
+
+
+
+                                <span>Key Management</span>
+
+                            </a>
+                            </li>
+                            <li>
+                                <a href="#video-chat" class="navlink menu-item">
+
+
+
+                                <i class="fa-double fa fa-lg fa-weixin"></i>
+
+
+
+                                <i class="fa-double fa fa-lg fa-video-camera"></i>
+
+
+
+                                <br>
+
+
+
+                                <span>Chat  /  Video</span>
+
+                            </a>
+                            </li>
+                            <li>
+                                <a href="#raw" class="navlink menu-item">
+
+
+
+                                <i class="fa fa-lg fa-cogs"></i>
+
+
+
+                                <br>
+
+
+
+                                <span>Raw Transactions</span>
+
+                            </a>
+                            </li>
+                            <li>
+                                <a href="#import" class="navlink menu-item">
+
+
+
+                                <i class="fa-double fa fa-lg fa-download"></i>
+
+
+
+                                <i class="fa-double fa fa-lg fa-upload"></i>
+
+
+
+                                <br>
+
+
+
+                                <span>Import / Export</span>
+
+                            </a>
+                            </li>
                         </ul>
-                    </li>
-                </ul>
-                <img height="20" class="header-profile" src="images/profile.png" />
-            </div>            
-        </div>
-        <div class="container">
-            <div class="page-header">
-                <h1>Loading...</h1>
-            </div>
-            <iframe scrolling="no" height="750" ></iframe>
-            <div>
-                
-            </div>
-        </div>
-    </div>
+                    </nav>
+                    <nav style="width: 240px; float: left;" class="menu-items-sm">
+                        <ul>
+                            <li>
+                                <a href="#" class="profile-item menu-item-sm">
 
-    <!--<div id="footer">
-        <div class="container text-right">
-            <p class="text-muted">Version 1.1</p>
-        </div>
-    </div>-->
 
-    <!-- wallet confirm send modal -->
-    <div class="modal fade" id="modalWalletConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Please confirm</h4>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        You are about to send a transaction to the value of
-                        <span id="spendAmount">0.00</span>RBR
-                    </p>
-                    <br>
-                    <div id="walletSendConfirmStatus" class="alert alert-danger hidden"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="walletConfirmSend">Send</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="confirmClose">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- wallet confirm send modal -->
-    <!-- qrcode modal -->
-    <div class="modal fade" id="modalQrcode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">qrcode</h4>
-                </div>
-                <div class="modal-body" align="center">
-                    <div id="qrcode"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="qrCodeClose">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- qrcode modal -->
-    <!-- qrcode scanner modal -->
-    <div class="modal fade" id="modalQrcodeScanner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">qrcode scanner</h4>
-                </div>
-                <div class="modal-body" align="center">
-                    <select id="videoSource" class="form-control"></select>
-                    <div id="videoReaderError" class="hidden">Your browser does not offer camera support</div>
-                    <video id="videoReader" muted autoplay style="width:100%;height:100%"></video>
-                    <div id="qrcode-scanner-callback-to" class="hidden"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="qrScanClose">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Elements that libs require exist (depricate us) -->
-    <div class="notifications top-right"></div>
-    <div class="hidden" id="entropybucket"></div>
-    <div class="hidden" id="my-number"></div>
-    <div class="hidden" id="my-number-link"></div>
-    <!-- ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/modernizr.custom.63321.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/Vault.js"></script>
-    <script src="js/database/pouchdb-3.4.0.min.js"></script>
-    <!-- Iframe Resize -->
-    <script src="js/iframeResizer.min.js"></script>
-    <!-- Bootstrap and Material Design -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jasny-bootstrap.js"></script>
-    <script src="js/ripples.min.js"></script>
-    <script src="js/material.min.js"></script>
-    <!-- Bootstrap Table -->
-    <script src="js/bootstrap-table.js"></script>
-    <script src="js/extensions/export/bootstrap-table-export.js"></script>
-    <script src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/tableExport.js"></script>
-    <script src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jquery.base64.js"></script>
-    <script src="js/extensions/editable/bootstrap-table-editable.js"></script>
-    <script src="https://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
-    <!-- Bootstrap Notify -->
-    <script src="js/bootstrap-notify.js"></script>
-   
-    <script src="js/identity.js"></script>
-    <!-- Socket.io -->
-    <script src="js/socket.io.js"></script>    
-    <!-- Bitcore -->
-    <script type="text/javascript" src="js/crypto-min.js"></script>
-    <script type="text/javascript" src="js/crypto-sha256.js"></script>
-    <script type="text/javascript" src="js/crypto-sha256-hmac.js"></script>
-    <script type="text/javascript" src="js/ripemd160.js"></script>
-    <script type="text/javascript" src="js/aes.js"></script>
-    <script type="text/javascript" src="js/qrcode.js"></script>
-    <script type="text/javascript" src="js/qcode-decoder.min.js"></script>
-    <script type="text/javascript" src="js/jsbn.js"></script>
-    <script type="text/javascript" src="js/ellipticcurve.js"></script>
-    <script type="text/javascript" src="js/coin.js"></script>
-    <script type="text/javascript" src="js/coinbin.js"></script>
-    <script type="text/javascript" src="js/bitcore.min.js"></script>
-    <script type="text/javascript" src="js/bitcore-ecies.min.js"></script>
-    <script type="text/javascript" src="js/bitcore-explorers-multi.js"></script>
 
-    <!-- PubSub -->
-    <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
-    <!-- WebRTC Peer Connections -->
-    <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
-    <script src="https://cdn.pubnub.com/pubnub-dev.js"></script>
-    <script src="js/webrtc.js"></script>
-    <script src="js/sound.js"></script>
-    <!--<script src="js/pubnub-3.7.1.min.js"></script> -->
-    <script src="js/pubsub.js"></script>
-    <!-- Database -->
-    <script src="js/pouchdb-3.4.0.min.js"></script>
-    <script src="js/pouchdb.transform-pouch.js"></script>
-    <script src="js/pouchdb.find.js"></script>
-    <script src="js/database/pouch-crypto.js"></script>
-    <script src="js/database/pouch.js"></script>
-</body>
+                                <!--<i class="fa fa-double fa-lg fa-user"></i>-->
+
+
+
+                                <img height="30" src="images/profile.png">
+
+
+
+                                <br>
+
+
+
+                                <span></span>
+
+                            </a>
+                            </li>
+                            <li>
+                                <a href="#wallet" class="navlink menuu menu-item-sm">
+
+
+
+                                <i class="fa fa-lg fa-university"></i>
+
+
+
+                                <br>
+
+
+
+                                <span></span>
+
+                            </a>
+                            </li>
+                            <li>
+                                <a href="#keys" class="navlink menu-item-sm">
+
+
+
+                                <i class="fa fa-lg fa-key"></i>
+
+
+
+                                <br>
+
+
+
+                                <span></span>
+
+                            </a>
+                            </li>
+                            <li>
+                                <a href="#video-chat" class="navlink menu-item-sm">
+
+
+
+                                <i class="fa-double fa fa-lg fa-weixin"></i>
+
+
+
+                                <br>
+
+
+
+                                <span></span>
+
+                            </a>
+                            </li>
+                            <li>
+                                <a href="#raw" class="navlink menu-item-sm">
+
+
+
+                                <i class="fa fa-lg fa-cogs"></i>
+
+
+
+                                <br>
+
+
+
+                                <span></span>
+
+                            </a>
+                            </li>
+                            <li>
+                                <a href="#import" class="navlink menu-item-sm">
+
+
+
+                                <i class="fa-double fa fa-lg fa-download"></i>
+
+
+
+                                <br>
+
+
+
+                                <span></span>
+
+                            </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="canvas" style="left: 60px;">
+                <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js"
+                id="dropboxjs" data-app-key="70ecne41xbzbp3l"></script>
+                <div id="header" class="navbar navbar-default " role="navigation">
+                    <button style="left: 0;" type="button" class="navbar-toggle" data-toggle="offcanvas"
+                    data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="navbar-right">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <i class="fa-double fa fa-lg fa-weixin header-profile">
+                                    <span class="badge alert-danger"></span>
+                                </i>
+                            </li>
+                            <li>
+                                <a class="navlink" href="#settings">
+
+                                <i class="fa-double fa fa-lg fa-gear header-profile"></i>
+
+                            </a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"
+                                aria-expanded="false">
+
+                                Satoshi <b class="caret"></b>
+
+                                <div class="ripple-wrapper"></div>
+
+                            </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="http://tech.ribbit.me/vault/export.html?data:application/json;filename=exportData;base64,W3siaGVhZGVyIjpbWyJMYWJlbCIsIkNvbXByZXNzZWQiLCJFbmNyeXB0ZWQiLCJBZGRyZXNzIiwiRm9ybWF0IiwiUHJpdmF0ZSBLZXkiLCJQdWJsaWMgS2V5Il1dLCJkYXRhIjpbWyJFbXB0eSIsImZhbHNlIiwiZmFsc2UiLCJSZWtyRlNoR3JhRGQyVGREODZLTG5ZVjFhdlBWcWhBaUhvIiwiSWRlbnRpdHkiLCIiLCIiXSxbIkVtcHR5IiwiZmFsc2UiLCJmYWxzZSIsIlJ0b0N2ak0zSFQ0RmY5OWJYdEFnYzNGamNYTVVTeXo5WHEiLCJJZGVudGl0eSIsIiIsIiJdXX1d"
+                                        class="dropbox-saver">Save to DropBox</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">Another action</a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)">Something else here</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="javascript:void(0)">Separated link</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <img height="20" class="header-profile" src="images/profile.png">
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="hidden-xs page-header">
+                        <h1>Loading...</h1>
+                    </div>
+                    <iframe id="guestFrame" allowTransparency="true" name="guestFrame" style="padding-right: 75px;"></iframe>
+                    <div></div>
+                </div>
+            </div>
+            <!-- wallet confirm send modal -->
+            <div class="modal fade" id="modalWalletConfirm" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">Please confirm</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>You are about to send a transaction to the value of
+                                <span id="spendAmount">0.00</span>RBR</p>
+                            <br>
+                            <div id="walletSendConfirmStatus" class="alert alert-danger hidden"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="walletConfirmSend">Send</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                            id="confirmClose">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- wallet confirm send modal -->
+            <!-- qrcode modal -->
+            <div class="modal fade" id="modalQrcode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">qrcode</h4>
+                        </div>
+                        <div class="modal-body" align="center">
+                            <div id="qrcode"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="qrCodeClose">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- qrcode modal -->
+            <!-- qrcode scanner modal -->
+            <div class="modal fade" id="modalQrcodeScanner" tabindex="-1" role="dialog"
+            aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            <h4 class="modal-title">qrcode scanner</h4>
+                        </div>
+                        <div class="modal-body" align="center">
+                            <select id="videoSource" class="form-control"></select>
+                            <div id="videoReaderError" class="hidden">Your browser does not offer camera support</div>
+                            <video id="videoReader"
+                            muted="" autoplay="" style="width: 100%; height: 100%"></video>
+                            <div id="qrcode-scanner-callback-to" class="hidden"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" id="qrScanClose">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="section section-primary">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Copyright 2015 Ribbit.me</h1>
+                        <p class="hidden-sm hidden-xs">This is beta software and should be used for testing purposes only.
+                            <br>No warranty is implied. Private key information is stored on your device
+                            or backed up into the cloud storage provider of your choice.
+                            <br>
+                            <a href="">We encourage suggestions &amp; value feedback</a>
+                        </p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="hidden-sm hidden-xs text-info text-right">
+                            <br>
+                            <br>
+                        </p>
+                        <div class="row">
+                            <div class="col-md-12 hidden-lg hidden-md hidden-sm hidden-xs text-left">
+                                <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>
+                                <a href="#"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
+                                <a href="#"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
+                                <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 hidden-xs text-right">
+                                <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>
+                                <a href="#"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
+                                <a href="#"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
+                                <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Elements that libs require exist (depricate us) -->
+        <div class="notifications top-right"></div>
+        <div class="hidden" id="entropybucket"></div>
+        <div class="hidden" id="my-number"></div>
+        <div class="hidden" id="my-number-link"></div>
+        <!--==================================================-->
+        <script src="js/porthole.js"></script>
+        <script>
+            var node;
+        
+            var windowProxy;
+        
+            window.onload = function () {
+        
+                // Create a proxy window to send to and receive 
+        
+                // messages from the iFrame
+        
+                windowProxy = new Porthole.WindowProxy(
+        
+                    'proxy.html', 'guestFrame');
+        
+        
+        
+                // Register an event handler to receive messages;
+        
+                //windowProxy.addEventListener(onMessage);
+        
+            };
+        </script>
+        <!-- Placed at the end of the document so the pages load faster
+        -->
+        <script src="js/modernizr.custom.63321.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/Vault.js"></script>
+        <script src="js/database/pouchdb-3.4.0.min.js"></script>
+        <!-- Iframe Resize -->
+        <script src="js/iframeResizer.min.js"></script>
+        <!-- Bootstrap and Material Design -->
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jasny-bootstrap.js"></script>
+        <script src="js/ripples.min.js"></script>
+        <script src="js/material.min.js"></script>
+        <!-- Bootstrap Table -->
+        <script src="js/bootstrap-table.js"></script>
+        <script src="js/extensions/export/bootstrap-table-export.js"></script>
+        <script src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/tableExport.js"></script>
+        <script src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jquery.base64.js"></script>
+        <script src="js/extensions/editable/bootstrap-table-editable.js"></script>
+        <script src="https://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
+        <!-- Bootstrap Notify -->
+        <script src="js/bootstrap-notify.js"></script>
+        <script src="js/identity.js"></script>
+        <!-- Socket.io -->
+        <script src="js/socket.io.js"></script>
+        <!-- Bitcore -->
+        <script type="text/javascript" src="js/crypto-min.js"></script>
+        <script type="text/javascript" src="js/crypto-sha256.js"></script>
+        <script type="text/javascript" src="js/crypto-sha256-hmac.js"></script>
+        <script type="text/javascript" src="js/ripemd160.js"></script>
+        <script type="text/javascript" src="js/aes.js"></script>
+        <script type="text/javascript" src="js/qrcode.js"></script>
+        <script type="text/javascript" src="js/qcode-decoder.min.js"></script>
+        <script type="text/javascript" src="js/jsbn.js"></script>
+        <script type="text/javascript" src="js/ellipticcurve.js"></script>
+        <script type="text/javascript" src="js/coin.js"></script>
+        <script type="text/javascript" src="js/coinbin.js"></script>
+        <script type="text/javascript" src="js/bitcore.min.js"></script>
+        <script type="text/javascript" src="js/bitcore-ecies.min.js"></script>
+        <script type="text/javascript" src="js/bitcore-message.js"></script>
+        <script type="text/javascript" src="js/bitcore-p2p.js"></script>
+        <script type="text/javascript" src="js/bitcore-explorers-multi.js"></script>
+        <script type="text/javascript" src="js/out-wallet.js"></script>
+        <!-- PubSub -->
+        <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        -->
+        <!-- WebRTC Peer Connections -->
+        <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+        -->
+        <script src="https://cdn.pubnub.com/pubnub-dev.js"></script>
+        <script src="js/webrtc.js"></script>
+        <script src="js/sound.js"></script>
+        <!--<script src="js/pubnub-3.7.1.min.js"></script> -->
+        <script src="js/pubsub.js"></script>
+        <!-- Database -->
+        <script src="js/pouchdb-3.4.0.min.js"></script>
+        <script src="js/pouchdb.transform-pouch.js"></script>
+        <script src="js/pouchdb.find.js"></script>
+        <script src="js/database/pouchdb.upsert.js"></script>
+        <script src="js/database/pouch-crypto.js"></script>
+		<script src="js/database/store.pouchdb.js"></script>
+        <script src="js/database/pouch.js"></script>
+        <script src="js/database/new-database.js"></script>
+		<!--<script src="js/fabric.min.js"></script>-->
+        <script src="js/mesh.js"></script>
+    </body>
+
 </html>

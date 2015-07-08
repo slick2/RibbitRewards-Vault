@@ -19,22 +19,58 @@ var Networks = bitcore.Networks;
 var Transaction = bitcore.Transaction;
 var UnspentOutput = Transaction.UnspentOutput;
 var AddressInfo = require('./models/addressinfo');
+Networks.AvailableNetworks = []
 
-	Networks.add({
-		name: "ribbit",
-		alias: "rbr",
-		pubkeyhash: 61,
+Networks.add({
+    name: "ribbit",
+    alias: "rbr",
+    pubkeyhash: 61,
     privatekey: 0xbd,
-		scripthash: 123,
-		xpubkey: 0x3d,
-		xprivkey: 0xbd,
-		networkMagic: 0xfaceb5e9,
-		port: 3764,
-		dnsSeeds: ["162.243.230.181"]
-	})
+    scripthash: 123,
+    xpubkey: 0x3d,
+    xprivkey: 0xbd,
+    networkMagic: 0xfaceb5e9,
+    port: 3764,
+    dnsSeeds: ["162.243.230.181"]
+})
+            Networks.AvailableNetworks.push({ name: "ribbit", insight: new Insight("ribbit") })
+            Networks.AvailableNetworks.push({ name: "bitcoin", insight: new Insight("https://insight.bitpay.com") })
+
   
-  Networks.defaultNetwork = bitcore.Networks.get("ribbit")
-  Networks.livenet = bitcore.Networks.get("ribbit")
+Networks.defaultNetwork = bitcore.Networks.get("ribbit")
+Networks.livenet = bitcore.Networks.get("ribbit")
+
+Networks.AvailableNetworks.currentNetwork = function () {
+    var currentNet = Networks.defaultNetwork.name;
+    if (currentNet === "livenet") currentNet = "bitcoin"
+    for (var i = 0; i < Networks.AvailableNetworks.length; i++) {
+        if (Networks.AvailableNetworks[i].name === currentNet) {
+            return Networks.AvailableNetworks[i]
+        }
+    }
+}
+            
+Networks.AvailableNetworks.get = function (name) {
+    //var currentNet = Networks.defaultNetwork;
+    for (var i = 0; i < Networks.AvailableNetworks.length; i++) {
+        if (Networks.AvailableNetworks[i].name === name) {
+            return Networks.AvailableNetworks[i]
+        }
+    }
+    return Networks.defaultNetwork
+}
+            
+Networks.AvailableNetworks.set = function (name) {
+    //var currentNet = Networks.defaultNetwork;
+    for (var i = 0; i < Networks.AvailableNetworks.length; i++) {
+        if (Networks.AvailableNetworks[i].name === name) {
+            Networks.defaultNetwork = Networks.AvailableNetworks[i].insight.network
+            Networks.livenet = Networks.AvailableNetworks[i].insight.network
+            //return Networks.AvailableNetworks[i]
+        }
+    }
+    return Networks.defaultNetwork
+}
 
 /**
  * Allows the retrieval of information regarding the state of the blockchain

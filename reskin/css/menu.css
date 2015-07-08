@@ -69,20 +69,6 @@ a .fa {
 	opacity: 0.4 !important;
 }
 
-.cd-dropdown {
-	  left: 50px;
-	  top: -20;
-	  margin-bottom: 0px !important;
-}
-
-.cd-dropdown > span {
-	  background-color: #00a8aa !important;
-	  color: white !important;
-}
-
-.cd-dropdown ul li span {
-	background-color: #007476 !important;
-}
 
 .menu-sm .cd-dropdown {
 	  left: -200px;

@@ -4,39 +4,43 @@ var Vault = {}
 Vault.page = {}
 /* My Databases (I know they arent really tables) */
 var tables = {}
-var remoteCouch = false;
+var remoteCouch = false
 var verbose = true
 
+/*
+require('pouchdb').plugin(require('store.pouchdb'));
+*/
+
 tables.address = new PouchDB('vault_address')
-tables.address.createIndex({
+/*tables.address.createIndex({
   index: {
     fields: ['seedId', 'compressed', 'pubkeyId', 'privkeyId', 'addressData', 'format']
   }
-})
+})*/
 tables.multisig = new PouchDB('vault_multisig')
-tables.multisig.createIndex({
+/*tables.multisig.createIndex({
   index: {
     fields: ['redeemScript', 'pubkeyIds', 'addressIds']
   }
-})
+})*/
 tables.pubkey = new PouchDB('vault_pubkey')
-tables.pubkey.createIndex({
+/*tables.pubkey.createIndex({
   index: {
     fields: ['key']
   }
-})
+})*/
 tables.privkey = new PouchDB('vault_privkey')
-tables.privkey.createIndex({
+/*tables.privkey.createIndex({
   index: {
     fields: ['format', 'key']
   }
-})
+})*/
 tables.channel = new PouchDB('vault_channel')
-tables.channel.createIndex({
+/*tables.channel.createIndex({
   index: {
     fields: ['securitylevel', 'pubkeyIds', 'privkeyIds', 'addressIds', 'name']
   }
-})
+})*/
 
 tables.settings = new PouchDB('vault_settings')
 tables.settings.createIndex({
@@ -60,6 +64,23 @@ Vault.getRecordOfType = function(table,id,cb) {
         if (verbose) console.log(err)
         return cb(err);
     })
+}
+
+Vault.deleteSettings = function (cb) {
+    Vault.deleteTable(Vault.tables.settings, "vault_settings", function() {
+        return cb()
+    })
+    
+}
+
+Vault.deleteTable = function (table, tableName, cb) {
+    table.destroy().then(function () {
+        table = new PouchDB(tableName)
+        return cb()
+    }).catch(function (error) {
+        console.log(error);
+    });
+    
 }
 
 /* ADD Records */
@@ -87,7 +108,7 @@ Vault.page.saveAddress = function(cb) {
     //}
 }
 
-Vault.saveHDAddress = function(isIdentity,cb) {
+Vault.generateHDAddress = function(isIdentity, cb) {
     var payload = {}
     var privateKey = new bitcore.HDPrivateKey()
     payload.address = new bitcore.Address(privateKey.publicKey, bitcore.Networks.livenet).toString();
@@ -96,9 +117,14 @@ Vault.saveHDAddress = function(isIdentity,cb) {
     payload.privkey = privateKey.xprivkey
     payload.compressed = false
     payload.identity = isIdentity
+    return cb(payload)
+}
 
-    Vault.insertAddress(payload, function(row) {
-        return cb(row)
+Vault.saveHDAddress = function(isIdentity,cb) {
+    Vault.generateHDAddress(isIdentity, function(payload) {
+        Vault.insertAddress(payload, function (row) {
+            return cb(row)
+        })
     })
 }
 
@@ -117,10 +143,14 @@ Vault.insertAddress = function(payload, cb){
         //mod for extended keys
     if (payload.privkey.indexOf('xprv') > -1 && (payload.identity == false || payload.identity == null))
         privkeyInsertData.format = "Extended"
-    else if (payload.identity == true) {
+    else if (payload.identity === true) {
         delete addressInsertData.identity
         addressInsertData.type = "Identity"
         privkeyInsertData.format = "Extended Identity";
+    }
+    if (payload.identity === false) {
+        delete addressInsertData.identity
+        addressInsertData.type = "standard"
     }
     
     /* Define my next function */
@@ -153,31 +183,77 @@ Vault.addSetting = function(key, value, cb) {
         key: key,
         value: value
     }
-    Vault.getSettingValue(key,function(value){
-        if (value === undefined || value === null) {
+    Vault.getSettingValue(key,function(v){
+        if (v === undefined || v === null) {
             tables.settings.put(kvp, function callback(err, result) {
                 if (!err) {
-                  if (verbose) console.log('Successfully added a setting!');
-                  if (verbose) console.log(result)
-                  return cb(result)
+                  if (verbose) console.log('Successfully added a setting! '+ key + " " + value);
+                    if (verbose) console.log(result)
+                  handleSettings(function() {
+                        return cb(result)
+                  })
                 } else {
                     if (verbose) console.log(err)
-                    return cb(err)
+                    handleSettings(function () {
+                        return cb(err)
+                    })
                 }
             })
         } else {
             console.log("already exists - Updating")
-            value.value == kvp.value
-            tables.settings.put(kvp, function callback(err, result) {
+            //value.value == kvp.value
+/*            tables.settings.put(kvp, function callback(err, result) {
                 if (!err) {
-                  if (verbose) console.log('Successfully added a setting!');
+                  if (verbose) console.log('Successfully added a setting! ' + key + " " + value);
                   if (verbose) console.log(result)
-                  return cb(result)
+                    handleSettings(function () {
+                        return cb(result)
+                    })
                 } else {
                     if (verbose) console.log(err)
-                    return cb(err)
+                    handleSettings(function () {
+                        return cb(err)
+                    })
                 }
-            })            
+            })*/ 
+  
+            /*Vault.getRecordFilteredOfType(Vault.tables.settings, "key", key, function (data) {
+                data["value"] = kvp.value
+                //Vault.tables.settings.upsert(data)
+                Vault.tables.settings.upsert(data["_id"], function (doc) {
+                    return { value: kvp.value };
+                }).then(function (res) {
+                    handleSettings(function () {
+                        return cb()
+                    })
+                // success, res is {rev: '1-xxx', updated: true}
+                }).catch(function (err) {
+                    handleSettings(function () {
+                        return cb(err)
+                    })
+                });
+                
+            }) */   
+            Vault.tables.settings.find({
+                selector: { key: key },
+                fields: ['value','_id']
+            }).then(function (result) {
+                Vault.tables.settings.upsert(result.docs[0]._id, function (doc) {
+                    return { value: kvp.value };
+                }).then(function (res) {
+                    console.log(res)
+                    handleSettings(function () {
+                        return cb()
+                    })
+                // success, res is {rev: '1-xxx', updated: true}
+                }).catch(function (err) {
+                    handleSettings(function () {
+                        return cb(err)
+                    })
+                })
+            }).catch(function (err) {
+                return cb(err)
+            })     
         }
     })    
 }
@@ -314,11 +390,23 @@ Vault.getAddressesByPrivateKeyFormat = function(type,cb){
 }
 
 Vault.getSettingValue = function getSettingValue(key,cb){
-    Vault.getRecordFilteredOfType(tables.settings, "key", key, function(record){
+    /*Vault.getRecordFilteredOfType(tables.settings, "key", key, function(record){
         if (record !== undefined)
             return cb(record.value)
         else 
             return cb(null)
+    })*/
+    Vault.tables.settings.find({
+        selector: { key: key },
+        fields: ['value']
+    }).then(function (result) {
+        if (result.docs.length > 0) {
+            return cb(result.docs[0].value)
+        } else {
+            return cb(null)
+        }
+    }).catch(function (err) {
+        return cb(err)
     })
 }
 
@@ -360,6 +448,12 @@ function getMultisigAsDataTable(cb) {
 	getTableAsDataTableRows(tables.multisig, function(rows){
 		cb(rows)
 	})
+}
+
+function getSettingsAsDataTable(cb) {
+    getTableAsDataTableRows(tables.settings, function (rows) {
+        cb(rows)
+    })
 }
 
 function getAllTablesAsDataTable(cb) {	

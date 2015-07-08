@@ -916,7 +916,7 @@ $(document).ready(function() {
 	validateOutputAmount();
 
 	/* capture mouse movement to add entropy */
-	var IE = document.all?true:false // Boolean, is browser IE?
+	/*var IE = document.all?true:false // Boolean, is browser IE?
 	if (!IE) document.captureEvents(Event.MOUSEMOVE)
 	document.onmousemove = getMouseXY;
 	function getMouseXY(e) {
@@ -945,5 +945,5 @@ $(document).ready(function() {
 		};
 
 		return true;
-	};
+	};*/
 });

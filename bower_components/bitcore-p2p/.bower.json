@@ -1,0 +1,15 @@
+{
+  "name": "bitcore-p2p",
+  "homepage": "https://github.com/bitpay/bitcore-p2p",
+  "version": "0.14.1",
+  "_release": "0.14.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.14.1",
+    "commit": "96e6f63dcf7219c7cb9e0c55cc264e106e6a2cf8"
+  },
+  "_source": "git://github.com/bitpay/bitcore-p2p.git",
+  "_target": "~0.14.1",
+  "_originalSource": "bitcore-p2p",
+  "_direct": true
+}

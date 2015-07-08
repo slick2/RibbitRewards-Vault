@@ -7,6 +7,33 @@ body {
       overflow-x: hidden;
 }
 
+#wrap {
+        min-height: 100%;
+        height: auto !important;
+        height: 100%;
+        /* Negative indent footer by it's height */
+        /*margin: 0 auto -170px;*/
+      }
+
+      /* Set the fixed height of the footer here */
+      #push,
+      #footer {
+        height: 60px;
+      }
+      #footer {
+        background-color: #f5f5f5;
+      }
+
+      /* Lastly, apply responsive CSS fixes as necessary */
+      @media (max-width: 767px) {
+        #footer {
+          margin-left: -20px;
+          margin-right: -20px;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+
 iframe {
     overflow: auto;
     margin: 0;
@@ -15,12 +42,40 @@ iframe {
     width: 100%;
 }
 
+.canvas:after {
+  content: "";
+  /*background: url(../images/svg/btc.svg);*/
+  opacity: 0.04;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+  background-size: cover;
+}
+
+.panel {
+    background-color: rgba(255,255,255,0.5) !important;
+}
+
+.page-header {
+  top: -10px !important;
+  position: absolute !important;
+  left: 100px !important;
+}
 .navbar-toggle {
     z-index: 1;
 }
 
+.badge.alert-danger {
+    position: absolute;
+    left: 20px;
+    top: -10px
+}
+
 .logo {
-  background-image: url(../images/RBR.svg);
+  background-image: url(../images/SVG/RBR.svg);
   left: 0;
   height: 55px;
   background-size: 55px 55px;
@@ -32,12 +87,32 @@ iframe {
     top: -40px;
 }
 
+.coinPicker {
+    margin-top: 2px;
+    margin-bottom: 5px;
+    margin-left: 2px;
+}
+
+.coinSelect {
+    margin-bottom: 5px;
+    margin-left: 1px;
+}
+
+.coin-menu {
+    margin-bottom: 5px;
+   /* margin-left: 2px;*/
+    position: absolute;
+    width: 300px !important;
+    background-color: #009688;
+    z-index: 50;
+}
+
 .logo:hover {
   
-  background-image: url(../images/ribbit-transparent.svg);
+  /*background-image: url(../images/SVG/ribbit-transparent.svg);*/
   left: 0;
   height: 55px;
-  background-size: 55px 55px;
+  /*background-size: 55px 55px;*/
   background-repeat: no-repeat;
   opacity: 1;
 }
@@ -69,7 +144,7 @@ iframe {
 .page-header h1 {
     color: #868d99;
     font-weight: bolder !important;
-    font-size: 4.2vw !important;
+    /*font-size: 4.2vw !important;*/
 }
 
 .header-profile {
