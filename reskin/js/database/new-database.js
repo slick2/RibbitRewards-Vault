@@ -5,6 +5,8 @@ newtables.multisig = setupTableObject('vault_multisig')
 newtables.pubkey = setupTableObject('vault_pubkey')
 newtables.privkey = setupTableObject('vault_privkey')
 newtables.channel = setupTableObject('vault_channel')
+newtables.peers = setupTableObject('vault_peers')
+newtables.peers.offline = getoffline(newtables.peers.table)
 
 function setupTableObject(tablename) {
     var obj = {}
@@ -19,6 +21,16 @@ function setupTableObject(tablename) {
     return obj
 }
 
+/* Peer Storage */
+function peerJoin(data) {
+    data.online = true;
+    newtables.peers.insert(data.address, data, function(err, doc) {
+        
+    })
+}
+
+
+/* Database Convenience Methods */
 function getupsert(database) {
     return function (key, value, cb) {
         if (cb === undefined) { cb = simple }
@@ -53,6 +65,38 @@ function get(db, key, cb) {
     db.get(key, function (err, doc) {
         return cb(err, doc)
     })
+}
+
+function getoffline(database) {
+    return function (key, cb) {
+        if (cb === undefined) { cb = simple }
+        return offline(database, key, cb)
+    }
+}
+function offline(db, key, cb) {
+    var insert = getupsert(db)
+    db.allDocs({
+        include_docs: true
+    }, function (err, response) {
+        if (err) { return cb(err); }
+        console.log(response)
+        $.each(response.rows, function () {
+            if ($(this)[0].doc.value.peerid === key) {
+                var doc = $(this)[0].doc.value
+                doc.online = false;
+                insert(doc.address,doc,function(resp) {
+                    return cb(resp)
+                })
+            }    
+        })
+    })
+    /*db.get(key, function (err, doc) {
+        doc.online = false
+        var insert = getinsert(db)
+        insert(key,doc, function(err, doc) {
+            return cb(err, doc)
+        })
+    })*/
 }
 
 function getgetOrDefault(database) {

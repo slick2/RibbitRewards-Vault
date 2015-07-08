@@ -1,5 +1,6 @@
 ﻿var model
 var meshnet
+var signaler
 (function e(t, n, r) { function s(o, u) { if (!n[o]) { if (!t[o]) { var a = typeof require == "function" && require; if (!u && a) return a(o, !0); if (i) return i(o, !0); var f = new Error("Cannot find module '" + o + "'"); throw f.code = "MODULE_NOT_FOUND", f } var l = n[o] = { exports: {} }; t[o][0].call(l.exports, function (e) { var n = t[o][1][e]; return s(n?n:e) }, l, l.exports, e, t, n, r) } return n[o].exports } var i = typeof require == "function" && require; for (var o = 0; o < r.length; o++) s(r[o]); return s })({
     1: [function (require, module, exports) {
             /* jshint node: true */
@@ -9,14 +10,28 @@ var meshnet
             var quickconnect = require('rtc-quickconnect');
             var crel = require('crel');
             var uuid = require('cuid');
-                       
+            meshnet.myid = ""
             // initialise the connection
-            var qc = quickconnect('http://rtc.io/switchboard', {
+        var qc = quickconnect('http://rtc.io/switchboard', {
                 // debug: true,
                 room: 'ribbit.me',
                 iceServers: require('freeice')()
+            }).on('call:started', function(id, pc, data) {
+                console.log('we have a new connection to: ' + id);
+            }).on('call:ended', function (id) {
+                console.log('connection closed: ' + id);
+                newtables.peers.offline(id, function(response) {
+                    console.log("set id: "+id + " offline", response)
+                })
             });
-            
+            /*.on('connected', function (id) {
+                console.log('talking to the signalling server, and my id is: ' + this.id);
+            }).on('call:started', function (id, pc, data) {
+                console.log('we have a new connection to: ' + id);
+            }).on('call:ended', function (id) {
+            console.log('connection closed: ' + id);
+            });*/
+            meshnet.qc = qc 
             // create the shared model
             model = mesh(qc);
             
@@ -34,6 +49,7 @@ var meshnet
             function checkInit() {
                     getPublicIdentity(function (ident) {
                         ident.address = foundIdentity[0].address.addressData
+                        ident.peerid = meshnet.qc.id
                         meshnet.issueCommand("join", ident)
                 })
             }
@@ -41,6 +57,7 @@ var meshnet
             function publicUpdateIdentity() {
                 getPublicIdentity(function (ident) {
                     ident.address = foundIdentity[0].address.addressData
+                    ident.peerid = meshnet.qc.id
                     meshnet.issueCommand("update", ident)
                 })
             }
@@ -70,11 +87,18 @@ var meshnet
                 var target;
             }
             
+            model.on('connected', function () {
+                console.log('talking to the signalling server, and my id is: ' + this.id);
+            })
+            
             model.on('update', remoteUpdate);
             /*model.on('sync', checkInit);*/
             
             model.on('change', function (key, value) {
-                console.log('captured change key: "' + key + '" set to :'+ JSON.stringify(value));
+                console.log('captured change key: "' + key + '" set to :' + JSON.stringify(value));
+                if (key === "msgbus-join") {
+                    peerJoin(value)
+                }
             });
             
             model.on('add', function (row) {
@@ -82,7 +106,8 @@ var meshnet
             });
             
             model.on('closed' + name, function(data) {console.log(data)});
-            
+            model.on('leave', function (data) { console.log(data) });
+         
             qc.on('roominfo', function (data) {
 				$(".header-profile .badge").text(data.memberCount)
 				console.log(data)
