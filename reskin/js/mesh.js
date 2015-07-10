@@ -18,6 +18,10 @@ var signaler
                 iceServers: require('freeice')()
             }).on('call:started', function(id, pc, data) {
                 console.log('we have a new connection to: ' + id);
+            }).on('connected', function () {
+                newtables.peers.offline(null, function (response) {
+                    console.log("everyone is now off line", response)
+                })
             }).on('call:ended', function (id) {
                 console.log('connection closed: ' + id);
                 newtables.peers.offline(id, function(response) {
@@ -45,24 +49,38 @@ var signaler
                 // add the object into mesh data
                 model.set(obj._label, obj.toJSON());
             }
-            
-            function checkInit() {
-                    getPublicIdentity(function (ident) {
-                        ident.address = foundIdentity[0].address.addressData
-                        ident.peerid = meshnet.qc.id
-                        meshnet.issueCommand("join", ident)
-                })
-            }
-            
-            function publicUpdateIdentity() {
+
+        function checkInit() {
+            if (settings.inFrame()) {return}
+            getPublicIdentity(function(ident) {
+                ident.address = foundIdentity[0].address.addressData
+                ident.peerid = meshnet.qc.id
+                setTimeout(function() {
+                    meshnet.issueCommand("heartbeat", meshnet.qc.id)
+                }, 30)
+                meshnet.issueCommand("join", ident)
+            })
+        }
+
+        function publicUpdateIdentity() {
                 getPublicIdentity(function (ident) {
                     ident.address = foundIdentity[0].address.addressData
                     ident.peerid = meshnet.qc.id
                     meshnet.issueCommand("update", ident)
                 })
             }
-            
-            function updateState(evt) {
+        
+            function pushMsg(msg) {
+                if (settings.inFrame()) { return }
+                getPublicIdentity(function(ident) {
+                ident.address = foundIdentity[0].address.addressData
+                ident.peerid = meshnet.qc.id
+                meshnet.issueCommand("chat", {address:ident.address,payload: msg})
+            })
+       }
+            meshnet.pushMsg = pushMsg
+
+        function updateState(evt) {
                 // TODO: debounce
                /* if (evt.target && evt.target._label) {
                     model.set(evt.target._label, evt.target.toJSON());
@@ -95,9 +113,16 @@ var signaler
             /*model.on('sync', checkInit);*/
             
             model.on('change', function (key, value) {
-                console.log('captured change key: "' + key + '" set to :' + JSON.stringify(value));
                 if (key === "msgbus-join" || key === "msgbus-update") {
-                    peerJoin(value)
+                    return peerJoin(value)
+                } else if (key === "msgbus-heartbeat") {
+                    newtables.peers.online(value, function (response) {
+                        console.log("set id: " + value + " online", response)
+                    })
+                } else if (key === "msgbus-chat") {
+                    if (settings.inFrame()) { return }
+                    console.log('captured chat :' + JSON.stringify(value));
+                    addGroupChatMsg(value)
                 }
             });
             
@@ -109,7 +134,7 @@ var signaler
             model.on('leave', function (data) { console.log(data) });
          
             qc.on('roominfo', function (data) {
-				$(".header-profile .badge").text(data.memberCount)
+				$(".hometabs .badge").text(data.memberCount)
 				console.log(data)
                 console.log('room info: '+ JSON.stringify(data));
             });

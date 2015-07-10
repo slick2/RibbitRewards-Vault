@@ -154,12 +154,17 @@ iframe {
 }
 
 .chatlist {
-    left: 25px;
-    position: absolute;
+    width: 230px;
+    position: relative;
+    left: -35px;
 }
 
 .chatlist .row {
     margin-top: 5px;
+}
+
+.hometabs .fa {
+    padding-bottom: 0 !important;
 }
 
 .menu-item-sm .square {
@@ -193,6 +198,67 @@ iframe {
       margin-top: 19px;
 }
 
+.hometabs {
+    background-color: transparent;
+}
+
+.hometabs .active, .hometabs .active a  {
+    background-color: #009688;
+    color: white !important;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+/* Chat Box */
+#chatwindow{
+    position:relative;
+    height:400px;
+}
+#messagewindow, #inputcontainer{
+    position:absolute;
+    left:0;
+    right:0;
+    border:1px solid #000;
+}
+#messagewindow{   
+    overflow:auto;
+    top:0;
+    bottom:3em;
+}
+#inputcontainer{
+    display:block;
+    bottom:0;
+    height:1em;
+    padding:.5em;
+    margin-top:1em;
+}
+
+#inputcontainer > p{
+    margin:0;
+}
+
+#messagewindow.users {
+    width: 250px;
+}
+
+#messagewindow.msgs {
+      margin-left: 260px;
+      margin-right: 65px;
+}
+
+#chatInput {
+  display: block;
+  bottom: -10px;
+  padding: .5em;
+  margin-top: 1em;
+  position: absolute;
+  left: 0;
+  right: 0;
+  border: 1px solid #000;
+  margin-right: 65px;
+}
+
+/* Chat Box */
 sup {
   top: -0.5em;
   color:red;

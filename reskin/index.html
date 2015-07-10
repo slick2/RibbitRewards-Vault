@@ -186,7 +186,6 @@
                                 </a>
                             </li>
                         </ul>
-                        <div class="chatlist"></div>
                     </nav>
                     <nav style="width: 240px; float: left;" class="menu-items-sm">
                         <ul>
@@ -312,28 +311,21 @@
                     </button>
                     <div class="navbar-right">
                         <ul class="nav navbar-nav">
-                            <li>
+                            <!--<li>
                                 <i class="fa-double fa fa-lg fa-weixin header-profile">
                                     <span class="badge alert-danger"></span>
                                 </i>
-                            </li>
-                            <li>
-                                <a class="navlink" href="#settings">
-
-                                <i class="fa-double fa fa-lg fa-gear header-profile"></i>
-
-                            </a>
-                            </li>
+                            </li>-->
                             <li class="dropdown">
                                 <a for="name" href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"
-                                aria-expanded="false">
-                                Satoshi <b class="caret"></b>
-                                <div class="ripple-wrapper"></div>
-                            </a>
+                                   aria-expanded="false">
+                                    Satoshi <b class="caret"></b>
+                                    <div class="ripple-wrapper"></div>
+                                </a>
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a href="http://tech.ribbit.me/vault/export.html?data:application/json;filename=exportData;base64,W3siaGVhZGVyIjpbWyJMYWJlbCIsIkNvbXByZXNzZWQiLCJFbmNyeXB0ZWQiLCJBZGRyZXNzIiwiRm9ybWF0IiwiUHJpdmF0ZSBLZXkiLCJQdWJsaWMgS2V5Il1dLCJkYXRhIjpbWyJFbXB0eSIsImZhbHNlIiwiZmFsc2UiLCJSZWtyRlNoR3JhRGQyVGREODZLTG5ZVjFhdlBWcWhBaUhvIiwiSWRlbnRpdHkiLCIiLCIiXSxbIkVtcHR5IiwiZmFsc2UiLCJmYWxzZSIsIlJ0b0N2ak0zSFQ0RmY5OWJYdEFnYzNGamNYTVVTeXo5WHEiLCJJZGVudGl0eSIsIiIsIiJdXX1d"
-                                        class="dropbox-saver">Save to DropBox</a>
+                                           class="dropbox-saver">Save to DropBox</a>
                                     </li>
                                     <li>
                                         <a href="javascript:void(0)">Another action</a>
@@ -347,6 +339,14 @@
                                     </li>
                                 </ul>
                             </li>
+                            <!--<li class="dropup">
+                                <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-double fa fa-lg fa-weixin header-profile">
+                                        <span class="badge alert-danger"></span>
+                                    </i>
+                                    <div class="ripple-wrapper"></div>
+                                </a>
+                            </li>-->
                         </ul>
                         <img height="20" class="header-profile" src="images/profile.png">
                     </div>
@@ -355,8 +355,59 @@
                     <div class="hidden-xs page-header">
                         <h1>Loading...</h1>
                     </div>
-                    <iframe id="guestFrame" allowTransparency="true" name="guestFrame" style="padding-right: 75px;"></iframe>
-                    <div></div>
+                    <div>
+
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs hometabs" role="tablist">
+                            <li role="presentation" class="active"><a class="frame-tab" href="#frame" style="color: black !important" aria-controls="frame" role="tab" data-toggle="tab">Loading...</a></li>
+                            <li role="presentation">
+                                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" style="color: black !important">
+                                    Group Chat
+                                    <i class="fa fa-lg fa-weixin">
+                                        <span class="badge alert-danger"></span>
+                                    </i>
+                                </a>
+                            </li>
+                            <li style="display:none" role="presentation" class="dropdown">
+                                <!--<a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a>-->
+                                <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">Private Chats <span class="caret"></span></a>
+                                <ul class="dropdown-menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
+                                    <li><a href="#messages" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1">@fat</a></li>
+                                    <li><a href="#settings" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2">@mdo</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="frame">
+                                <iframe id="guestFrame" allowtransparency="true" name="guestFrame" style="padding-right: 75px; height: 949px;" src="profile.html"></iframe>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="profile">
+                                <div id="chatwindow">
+                                    <div id="messagewindow" class="users">
+                                        <ul class="chatlist"></ul>
+                                    </div>
+                                    <div id="messagewindow" class="msgs">
+                                        
+                                    </div>
+                                    <!--<div id="inputcontainer">
+                                        <p>Your message</p>
+                                    </div>-->
+                                    <input id="chatInput" class="form-control input-lg" type="text">
+                                </div>
+                                <span class="row"></span>
+                                    <div class="togglebutton">
+                                        <label>
+                                            Hide offline users?
+                                            <input type="checkbox" for="hide" toggletype="offline" data-original-title="" title="" style="margin: 5px;">
+                                        </label>
+                                    </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="messages">c</div>
+                            <div role="tabpanel" class="tab-pane" id="settings">d</div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- wallet confirm send modal -->
@@ -496,13 +547,12 @@
         <!-- Placed at the end of the document so the pages load faster
         -->
         <script src="js/modernizr.custom.63321.js"></script>
-        <script src="js/app.js"></script>
-        <script src="js/Vault.js"></script>
         <script src="js/database/pouchdb-3.4.0.min.js"></script>
         <!-- Iframe Resize -->
         <script src="js/iframeResizer.min.js"></script>
         <!-- Bootstrap and Material Design -->
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.stickytabs.js"></script>
         <script src="js/jasny-bootstrap.js"></script>
         <script src="js/ripples.min.js"></script>
         <script src="js/material.min.js"></script>
@@ -536,6 +586,9 @@
         <script type="text/javascript" src="js/bitcore-p2p.js"></script>
         <script type="text/javascript" src="js/bitcore-explorers-multi.js"></script>
         <script type="text/javascript" src="js/out-wallet.js"></script>
+        <!-- VAULT -->
+        <script src="js/app.js"></script>
+        <script src="js/Vault.js"></script>
         <!-- PubSub -->
         <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         -->

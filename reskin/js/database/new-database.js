@@ -7,6 +7,7 @@ newtables.privkey = setupTableObject('vault_privkey')
 newtables.channel = setupTableObject('vault_channel')
 newtables.peers = setupTableObject('vault_peers')
 newtables.peers.offline = getoffline(newtables.peers.table)
+newtables.peers.online = getonline(newtables.peers.table)
 
 function setupTableObject(tablename) {
     var obj = {}
@@ -70,24 +71,31 @@ function get(db, key, cb) {
 function getoffline(database) {
     return function (key, cb) {
         if (cb === undefined) { cb = simple }
-        return offline(database, key, cb)
+        return offline(database, false, key, cb)
     }
 }
-function offline(db, key, cb) {
+function getonline(database) {
+    return function (key, cb) {
+        if (cb === undefined) { cb = simple }
+        return offline(database, true, key, cb)
+    }
+}
+function offline(db, state, key, cb) {
     var insert = getupsert(db)
     db.allDocs({
         include_docs: true
     }, function (err, response) {
         if (err) { return cb(err); }
         console.log(response)
-        $.each(response.rows, function () {
-            if ($(this)[0].doc.value.peerid === key) {
+        $.each(response.rows, function (index, value) {
+            if ($(this)[0].doc.value.peerid === key || key === null) {
                 var doc = $(this)[0].doc.value
-                doc.online = false;
-                insert(doc.address,doc,function(resp) {
+                doc.online = state;
+                insert(doc.address, doc, function(resp) {
+                    if (key !== null || index === ( response.rows.length -1) )
                     return cb(resp)
                 })
-            }    
+            }
         })
     })
     /*db.get(key, function (err, doc) {

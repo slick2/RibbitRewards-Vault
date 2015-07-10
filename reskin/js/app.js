@@ -224,6 +224,7 @@ var loadPageByHash = function () {
     if ($("iframe").length > 0) {
         $("iframe").attr("src", pageData.page)
         $(".page-header h1").text(pageData.title)
+        $(".frame-tab").text(pageData.title)
     } //else {
         setTimeout(function(){handleSettingsElementFromStore()},500)
     //}
@@ -295,14 +296,48 @@ function renderChatList() {
         $.each(rows, function () {
             var data = $(this).get(0)
             var photo = data.photo
-            var url
-            if (photo.location === "stock") {
-                url = "./images/avatars/characters_"+photo.id+".png"
-            } else if (photo.location === "base64") {
-                url = photo.data
+            var user, url
+            if (data.name !== undefined) {
+                user = data.name
+            } else if (data.nickname !== undefined) {
+                user = data.nickname
+            } else {
+                user = "Anonymous"
             }
-             $(".chatlist").append('<div class="row"><img width="35px" src="'+url+'"></div>')
-         })
+            if (photo !== undefined && photo.location !== undefined && photo.location === "stock") {
+                url = "./images/avatars/characters_" + photo.id + ".png"
+            } else if (photo !== undefined && photo.location !== undefined && photo.location === "base64") {
+                url = photo.data
+            } else {
+                url = "./images/profile.png"
+            }
+            var onlineclass = ""
+            var onlinestyle = ""
+            var onlineindicator = ""
+            var isonline = ""
+            var border = "border: 2px solid green;"
+            var detailstyle = " position: relative;  left: 45px;  top: -15px;"
+            var communicate = '<a href=""><i class="fa-double fa fa-lg fa-plus-circle" style="float:right;"></i> </a>'
+            var shadow = "  box-shadow: 0 1px 6px 0 rgba(0,0,0,.12),0 1px 6px 0 rgba(0,0,0,.12); transition: box-shadow .28s cubic-bezier(.4,0,.2,1);"
+            if (!data.online) {
+                onlineclass = "btn-danger";
+                onlinestyle = "opacity: 0.4;filter: alpha(opacity=40);";
+                border = "border: 2px solid red;";
+            } else {
+                communicate += ' <a href=""><i class="fa fa-lg fa-weixin" style="float:right;"></i></a>'
+                communicate += ' <a href=""><i class="fa fa-lg fa-video-camera" style="float:right;"></i></a>'
+                onlineclass = "btn-success";
+            }
+            newtables.settings.get("hideoffline", function(err,doc) {
+                if (doc.value && !data.online) {
+                    isonline = "display: none; " 
+                }
+                $(".chatlist").append('<li style="'+ isonline+'"><div><div>' + onlineindicator + '<img class="circular" style="width:35px !important; height:35px !important; cursor: pointer; ' + onlinestyle + shadow + border + '" src="' + url + '"></div><div style="' + detailstyle + '">' + user + communicate + '</div></div></li>')
+                $(".chatlist .row").css("height", "38px")
+            })
+            //onlineindicator = '<a href="javascript:void(0)" class="btn '+onlineclass+' btn-fab btn-raised" style="width:40px; height:40px; position: absolute;"></a>'
+            
+        })
     })
 }
 
@@ -382,12 +417,17 @@ function persistSettingToggleToDatastore(context) {
     })
 }
 
-var initApplication = function () {
+var initApplication = function() {
 	/* Video */
     //initVideo(foundIdentity[0].address.addressData)
     initAllTheThings()
     console.log("Init Application")
     $.material.init();
+    //$('#tabs').tab();
+    if (!settings.inFrame()) {
+        var options = { selectorAttribute: "data-target" };
+        $('#tabs').stickyTabs(options);
+    }
 }
 
 function popMsg(msg) {
@@ -436,6 +476,12 @@ function bindClicks() {
     
     $(document).on('click.customBindings', '.navlink', function () {
         setTimeout(function(){loadPageByHash()},500)
+    })
+    
+    /* Hometabs switch */
+    $(document).on('click.customBindings', '.hometabs a', function (e) {
+        e.preventDefault()
+        $(this).tab("show")
     })
     
     $(document).on('click.customBindings', '.togglebutton input', function () {
@@ -539,13 +585,22 @@ function bindClicks() {
        /* })*/
     })
     
+    $(document).on('change.customBindings', "#chatInput", function () {
+        var target = $(this)
+        var msg = target.val()
+        $(this).val("")
+        if (!settings.inFrame()) {
+            meshnet.pushMsg(msg)
+        }
+    })
+    
     $(document).on('keyup.customBindings', "input[type='text'][for]", function () {
         var target = $(this)
         newtables.settings.insert(target.attr("for"), target.val(), function (doc) {
             top.matchPageSettingsToDatastore()
         })
     })
-    
+     
     /* Address Picker Actions */
     //wallet-action
     $(document).on('click.customBindings', '.wallet-address-picker .dropdown-menu .wallet-action', function (data) {
@@ -803,6 +858,32 @@ function changeProfileImageStock(context) {
     newtables.settings.insert("profileImage", {location: "stock", id: rnd}, function(doc) {
         console.log(doc)
         meshnet.publicUpdateIdentity()
+    })
+}
+
+function addGroupChatMsg(payload) {
+    var msg = payload.payload
+    newtables.peers.get(payload.address, function (err, data) {
+        data = data.value
+        var photo = data.photo
+        var user, url
+        if (data.name !== undefined) {
+            user = data.name
+        } else if (data.nickname !== undefined) {
+            user = data.nickname
+        } else {
+            user = "Anonymous"
+        }
+        if (photo !== undefined && photo.location !== undefined && photo.location === "stock") {
+            url = "./images/avatars/characters_" + photo.id + ".png"
+        } else if (photo !== undefined && photo.location !== undefined && photo.location === "base64") {
+            url = photo.data
+        } else {
+            url = "./images/profile.png"
+        }
+        
+        $("#messagewindow.msgs").append('<div style="margin-left: 10px;" class="row"><img class="circular" style="width:35px !important; height:35px !important; cursor: pointer; " src="' + url + '"></div><div style="left: 55px;position: relative;  top: -20px;float: left;">(' + user + ')</div><div style="left: 185px;position: relative; top:-20px;">' + msg + '</div></div>')
+        $("#messagewindow.msgs").animate({ scrollTop: $("#messagewindow.msgs").prop("scrollHeight") - $("#messagewindow.msgs").height() }, 300);
     })
 }
 
