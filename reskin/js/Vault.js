@@ -15,7 +15,7 @@ $(document).ready(function () {
 function initAllTheThings() {
     top.loadAddressTable()
 
-    top.loadAddressPicker()
+    loadAddressPicker()
 
     bindClicks()
 
