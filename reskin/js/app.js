@@ -3,6 +3,7 @@ var bitcore, ECIES, explorers, insight, transaction, qrcode, p2p, message, node
 var settings = {}
 var foundIdentity = {}
 var lazyCheck, getDisplayName, checkLocalIdentity
+/*Vault = top.Vault*/
 var check = function (cb) {
     Vault.getAddressesByPrivateKeyFormat("Extended Identity", function (keys) {
         foundIdentity = keys
@@ -57,7 +58,7 @@ $(document).ready(function () {
         preInit(function () {
             check(function () {
                 setTimeout(function () { $(".navmenu").fadeIn("slow") }, 900)
-                if (verbose) console.log("done checking identity")
+                if (top.verbose) console.log("done checking identity")
                 initApplication()
 
             })
@@ -119,7 +120,7 @@ iframeLoaded = function() {
     /* Cleanup Canvas size */
     $(".canvas").width($(window).width() - Number(offset()))
     var options = {}
-    if (verbose) options.log = true
+    if (top.verbose) options.log = true
     iFrameResize(options)
 }
 
@@ -167,16 +168,16 @@ var preInit = function(cb) {
     checkLocalIdentity = function() {
         if (foundIdentity.length === 0) {
             Vault.saveHDAddress(true, function() {
-                if (verbose) console.log("Created a new identity")
+                if (top.verbose) console.log("Created a new identity")
                 check(function() {
                     console.log("checked identity again")
                     lazyCheck()
                 })
             })
         } else {
-            if (verbose) console.log("Using identity address: " + foundIdentity[0].address.addressData)
-            $(".identity").html(foundIdentity[0].address.addressData)
-            $("#identityAddress").val(foundIdentity[0].address.addressData)
+            if (top.verbose) console.log("Using identity address: " + top.foundIdentity[0].address.addressData)
+            $(".identity").html(top.foundIdentity[0].address.addressData)
+            $("#identityAddress").val(top.foundIdentity[0].address.addressData)
             joinIdentity()
             meshnet.checkInit()
         }
@@ -548,7 +549,7 @@ function bindClicks() {
     $(document).on('keyup.customBindings', "input[type='text'][for]", function () {
         var target = $(this)
         newtables.settings.insert(target.attr("for"), target.val(), function (doc) {
-            top.matchPageSettingsToDatastore()
+            //top.matchPageSettingsToDatastore()
         })
     })
      
@@ -808,7 +809,7 @@ function changeProfileImageStock(context) {
     top.$(".profile-item img").css("background-image", "url(./images/avatars/characters_" + rnd + ".png)")
     newtables.settings.insert("profileImage", {location: "stock", id: rnd}, function(doc) {
         console.log(doc)
-        top.meshnet.publicUpdateIdentity()
+        meshnet.publicUpdateIdentity()
     })
 }
 

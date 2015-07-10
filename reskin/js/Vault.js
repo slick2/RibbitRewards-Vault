@@ -13,15 +13,15 @@ $(document).ready(function () {
 })
 
 function initAllTheThings() {
-    loadAddressTable()
+    top.loadAddressTable()
 
-    loadAddressPicker()
+    top.loadAddressPicker()
 
     bindClicks()
 
-    checkHash()
+    top.checkHash()
 
-    getDisplayName($("#displayName"))
+    top.getDisplayName($("#displayName"))
 }
 
 function getDisplayName(element) {
@@ -33,7 +33,7 @@ function getDisplayName(element) {
 }
 
 function loadAddressTable() {
-    getAllTablesAsDataTable(function (data) {
+    top.getAllTablesAsDataTable(function (data) {
         $('#table').bootstrapTable('load', data.address)
         if (data.address.rows.length <= 1) {
             Vault.saveHDAddress(false, function () {
@@ -121,47 +121,50 @@ function supportsImports() {
  *              Much is boilerplate
  * 
  *****************************************/
-var $table = $('#table'),
-    $remove = $('#remove'),
-    selections = [];
-$(function () {
-    $table.bootstrapTable({
-        height: getHeight()
-    });
-    $table.on('check.bs.table uncheck.bs.table ' +
-        'check-all.bs.table uncheck-all.bs.table', function () {
-            $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
-            // save your data, here just save the current page
-            selections = getIdSelections();
-            // push or splice the selections if you want to save all data selections
-        });
-    $table.on('all.bs.table', function (e, name, args) {
-        //This is where I can save the changes
-        if (name.indexOf('editable-save') == 0) {
-            var interestingRecord = args[1]._id
-            var fieldEdited = args[0]
-            Vault.getRecordFilteredOfType(Vault.tables.address, "_id", interestingRecord, function (data) {
-                data[fieldEdited] = args[1][fieldEdited]
-                initAllTheThings()
-                return Vault.tables.address.put(data)
-            })
-        }
-        if (verbose) console.log(name, args);
-    });
-    $remove.click(function () {
-        var ids = getIdSelections();
-        $table.bootstrapTable('remove', {
-            field: 'id',
-            values: ids
-        });
-        $remove.prop('disabled', true);
-    });
-    $(window).resize(function () {
-        $table.bootstrapTable('resetView', {
+if (location.href.indexOf('keys') > -1) {
+    var $table = $('#table'),
+        $remove = $('#remove'),
+        selections = [];
+    $(function() {
+        $table.bootstrapTable({
             height: getHeight()
         });
+        $table.on('check.bs.table uncheck.bs.table ' +
+            'check-all.bs.table uncheck-all.bs.table', function() {
+                $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+                // save your data, here just save the current page
+                selections = getIdSelections();
+                // push or splice the selections if you want to save all data selections
+            });
+        $table.on('all.bs.table', function(e, name, args) {
+            //This is where I can save the changes
+            if (name.indexOf('editable-save') == 0) {
+                var interestingRecord = args[1]._id
+                var fieldEdited = args[0]
+                Vault.getRecordFilteredOfType(Vault.tables.address, "_id", interestingRecord, function(data) {
+                    data[fieldEdited] = args[1][fieldEdited]
+                    initAllTheThings()
+                    return Vault.tables.address.put(data)
+                })
+            }
+            if (verbose) console.log(name, args);
+        });
+        $remove.click(function() {
+            var ids = getIdSelections();
+            $table.bootstrapTable('remove', {
+                field: 'id',
+                values: ids
+            });
+            $remove.prop('disabled', true);
+        });
+        $(window).resize(function() {
+            $table.bootstrapTable('resetView', {
+                height: getHeight()
+            });
+        });
     });
-});
+}
+
 function getIdSelections() {
     return $.map($table.bootstrapTable('getSelections'), function (row) {
         return row.id

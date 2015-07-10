@@ -11,7 +11,7 @@ newtables.peers.online = getonline(newtables.peers.table)
 
 function setupTableObject(tablename) {
     var obj = {}
-    obj.table = new PouchDB(tablename, { auto_compaction: true })
+    obj.table = new top.PouchDB(tablename, { auto_compaction: true })
     obj.insert = getupsert(obj.table)
     obj.get = getget(obj.table)
     obj.getOrDefault = getgetOrDefault(obj.table)

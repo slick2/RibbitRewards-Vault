@@ -137,7 +137,7 @@ iframe {
 	-webkit-border-radius: 150px;
 	-moz-border-radius: 150px;
      background-size: cover;
-     top: 5px;
+     top: 20px;
      position: relative;
 }
 
@@ -151,6 +151,15 @@ iframe {
     top: -21px;
     left: -7px;
     position: relative;
+}
+
+.form-control  {
+    width: 250px !important;    
+}
+
+input[type=file] {
+      top: 15px;
+  position: absolute;
 }
 
 .chatlist {
