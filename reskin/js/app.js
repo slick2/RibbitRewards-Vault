@@ -290,56 +290,7 @@ function handleProfileImageUpload(context) {
     }
 }
 
-function renderChatList() {
-    newtables.peers.allRecords(function (rows) {
-        $(".chatlist").html("")
-        $.each(rows, function () {
-            var data = $(this).get(0)
-            var photo = data.photo
-            var user, url
-            if (data.name !== undefined) {
-                user = data.name
-            } else if (data.nickname !== undefined) {
-                user = data.nickname
-            } else {
-                user = "Anonymous"
-            }
-            if (photo !== undefined && photo.location !== undefined && photo.location === "stock") {
-                url = "./images/avatars/characters_" + photo.id + ".png"
-            } else if (photo !== undefined && photo.location !== undefined && photo.location === "base64") {
-                url = photo.data
-            } else {
-                url = "./images/profile.png"
-            }
-            var onlineclass = ""
-            var onlinestyle = ""
-            var onlineindicator = ""
-            var isonline = ""
-            var border = "border: 2px solid green;"
-            var detailstyle = " position: relative;  left: 45px;  top: -15px;"
-            var communicate = '<a href=""><i class="fa-double fa fa-lg fa-plus-circle" style="float:right;"></i> </a>'
-            var shadow = "  box-shadow: 0 1px 6px 0 rgba(0,0,0,.12),0 1px 6px 0 rgba(0,0,0,.12); transition: box-shadow .28s cubic-bezier(.4,0,.2,1);"
-            if (!data.online) {
-                onlineclass = "btn-danger";
-                onlinestyle = "opacity: 0.4;filter: alpha(opacity=40);";
-                border = "border: 2px solid red;";
-            } else {
-                communicate += ' <a href=""><i class="fa fa-lg fa-weixin" style="float:right;"></i></a>'
-                communicate += ' <a href=""><i class="fa fa-lg fa-video-camera" style="float:right;"></i></a>'
-                onlineclass = "btn-success";
-            }
-            newtables.settings.get("hideoffline", function(err,doc) {
-                if (doc.value && !data.online) {
-                    isonline = "display: none; " 
-                }
-                $(".chatlist").append('<li style="'+ isonline+'"><div><div>' + onlineindicator + '<img class="circular" style="width:35px !important; height:35px !important; cursor: pointer; ' + onlinestyle + shadow + border + '" src="' + url + '"></div><div style="' + detailstyle + '">' + user + communicate + '</div></div></li>')
-                $(".chatlist .row").css("height", "38px")
-            })
-            //onlineindicator = '<a href="javascript:void(0)" class="btn '+onlineclass+' btn-fab btn-raised" style="width:40px; height:40px; position: absolute;"></a>'
-            
-        })
-    })
-}
+
 
 function matchPageSettingsToDatastore() {
     /* Toggles */
@@ -458,7 +409,7 @@ function bindClicks() {
     })
     /* Toggle Profile Pic */
     $(document).on('click.customBindings', 'div[for="profileImage"]', function () {
-       changeProfileImageStock($(this))
+       top.changeProfileImageStock($(this))
     })
     
     /* Change Coin */
@@ -857,12 +808,13 @@ function changeProfileImageStock(context) {
     top.$(".profile-item img").css("background-image", "url(./images/avatars/characters_" + rnd + ".png)")
     newtables.settings.insert("profileImage", {location: "stock", id: rnd}, function(doc) {
         console.log(doc)
-        meshnet.publicUpdateIdentity()
+        top.meshnet.publicUpdateIdentity()
     })
 }
 
 function addGroupChatMsg(payload) {
     var msg = payload.payload
+    var address = payload.address
     newtables.peers.get(payload.address, function (err, data) {
         data = data.value
         var photo = data.photo
@@ -882,8 +834,78 @@ function addGroupChatMsg(payload) {
             url = "./images/profile.png"
         }
         
-        $("#messagewindow.msgs").append('<div style="margin-left: 10px;" class="row"><img class="circular" style="width:35px !important; height:35px !important; cursor: pointer; " src="' + url + '"></div><div style="left: 55px;position: relative;  top: -20px;float: left;">(' + user + ')</div><div style="left: 185px;position: relative; top:-20px;">' + msg + '</div></div>')
+        $("#messagewindow.msgs").append('<div class="chatmsg"> <div style="margin-left: 10px;" class="messages row"><img address="'+ escapeHtml(address)+'" class="circular" style="width:35px !important; height:35px !important; cursor: pointer; " src="' + escapeHtml(url) + '"></div><div class="username" style="left: 55px;position: relative;  top: -20px;float: left;">(' + escapeHtml(user) + ')</div><div class="msg" style="left: 185px;position: relative; top:-20px;">' + escapeHtml(msg) + '</div></div>')
         $("#messagewindow.msgs").animate({ scrollTop: $("#messagewindow.msgs").prop("scrollHeight") - $("#messagewindow.msgs").height() }, 300);
     })
 }
 
+function renderChatList() {
+    newtables.peers.allRecords(function (rows) {
+        $(".chatlist").html("")
+        $.each(rows, function () {
+            var data = $(this).get(0)
+            var photo = data.photo
+            var user, url
+            if (data.name !== undefined) {
+                user = data.name
+            } else if (data.nickname !== undefined) {
+                user = data.nickname
+            } else {
+                user = "Anonymous"
+            }
+            if (photo !== undefined && photo.location !== undefined && photo.location === "stock") {
+                url = "./images/avatars/characters_" + photo.id + ".png"
+            } else if (photo !== undefined && photo.location !== undefined && photo.location === "base64") {
+                url = photo.data
+            } else {
+                url = "./images/profile.png"
+            }
+            var onlineclass = ""
+            var onlinestyle = ""
+            var onlineindicator = ""
+            var isonline = ""
+            var border = "border: 2px solid green;"
+            var detailstyle = " position: relative;  left: 45px;  top: -15px;"
+            var communicate = '<a href=""><i class="fa-double fa fa-lg fa-plus-circle" style="float:right;"></i> </a>'
+            var shadow = "  box-shadow: 0 1px 6px 0 rgba(0,0,0,.12),0 1px 6px 0 rgba(0,0,0,.12); transition: box-shadow .28s cubic-bezier(.4,0,.2,1);"
+            if (!data.online) {
+                onlineclass = "btn-danger";
+                onlinestyle = "opacity: 0.4;filter: alpha(opacity=40);";
+                border = "border: 2px solid red;";
+            } else {
+                communicate += ' <a href=""><i class="fa fa-lg fa-weixin" style="float:right;"></i></a>'
+                communicate += ' <a href=""><i class="fa fa-lg fa-video-camera" style="float:right;"></i></a>'
+                onlineclass = "btn-success";
+            }
+            newtables.settings.get("hideoffline", function (err, doc) {
+                if (doc.value && !data.online) {
+                    isonline = "display: none; "
+                }
+                $(".chatlist").append('<li style="' + isonline + '"><div><div>' + onlineindicator + '<img address="' + escapeHtml(data.address) + '" class="circular" style="width:35px !important; height:35px !important; cursor: pointer; ' + onlinestyle + shadow + border + '" src="' + escapeHtml(url) + '"></div><div style="' + detailstyle + '">' + escapeHtml(user) + communicate + '</div></div></li>')
+                $(".chatlist .row").css("height", "38px")
+
+                /* update past chats */
+                $.each($(".chatmsg"), function () {
+                    var image = $(this).find($("img[address='"+ escapeHtml(data.address) +"']")).get(0)
+                    var display = $(this).find($(".username")).get(0)
+                    if (image !== undefined) {
+                        $(image).attr("src", escapeHtml(url))
+                        $(display).text(user)
+                    }
+                })
+            })
+            
+
+
+            //onlineindicator = '<a href="javascript:void(0)" class="btn '+onlineclass+' btn-fab btn-raised" style="width:40px; height:40px; position: absolute;"></a>'
+            
+        })
+    })
+}
+
+function escapeHtml(html) {
+    var text = document.createTextNode(html);
+    var div = document.createElement('div');
+    div.appendChild(text);
+    return div.innerHTML;
+}
