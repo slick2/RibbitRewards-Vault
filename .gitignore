@@ -28,3 +28,6 @@ node_modules
 
 #parsed files
 *.json
+
+#zips
+*.zip
