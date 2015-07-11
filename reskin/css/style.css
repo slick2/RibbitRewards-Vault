@@ -153,6 +153,12 @@ iframe {
     position: relative;
 }
 
+.wallet-address-picker-balance {
+    position: absolute;
+    left: 450px;
+    top: 80px;
+}
+
 .form-control  {
     width: 250px !important;    
 }
