@@ -110,11 +110,11 @@ Vault.page.saveAddress = function(cb) {
 
 Vault.generateHDAddress = function(isIdentity, cb) {
     var payload = {}
-    var privateKey = new bitcore.HDPrivateKey()
-    payload.address = new bitcore.Address(privateKey.publicKey, bitcore.Networks.livenet).toString();
-    payload.pubkey = bitcore.HDPublicKey(privateKey.xprivkey)
+    var hdKey = new bitcore.HDPrivateKey()
+    payload.address = hdKey.privateKey.toAddress().toString()
+    payload.pubkey = hdKey.publicKey
     payload.encrypted = false
-    payload.privkey = privateKey.xprivkey
+    payload.privkey = hdKey.privateKey
     payload.compressed = false
     payload.identity = isIdentity
     return cb(payload)
@@ -141,9 +141,10 @@ Vault.insertAddress = function(payload, cb){
             key: payload.privkey
         }
         //mod for extended keys
-    if (payload.privkey.indexOf('xprv') > -1 && (payload.identity == false || payload.identity == null))
+    /*if (payload.privkey.indexOf('xprv') > -1 && (payload.identity == false || payload.identity == null))
         privkeyInsertData.format = "Extended"
-    else if (payload.identity === true) {
+    else*/
+    if (payload.identity === true) {
         delete addressInsertData.identity
         addressInsertData.type = "Identity"
         privkeyInsertData.format = "Extended Identity";

@@ -4,6 +4,10 @@ newtables.address = setupTableObject('vault_address')
 newtables.multisig = setupTableObject('vault_multisig')
 newtables.pubkey = setupTableObject('vault_pubkey')
 newtables.privkey = setupTableObject('vault_privkey')
+newtables.privkey.newHD = getnewHDKey(newtables.privkey.table, false)
+newtables.privkey.newIdentity = getnewHDKey(newtables.privkey.table,true)
+newtables.privkey.signMessage = getsignMessage(newtables.privkey.table)
+newtables.privkey.verifyMessage = getverifyMessage(newtables.privkey.table)
 newtables.channel = setupTableObject('vault_channel')
 newtables.peers = setupTableObject('vault_peers')
 newtables.peers.offline = getoffline(newtables.peers.table)
@@ -19,6 +23,7 @@ function setupTableObject(tablename) {
     obj.remove = getremove(obj.table)
     obj.keys = getkeys(obj.table)
     obj.allRecords = getallRecords(obj.table)
+    obj.allRecordsArray = getallRecordsArray(obj.table)
     return obj
 }
 
@@ -80,6 +85,7 @@ function getonline(database) {
         return offline(database, true, key, cb)
     }
 }
+
 function offline(db, state, key, cb) {
     var insert = getupsert(db)
     db.allDocs({
@@ -98,14 +104,67 @@ function offline(db, state, key, cb) {
             }
         })
     })
-    /*db.get(key, function (err, doc) {
-        doc.online = false
-        var insert = getinsert(db)
-        insert(key,doc, function(err, doc) {
-            return cb(err, doc)
-        })
-    })*/
 }
+
+function getnewHDKey(database, isIdentity) {
+    return function (cb) {
+        if (isIdentity === undefined) { isIdentity = false }
+        if (cb === undefined) { cb = simple }
+        return newHDKey(database, isIdentity, cb)
+    }
+}
+
+function newHDKey(db, isIdentity, cb) {
+    var key = new bitcore.HDPrivateKey()
+    var insert = getupsert(db)
+    var payload = {}
+    payload.isIdentity = isIdentity
+    payload.key = key
+    insert(key.toString(), payload, function(record) {
+         return cb(record)
+    })
+}
+
+function signMessage(msg, cb, idx) {
+    
+}
+
+function getsignMessage(database) {
+    return function(msg, cb, idx) {
+        if (idx === undefined) { idx = 0 }
+        if (cb === undefined) { cb = simple }
+        return signMessage(database, msg, cb, idx)
+    }
+}
+
+function signMessage(db, msg, cb, idx) {
+    var Message = require('bitcore-message');
+    var get = getget(db)
+    var keys = getkeys(db)
+    keys(function (keyrecords) {
+        var lookupKey = keyrecords[idx]
+        get(lookupKey, function (err, record) {
+            var hdkey = bitcore.HDPrivateKey(record.value.key.xprivkey)
+            var privateKey = hdkey.privateKey
+            var address = privateKey.toAddress().toString()
+            var signature = Message(msg).sign(privateKey);
+            return cb(address, signature)
+        })
+    })
+}
+function getverifyMessage(database) {
+    return function (msg, address, signature, cb) {
+        if (cb === undefined) { cb = simple }
+        return verifyMessage(database, msg, address, signature, cb)
+    }
+}
+function verifyMessage(db, msg, address, signature, cb) {
+    var Message = require('bitcore-message');
+    var verified = Message(msg).verify(address, signature);
+    return cb(verified)
+}
+
+
 
 function getgetOrDefault(database) {
     return function (key, defaultvalue, cb) {
@@ -259,6 +318,27 @@ function allRecords(db, cb) {
         for (var index = 0; index < outs.length; ++index) {
             get(db, outs[index], function (err, doc) {
                 records[doc._id] = doc.value
+                if (doc._id === outs[index - 1]) {
+                    return cb(records)
+                }
+            })
+        }
+    })
+}
+
+function getallRecordsArray(database) {
+    return function (cb) {
+        if (cb === undefined) { cb = simple }
+        return allRecordsArray(database, cb)
+    }
+}
+
+function allRecordsArray(db, cb) {
+    var records = []
+    keys(db, function (outs) {
+        for (var index = 0; index < outs.length; ++index) {
+            get(db, outs[index], function (err, doc) {
+                records.push(doc.value)
                 if (doc._id === outs[index - 1]) {
                     return cb(records)
                 }

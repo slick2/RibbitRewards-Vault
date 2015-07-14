@@ -9,7 +9,6 @@ require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof requ
 var base64 = require('base64-js')
 var ieee754 = require('ieee754')
 var isArray = require('is-array')
-
 exports.Buffer = Buffer
 exports.SlowBuffer = SlowBuffer
 exports.INSPECT_MAX_BYTES = 50

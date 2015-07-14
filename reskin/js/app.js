@@ -1,15 +1,15 @@
  /* Globals */
 var bitcore, ECIES, explorers, insight, transaction, qrcode, p2p, message, node
 var settings = {}
-var foundIdentity = {}
+var foundIdentity = []
 var lazyCheck, getDisplayName, checkLocalIdentity
 /*Vault = top.Vault*/
-var check = function (cb) {
+/*var check = function (cb) {
     Vault.getAddressesByPrivateKeyFormat("Extended Identity", function (keys) {
         foundIdentity = keys
         return cb()
     })
-}
+}*/
 var onPage = function () {
     var page, title
     var hash = window.location.hash.replace('#', '')
@@ -56,12 +56,10 @@ var onPage = function () {
 $(document).ready(function () {
     handleSettings(function () {
         preInit(function () {
-            check(function () {
+            /*check(function () {*/
                 setTimeout(function () { $(".navmenu").fadeIn("slow") }, 900)
-                if (top.verbose) console.log("done checking identity")
                 initApplication()
-
-            })
+            //})
         })
     })
 })
@@ -73,8 +71,6 @@ function handleSettings(cb) {
     }
 
     var loadApplication = 
-    //getOrSetSetting(settings.onPage.title.toLowerCase() + "advanced", false, function (setting) {
-        //settings.onPage.advanced = setting
         getOrSetSetting("displayname", "", function (setting) {
             settings.displayname = setting
             getOrSetSetting("currentcoin", { name: "ribbit", short: "rbr" }, function (setting) {
@@ -82,7 +78,6 @@ function handleSettings(cb) {
                 return appendAllSettings(cb)
             })
         })
-    //})
     
     //onboarding first
     getOrSetSetting("onboard", {seen:"false",level:0,dismissed:false}, function(setting) {
@@ -130,24 +125,16 @@ var preInit = function(cb) {
     bitcore = require('bitcore')
     ECIES = require('bitcore-ecies')
     explorers = require('bitcore-explorers-multi')
-    //p2p = require('bitcore-p2p')
-    //message = require('bitcore-message')
-    //Vault.getSettingValue("currentcoin", function (current) {
+    
     var current = settings.currentcoin
     if (current != null) {
-        //insight = new explorers.Insight(current.name)
         bitcore.Networks.AvailableNetworks.set(current.name)
         insight = bitcore.Networks.AvailableNetworks.currentNetwork().insight
         switchCoinImage(current.short, current.name)
-        //popMsg("Wallet context changed to " + current.name)
-
     } else {
         insight = new explorers.Insight("ribbit")
         bitcore.Networks.AvailableNetworks.set("ribbit")
-        //popMsg("Wallet context changed to Ribbit Rewards")
     }
-    //})
-
     transaction = new bitcore.Transaction()
     qrcode = new QRCode("qrcode")
 
@@ -166,6 +153,29 @@ var preInit = function(cb) {
         })
     }
     checkLocalIdentity = function() {
+        //foundIdentity = []
+        var setLocalIdentity = function(id) {
+            newtables.privkey.allRecordsArray(function (rows) {
+                $.each(rows, function () {
+                    var record = $(this)[0]
+                    if (record.isIdentity) {
+                        foundIdentity.push(record.key)
+                        return meshnet.checkInit()
+                    }
+                })
+            })
+        }
+        newtables.privkey.keys(function(keys) {
+             if (keys.error) {
+                 newtables.privkey.newIdentity(function(out) {
+                    return setLocalIdentity()
+                 })
+             } else {
+                return setLocalIdentity()
+             }
+        })
+    }
+    /*checkLocalIdentity = function() {
         if (foundIdentity.length === 0) {
             Vault.saveHDAddress(true, function() {
                 if (top.verbose) console.log("Created a new identity")
@@ -181,7 +191,7 @@ var preInit = function(cb) {
             joinIdentity()
             meshnet.checkInit()
         }
-    }
+    }*/
     explorers = require('bitcore-explorers-multi')
     adjustDesign()
     cb()
@@ -311,6 +321,7 @@ function matchPageSettingsToDatastore() {
         var target = $(this).attr("for")
         var img = $(this)
         newtables.settings.get(target, function (err, out) {
+            if (err) { return }
             var url = out.value
             if (url.location === "stock") {
                 //img.attr("src", "./images/avatars/characters_" + url.id + ".png")
@@ -326,6 +337,7 @@ function matchPageSettingsToDatastore() {
         var target = $(this).attr("for")
         var img = $(this)
         newtables.settings.get(target, function (err, out) {
+            if (err) { return }
             var url = out.value
             if (url.location === "stock") {
                 //img.attr("src", "./images/avatars/characters_" + url.id + ".png")
@@ -342,7 +354,8 @@ function matchPageSettingsToDatastore() {
     $.each($("input[for][type='text']"), function() {
         var target = $(this).attr("for")
         var input = $(this)
-        newtables.settings.get(target, function(err, out) {
+        newtables.settings.get(target, function (err, out) {
+            if (err) { return }
             input.val(out.value)
         })
     })
@@ -351,6 +364,7 @@ function matchPageSettingsToDatastore() {
         var target = $(this).attr("for")
         var input = $(this)
         newtables.settings.get(target, function (err, out) {
+            if (err) { return }
             input.text(out.value)
         })
     })
@@ -371,14 +385,14 @@ function persistSettingToggleToDatastore(context) {
 
 var initApplication = function() {
 	/* Video */
-    //initVideo(foundIdentity[0].address.addressData)
+
     initAllTheThings()
     console.log("Init Application")
     $.material.init();
-    //$('#tabs').tab();
     if (!settings.inFrame()) {
         var options = { selectorAttribute: "data-target" };
         $('#tabs').stickyTabs(options);
+        top.renderChatList()
     }
 }
 
@@ -542,7 +556,9 @@ function bindClicks() {
         var msg = target.val()
         $(this).val("")
         if (!settings.inFrame()) {
-            meshnet.pushMsg(msg)
+            var chat = new Chat({ "payload": msg })
+            setTimeout(function(){chat.broadcast()},500)
+            //meshnet.pushMsg(msg)
         }
     })
     
@@ -814,7 +830,7 @@ function changeProfileImageStock(context) {
 }
 
 function addGroupChatMsg(payload) {
-    var msg = payload.payload
+    var msg = payload.msg
     var address = payload.address
     newtables.peers.get(payload.address, function (err, data) {
         data = data.value

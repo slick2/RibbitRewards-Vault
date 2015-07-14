@@ -52,33 +52,43 @@ var signaler
 
         function checkInit() {
             if (settings.inFrame()) {return}
-            getPublicIdentity(function(ident) {
-                ident.address = foundIdentity[0].address.addressData
+            getPublicIdentity(function (ident) {
+                var pk = foundIdentity[0]
+                ident.address = bitcore.HDPrivateKey(pk.xprivkey).privateKey.toAddress().toString()
                 ident.peerid = meshnet.qc.id
-                setTimeout(function() {
+                setInterval(function() {
                     meshnet.issueCommand("heartbeat", meshnet.qc.id)
-                }, 30)
+                }, 300000)
                 meshnet.issueCommand("join", ident)
             })
         }
 
         function publicUpdateIdentity() {
                 getPublicIdentity(function (ident) {
-                    ident.address = foundIdentity[0].address.addressData
+                    var pk = foundIdentity[0]
+                    ident.address = bitcore.HDPrivateKey(pk.xprivkey).privateKey.toAddress().toString()
                     ident.peerid = meshnet.qc.id
                     meshnet.issueCommand("update", ident)
                 })
             }
         
-            function pushMsg(msg) {
+            /*function pushMsg(msg) {
                 if (settings.inFrame()) { return }
                 getPublicIdentity(function(ident) {
-                ident.address = foundIdentity[0].address.addressData
-                ident.peerid = meshnet.qc.id
-                meshnet.issueCommand("chat", {address:ident.address,payload: msg})
-            })
-       }
-            meshnet.pushMsg = pushMsg
+                    ident.address = foundIdentity[0].address.addressData
+                    ident.peerid = meshnet.qc.id
+                    var Message = require('bitcore-message');
+                    var privateKey = bitcore.HDPrivateKey(foundIdentity[0].privkey.keydata).privateKey
+                    var signature = Message(msg).sign(privateKey);
+                    console.log("signature",signature)
+                    meshnet.issueCommand("chat", { address: ident.address, payload: msg, signature: signature })
+                })
+            }
+            meshnet.pushMsg = pushMsg*/
+            function broadcastChat(chat) {
+                meshnet.issueCommand("chat",chat.toObj())
+            }
+            meshnet.broadcastChat = broadcastChat
 
         function updateState(evt) {
                 // TODO: debounce
@@ -91,12 +101,16 @@ var signaler
                 model.set('msgbus-' + command, payload);
             }
             
-            meshnet.retrieveData = function(key) {
-                model.retrieve(key, function(err, result) {
-                   console.log({ error: err, result: result })
-                })
+            meshnet.setValue = function (key, value, cb) {
+                model.set(key, value)
+                return cb()
             }
             
+            meshnet.retrieveData = function(key,cb) {
+                model.retrieve(key, function(err, result) {
+                   return cb(err, result)
+                })
+            }
             meshnet.checkInit = checkInit
             meshnet.publicUpdateIdentity = publicUpdateIdentity
 
@@ -122,7 +136,11 @@ var signaler
                 } else if (key === "msgbus-chat") {
                     if (settings.inFrame()) { return }
                     console.log('captured chat :' + JSON.stringify(value));
-                    addGroupChatMsg(value)
+                    var verified = Message(value.msg).verify(value.address, value.signature);
+                    console.log("sigmatch? " + verified)
+                    if (verified) {
+                        addGroupChatMsg(value)
+                    }
                 }
             });
             
@@ -5624,6 +5642,7 @@ module.exports = function (qc, opts) {
                     
                     // otherwise, wait for the value
                     model.once('change:' + key, callback.bind(model, null));
+                    return callback("record not found",null)
                 }
                 
                 // patch in the retrieveValue function
