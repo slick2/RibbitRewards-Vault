@@ -1532,7 +1532,7 @@ module.exports = isArray || function (val) {
                         if (er instanceof Error) {
                             throw er; // Unhandled 'error' event
                         }
-                        throw TypeError('Uncaught, unspecified "error" event.');
+                        //throw TypeError('Uncaught, unspecified "error" event.');
                     }
                 }
                 
@@ -9909,7 +9909,7 @@ module.exports = function (pc, opts) {
                         
                         // if errored, fail
                         if (err) {
-                            console.error(taskName + ' task failed: ', err);
+                            console.log(taskName + ' task failed: ', err);
                             return fail(err);
                         }
                         

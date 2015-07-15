@@ -2259,14 +2259,21 @@
                             self.store.put('root', serialized, opts, function (err) { cb(err, self.rootKey) })
                             return
                         }
-                        self.rootKey = new HDPrivateKey(root)
-                        return cb(null, self.rootKey)
+                        try {
+                            self.rootKey = new HDPrivateKey(root)
+                            return cb(null, self.rootKey)
+                        } catch (e) {
+                            return cb(null,null)
+                        }
                     })
                 }
                 
                 Wallet.prototype._initializeKeys = function (cb) {
-                    this.pubKey = this.rootKey.hdPublicKey
-                    this._generateKeys(cb)
+                    try {
+                        this.pubKey = this.rootKey.hdPublicKey
+                        this._generateKeys(cb)
+                    } catch (e) {
+                    }
                 }
                 
                 Wallet.prototype._generateKeys = function (cb) {
@@ -21390,7 +21397,8 @@ Peer.config = {
                 
                 Peer.prototype.signal = function (data) {
                     var self = this
-                    if (self.destroyed) throw new Error('cannot signal after peer is destroyed')
+                    //if (self.destroyed) throw new Error('cannot signal after peer is destroyed')
+                    if (self.destroyed) console.log('cannot signal after peer is destroyed')
                     if (typeof data === 'string') {
                         try {
                             data = JSON.parse(data)
@@ -37965,7 +37973,8 @@ var inherits = require('inherits')
                         if (er instanceof Error) {
                             throw er; // Unhandled 'error' event
                         }
-                        throw TypeError('Uncaught, unspecified "error" event.');
+                        //throw TypeError('Uncaught, unspecified "error" event.');
+                        console.log('Uncaught, unspecified "error" event.');
                     }
                 }
                 
