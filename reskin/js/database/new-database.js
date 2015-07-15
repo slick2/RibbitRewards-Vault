@@ -28,12 +28,13 @@ function setupTableObject(tablename) {
 }
 
 /* Peer Storage */
-function peerJoin(data) {
+/* moved to mesh */
+/*function peerJoin(data) {
     data.online = true;
     newtables.peers.insert(data.address, data, function(err, doc) {
         renderChatList()
     })
-}
+}*/
 
 
 /* Database Convenience Methods */

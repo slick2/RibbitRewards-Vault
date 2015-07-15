@@ -833,32 +833,46 @@ function addGroupChatMsg(payload) {
     var msg = payload.msg
     var address = payload.address
     newtables.peers.get(payload.address, function (err, data) {
-        data = data.value
-        var photo = data.photo
-        var user, url
-        if (data.name !== undefined) {
-            user = data.name
-        } else if (data.nickname !== undefined) {
-            user = data.nickname
-        } else {
-            user = "Anonymous"
+        var formulateMsg = function (data) {
+            var photo = data.photo
+            var user, url
+            if (data.name !== undefined) {
+                user = data.name
+            } else if (data.nickname !== undefined) {
+                user = data.nickname
+            } else {
+                user = "Anonymous"
+            }
+            if (photo !== undefined && photo.location !== undefined && photo.location === "stock") {
+                url = "./images/avatars/characters_" + photo.id + ".png"
+            } else if (photo !== undefined && photo.location !== undefined && photo.location === "base64") {
+                url = photo.data
+            } else {
+                url = "./images/profile.png"
+            }
+            
+            $("#messagewindow.msgs").append('<div class="chatmsg"> <div style="margin-left: 10px;" class="messages row"><img address="' + escapeHtml(address) + '" class="circular" style="width:35px !important; height:35px !important; cursor: pointer; " src="' + escapeHtml(url) + '"></div><div class="username" style="left: 55px;position: relative;  top: -20px;float: left;">(' + escapeHtml(user) + ')</div><div class="msg" style="left: 185px;position: relative; top:-20px;">' + escapeHtml(msg) + '</div></div>')
+            $("#messagewindow.msgs").animate({ scrollTop: $("#messagewindow.msgs").prop("scrollHeight") - $("#messagewindow.msgs").height() }, 300);
         }
-        if (photo !== undefined && photo.location !== undefined && photo.location === "stock") {
-            url = "./images/avatars/characters_" + photo.id + ".png"
-        } else if (photo !== undefined && photo.location !== undefined && photo.location === "base64") {
-            url = photo.data
+        if (err) {
+            meshnet.retrieveData(payload.address, function(err, data) {
+                newtables.peers.insert(data.address, data, function(err, doc) {
+                    formulateMsg(data)
+                    renderChatList()
+                })
+            })
         } else {
-            url = "./images/profile.png"
+            formulateMsg(data.value)
+            //renderChatList()
         }
         
-        $("#messagewindow.msgs").append('<div class="chatmsg"> <div style="margin-left: 10px;" class="messages row"><img address="'+ escapeHtml(address)+'" class="circular" style="width:35px !important; height:35px !important; cursor: pointer; " src="' + escapeHtml(url) + '"></div><div class="username" style="left: 55px;position: relative;  top: -20px;float: left;">(' + escapeHtml(user) + ')</div><div class="msg" style="left: 185px;position: relative; top:-20px;">' + escapeHtml(msg) + '</div></div>')
-        $("#messagewindow.msgs").animate({ scrollTop: $("#messagewindow.msgs").prop("scrollHeight") - $("#messagewindow.msgs").height() }, 300);
     })
 }
 
 function renderChatList() {
     newtables.peers.allRecords(function (rows) {
         $(".chatlist").html("")
+        var onlineCnt = 0
         $.each(rows, function () {
             var data = $(this).get(0)
             var photo = data.photo
@@ -889,10 +903,13 @@ function renderChatList() {
                 onlineclass = "btn-danger";
                 onlinestyle = "opacity: 0.4;filter: alpha(opacity=40);";
                 border = "border: 2px solid red;";
+
             } else {
                 communicate += ' <a href=""><i class="fa fa-lg fa-weixin" style="float:right;"></i></a>'
                 communicate += ' <a href=""><i class="fa fa-lg fa-video-camera" style="float:right;"></i></a>'
                 onlineclass = "btn-success";
+                onlineCnt = onlineCnt + 1
+                $(".hometabs .badge").text(onlineCnt)
             }
             newtables.settings.get("hideoffline", function (err, doc) {
                 if (doc.value && !data.online) {

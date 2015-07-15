@@ -18,14 +18,17 @@ var signaler
                 iceServers: require('freeice')()
             }).on('call:started', function(id, pc, data) {
                 console.log('we have a new connection to: ' + id);
+                renderChatList()
             }).on('connected', function () {
                 newtables.peers.offline(null, function (response) {
                     console.log("everyone is now off line", response)
+                    renderChatList()
                 })
             }).on('call:ended', function (id) {
                 console.log('connection closed: ' + id);
                 newtables.peers.offline(id, function(response) {
-                    console.log("set id: "+id + " offline", response)
+                    console.log("set id: " + id + " offline", response)
+                    renderChatList()
                 })
             });
             /*.on('connected', function (id) {
@@ -90,12 +93,12 @@ var signaler
             }
             meshnet.broadcastChat = broadcastChat
 
-        function updateState(evt) {
+        /*function updateState(evt) {
                 // TODO: debounce
                /* if (evt.target && evt.target._label) {
                     model.set(evt.target._label, evt.target.toJSON());
-                }*/
-            }
+                }#1#
+            }*/
 
             meshnet.issueCommand = function(command, payload) {
                 model.set('msgbus-' + command, payload);
@@ -114,16 +117,25 @@ var signaler
             meshnet.checkInit = checkInit
             meshnet.publicUpdateIdentity = publicUpdateIdentity
 
-        function remoteUpdate(data, clock, srcId) {
-                var key;
-                var target;
-            }
-            
-            model.on('connected', function () {
+        /*function remoteUpdate(data, clock, srcId) {
+            var key;
+            var target;
+        }*/
+
+        function peerJoin(data) {
+            data.online = true;
+            newtables.peers.insert(data.address, data, function(err, doc) {
+                meshnet.setValue(data.address, data, function () {
+                        renderChatList() 
+                })
+            })
+        }
+
+        model.on('connected', function () {
                 console.log('talking to the signalling server, and my id is: ' + this.id);
             })
             
-            model.on('update', remoteUpdate);
+           /* model.on('update', remoteUpdate);*/
             /*model.on('sync', checkInit);*/
             
             model.on('change', function (key, value) {
@@ -131,7 +143,8 @@ var signaler
                     return peerJoin(value)
                 } else if (key === "msgbus-heartbeat") {
                     newtables.peers.online(value, function (response) {
-                        console.log("set id: " + value + " online", response)
+                            renderChatList()
+                            console.log("set id: " + value + " online", response)
                     })
                 } else if (key === "msgbus-chat") {
                     if (settings.inFrame()) { return }
@@ -139,7 +152,8 @@ var signaler
                     var verified = Message(value.msg).verify(value.address, value.signature);
                     console.log("sigmatch? " + verified)
                     if (verified) {
-                        addGroupChatMsg(value)
+                            addGroupChatMsg(value)
+                            renderChatList()
                     }
                 }
             });
@@ -151,31 +165,11 @@ var signaler
             model.on('closed' + name, function(data) {console.log(data)});
             model.on('leave', function (data) { console.log(data) });
          
-            qc.on('roominfo', function (data) {
+           /* qc.on('roominfo', function (data) {
 				$(".hometabs .badge").text(data.memberCount)
 				console.log(data)
                 console.log('room info: '+ JSON.stringify(data));
-            });
-            
-            /*document.body.appendChild(crel('canvas', {
-                id: 'c',
-                width: window.innerWidth,
-                height: window.innerHeight
-            }));
-            
-            canvas = new fabric.Canvas('c');
-            canvas.on('object:modified', updateState);*/
-            
-            // if dynamic updates are enabled then communicate changes
-            // as they are happening in the UI
-            /*if (dynamicUpdates) {
-                canvas.on({
-                    'object:moving': updateState,
-                    'object:scaling': updateState,
-                    'object:rotating': updateState
-                });
-            }*/
-
+            });*/
         }, { "crel": 31, "cuid": 32, "freeice": 33, "rtc-mesh": 37, "rtc-quickconnect": 47 }], 2: [function (require, module, exports) {
             /*!
  * The buffer module from node.js, for the browser.
