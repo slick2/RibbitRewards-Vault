@@ -15,8 +15,6 @@ var Chat = function (obj) {
         chat.signMessage()
         return chat
     }
-    
-    
 }
 
 var Message = require('bitcore-message');
@@ -50,6 +48,7 @@ chat.addToTip = function (cb) {
             currentTip.hash = 0
         } else { currentTip = foundTip }
         chat.height = currentTip.height + 1
+        if (chat.previousHash === currentTip.hash) {return}
         chat.previousHash = currentTip.hash
 
         chat.hash(function(hash) {
@@ -76,13 +75,11 @@ chat.store = function (cb) {
 }
 
 chat.hash = function(cb) {
-    //hash the pieces here
     var hash = CryptoJS.SHA256(chat.identity+"|"+ chat.msg+"|"+chat.signature)
     return cb(hash.toString())
 }
 
 chat.prehash = function (cb) {
-    //hash the pieces here
     var hash = chat.identity + "|" + chat.msg + "|" + chat.signature
     return cb(hash.toString())
 }
