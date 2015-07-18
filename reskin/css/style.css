@@ -1,10 +1,29 @@
+@font-face {
+	font-family: 'Raleway';
+
+    src: url('../fonts/raleway-regular.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Raleway-thin';
+
+    src: url('../fonts/raleway-thin.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
 html, body {
 	height: 100%;
+    font-family: Raleway;
 }
+
+
 
 body {
 	background-color:#ffffff;
-      overflow-x: hidden;
+    overflow-x: hidden;
 }
 
 #wrap {
@@ -41,6 +60,115 @@ iframe {
     border: none;
     width: 100%;
 }
+.menu-bg {
+	position: absolute;
+	top: 205px;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	background: #D2D7D3 ;
+	transform-origin: 100% 0;
+    z-index: -1;
+    overflow: hidden;
+}
+/* QRScanner */
+
+.scanner-laser{
+    position: absolute;
+    margin: 40px;
+    height: 30px;
+    width: 30px;
+}
+.laser-leftTop{
+    top: 0;
+    left: 0;
+    border-top: solid red 5px;
+    border-left: solid red 5px;
+}
+.laser-leftBottom{
+    bottom: 0;
+    left: 0;
+    border-bottom: solid red 5px;
+    border-left: solid red 5px;
+}
+.laser-rightTop{
+    top: 0;
+    right: 0;
+    border-top: solid red 5px;
+    border-right: solid red 5px;
+}
+.laser-rightBottom{
+    bottom: 0;
+    right: 0;
+    border-bottom: solid red 5px;
+    border-right: solid red 5px;
+}
+
+/* QR Scanner */
+.qrButton {
+  font-size: 2em;
+  position: absolute !important;
+  top: -12px !important;
+  right: -15px !important;
+  padding: 5px;
+  padding-bottom: 1px;
+}
+
+.qrButton .glyphicon-qrcode {
+    color: #26C281 !important;
+}
+
+.qrScanButton {
+  font-size: 2em;
+  position: absolute !important;
+  top: -12px !important;
+  right: -15px !important;
+  padding: 5px;
+  padding-bottom: 1px;
+}
+
+.qrScanButton .glyphicon-facetime-video {
+    color: #26C281 !important;
+}
+
+.nav-tabs {
+  top: -60px;
+  position: relative;
+  left: 60px;
+  margin-right: 250px;
+}
+
+.togglebutton label input[type=checkbox]:checked+.toggle:after, .togglebutton-default label input[type=checkbox]:checked+.toggle:after {
+  background-color: #26C281;
+}
+
+.panel-primary > .panel-heading {
+  background-color: #26C281 !important;
+}
+
+.navmenu {
+  z-index: 1;
+  background: #26C281;
+  /*overflow: hidden !important;*/
+  overflow-x: hidden;
+}
+
+.dropdown-menu .itemAddress {
+  font-size: xx-small !important;
+  position: relative;
+  left: 0 !important;
+}
+
+.accountInPicker .accountLabel {
+    float: left;
+}
+
+.wallet-address-picker .itemAddress {
+  position: relative;
+  top: 3px;
+  left: 15px;
+  font-size: .8vw;
+}
 
 .canvas:after {
   content: "";
@@ -68,10 +196,18 @@ iframe {
     z-index: 1;
 }
 
-.badge.alert-danger {
+.icon-bar {
+    color: gray !important;
+}
+
+.badge.alert-info {
     position: absolute;
     left: 20px;
     top: -10px
+}
+
+.footer-icons {
+    z-index: 2 !important;
 }
 
 .logo {
@@ -103,7 +239,7 @@ iframe {
    /* margin-left: 2px;*/
     position: absolute;
     width: 300px !important;
-    background-color: #009688;
+    background-color: #26C281;
     z-index: 50;
 }
 
@@ -142,7 +278,7 @@ iframe {
 }
 
 .square {
-    width: 222px;
+    width: 245px;
     height: 165px;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -159,7 +295,68 @@ iframe {
     top: 80px;
 }
 
-.form-control  {
+li.active a, li.active a:hover {
+      color: white !important;
+}
+
+li a:not(.active) {
+    color: grey !important;
+}
+
+.amount {
+  height: 75px !important;
+  font-size: 2em;
+  text-align: center;
+  font-size: 3em;
+  color: #26C281;
+}
+
+.amount-label {
+  vertical-align: middle;
+  top: 23px;
+  position: absolute;
+}
+
+.balance-container {
+    text-align: center;
+    font-size: 5em;
+    left: -30px;
+    position: relative;
+    color: #26C281;
+    font-family: Raleway-thin;
+    font-variant: small-caps;
+}
+
+
+
+li .accountInPicker {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.accountInPicker {
+  color: grey !important;
+  font-weight: bold;
+}
+
+.accountInPickerBalance {
+  font-weight: bold;
+    color: darkorange;
+    left: 10px;
+  position: relative;
+}
+
+.accountInPickerBalance.positiveBalance {
+  color: #26C281;
+}
+
+
+
+.dropdown-menu li:hover {
+  background-color: rgba(190, 190, 190, 0.3);
+}
+
+.form-control:not(.toAddress):not(.amount)  {
     width: 250px !important;    
 }
 
@@ -187,6 +384,68 @@ input[type=file] {
     top: -60px !important;
 }
 
+
+      .wallet-address-picker .dropdown-toggle {
+        right: 5px;
+        position: absolute;
+      }
+      .address-view {left: -20px;}
+      .form-horizontal .form-control-feedback { left: -35px; }
+      .dropdown-menu {
+
+        color: gray;
+      }
+      .dropdown-menu a {
+        color: gray !important;
+      }
+      .btn-primary:not(.btn-link):not(.btn-flat) {
+        background-color: #26c281 !important;
+        color: rgba(255, 255, 255, 0.84);
+      }
+      .form-group .control-label, .form-group-default .control-label, .btn-default {
+        color: gray !important;
+      }
+      body {
+        color: gray;
+      }
+      .wallet-address-picker {
+        /*box-shadow: none;*/
+        width: 100%;
+        left: -20px;      
+        margin: 0px 1px;
+      }
+      .btn {
+        text-transform: none !important;
+      }
+      .address-view.btn {
+        /*left: -45px;
+        color: #b2b2b2 !important;
+      }
+        *::-webkit-input-placeholder {
+        color: #b2b2b2 !important;
+      }
+        *:-moz-placeholder {
+        /* FF 4-18 */
+        color: #b2b2b2 !important;
+      }
+      *::-moz-placeholder {
+        /* FF 19+ */
+        color: #b2b2b2 !important;
+      }
+      *:-ms-input-placeholder {
+        /* IE 10+ */
+        color: #b2b2b2 !important;
+      }
+
+.contactList{
+  width: 190px;
+  background-color: rgba(139, 139, 139,0.8);
+  height: 99%;
+  position: absolute;
+  bottom: 16px;
+  visibility: hidden;
+}
+
 .circular img {
 	opacity: 0;
 	filter: alpha(opacity=0);
@@ -203,11 +462,11 @@ input[type=file] {
     margin-top: 0 !important;
 }
 
-.page-header h1 {
+/*.page-header h1 {
     color: #868d99;
     font-weight: bolder !important;
-    /*font-size: 4.2vw !important;*/
-}
+    /*font-size: 4.2vw !important;!1!
+}*/
 
 .header-profile {
       margin-top: 19px;
@@ -218,7 +477,7 @@ input[type=file] {
 }
 
 .hometabs .active, .hometabs .active a  {
-    background-color: #009688;
+    background-color: #26C281;
     color: white !important;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;

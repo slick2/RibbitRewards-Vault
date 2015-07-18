@@ -114,16 +114,7 @@ ul.menu-items {
 	height: 165px;
 }
 
-.menu-bg {
-	position: absolute;
-	top: 205px;
-	left: 0;
-	bottom: 0;
-	right: 0;
-	background: #D2D7D3;
-	transform-origin: 100% 0;
-    z-index: -1;
-}
+
 
 .menu-sm {
 	position: fixed;

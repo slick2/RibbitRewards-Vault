@@ -54,6 +54,7 @@
     <link href="css/normalize.css" rel="stylesheet">
     <!-- Animate -->
     <link rel="stylesheet" href="css/animate.css">
+    <link href="css/nouislider.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media
     queries -->
     <!--[if lt IE 9]>
@@ -63,478 +64,556 @@
 </head>
 
 <body>
-    <div id="wrap">
-        <div class="navmenu navmenu-default navmenu-fixed-left" style="display: none">
-            <!-- Coin Select -->
-            <div class="logo coinPicker small-menu" data="rbr" name="ribbit"></div>
-            <div class="coin-menu" style="display: none">
-                <div class="">
-                    <div class="logo coinSelect" data="btc" name="bitcoin" style="background-image: url(./images/SVG/BTC.svg)"></div>
-                </div>
-                <div class="">
-                    <div class="logo coinSelect" data="ltc" name="litecoin" style="background-image: url(./images/SVG/LTC.svg)"></div>
-                </div>
-                <div class="">
-                    <div class="logo coinSelect" data="doge" name="dogecoin" style="background-image: url(./images/SVG/DOGE.svg)"></div>
-                </div>
+<div id="wrap">
+<div class="navmenu navmenu-default navmenu-fixed-left" style="display: none">
+<!-- Coin Select -->
+<div class="logo coinPicker small-menu" data="rbr" name="ribbit"></div>
+<div class="coin-menu" style="display: none">
+    <div class="">
+        <div class="logo coinSelect" data="btc" name="bitcoin" style="background-image: url(./images/SVG/BTC.svg)"></div>
+    </div>
+    <div class="">
+        <div class="logo coinSelect" data="frk" name="franko" style="background-image: url(./images/SVG/FRK.svg)"></div>
+    </div>
+</div>
+<div class="menu-profile menu-items">
+    <ul>
+        <li></li>
+    </ul>
+</div>
+<div class="menu-bg "></div>
+<div style="width: 480px">
+<nav style="width: 240px; float: left;" class="menu-items">
+    <ul>
+        <li>
+            <a href="#profile" class="navlink profile-item menu-item">
+
+
+
+                <!--<i class="fa fa-double fa-lg fa-user"></i>-->
+
+
+
+                <img for="profileImage" class="square" src="images/profile.png">
+
+
+
+                <br>
+
+
+
+                <span>Profile</span>
+
+            </a>
+        </li>
+        <li>
+            <a href="#wallet" class="navlink menuu menu-item">
+
+
+
+                <i class="fa fa-lg fa-university"></i>
+
+
+
+                <br>
+
+
+
+                <span>Wallet</span>
+
+            </a>
+        </li>
+        <li>
+            <a href="#keys" class="navlink menu-item">
+
+
+
+                <i class="fa fa-lg fa-key"></i>
+
+
+
+                <br>
+
+
+
+                <span>Key Management</span>
+
+            </a>
+        </li>
+        <li>
+            <a href="#video-chat" class="navlink menu-item">
+
+
+
+                <i class="fa-double fa fa-lg fa-weixin"></i>
+
+
+
+                <i class="fa-double fa fa-lg fa-video-camera"></i>
+
+
+
+                <br>
+
+
+
+                <span>Chat  /  Video</span>
+
+            </a>
+        </li>
+        <li>
+            <a href="#raw" class="navlink menu-item">
+
+
+
+                <i class="fa fa-lg fa-cogs"></i>
+
+
+
+                <br>
+
+
+
+                <span>Raw Transactions</span>
+
+            </a>
+        </li>
+        <li>
+            <a href="#import" class="navlink menu-item">
+
+
+
+                <i class="fa-double fa fa-lg fa-download"></i>
+
+
+
+                <i class="fa-double fa fa-lg fa-upload"></i>
+
+
+
+                <br>
+
+
+
+                <span>Import / Export</span>
+
+            </a>
+        </li>
+    </ul>
+</nav>
+<nav style="width: 240px; float: left;" class="menu-items-sm">
+    <ul>
+        <li>
+            <div style="cursor: pointer" onclick=" location.href = '#profile'; loadPageByHash() " class="profile-item menu-item-sm">
+                <img for="profileImage" class="square" src="images/profile.png">
+                <br>
+                <span></span>
             </div>
-            <div class="menu-profile menu-items">
-                <ul>
-                    <li></li>
-                </ul>
-            </div>
-            <div class="menu-bg "></div>
-            <div style="width: 480px">
-                <nav style="width: 240px; float: left;" class="menu-items">
-                    <ul>
+        </li>
+        <li>
+            <a href="#wallet" class="navlink menuu menu-item-sm">
+
+
+
+                <i class="fa fa-lg fa-university"></i>
+
+
+
+                <br>
+
+
+
+                <span></span>
+
+            </a>
+        </li>
+        <li>
+            <a href="#keys" class="navlink menu-item-sm">
+
+
+
+                <i class="fa fa-lg fa-key"></i>
+
+
+
+                <br>
+
+
+
+                <span></span>
+
+            </a>
+        </li>
+        <li>
+            <a href="#video-chat" class="navlink menu-item-sm">
+
+
+
+                <i class="fa-double fa fa-lg fa-weixin"></i>
+
+
+
+                <br>
+
+
+
+                <span></span>
+
+            </a>
+        </li>
+        <li>
+            <a href="#raw" class="navlink menu-item-sm">
+
+
+
+                <i class="fa fa-lg fa-cogs"></i>
+
+
+
+                <br>
+
+
+
+                <span></span>
+
+            </a>
+        </li>
+        <li>
+            <a href="#import" class="navlink menu-item-sm">
+
+
+
+                <i class="fa-double fa fa-lg fa-download"></i>
+
+
+
+                <br>
+
+
+
+                <span></span>
+
+            </a>
+        </li>
+    </ul>
+</nav>
+</div>
+</div>
+<div class="canvas" style="left: 60px;">
+    <div class="contactList animated"></div>
+    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js"
+            id="dropboxjs" data-app-key="70ecne41xbzbp3l"></script>
+    <div id="header" class="navbar navbar-default " role="navigation">
+        <button style="left: 0;" type="button" class="navbar-toggle" data-toggle="offcanvas"
+                data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+                <!--<li>
+                    <i class="fa-double fa fa-lg fa-weixin header-profile">
+                        <span class="badge alert-danger"></span>
+                    </i>
+                </li>-->
+                <li class="dropdown">
+                    <a for="name" href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"
+                       aria-expanded="false">
+                        Please configure your name <b class="caret"></b>
+                        <div class="ripple-wrapper"></div>
+                    </a>
+                    <ul class="dropdown-menu">
                         <li>
-                            <a href="#profile" class="navlink profile-item menu-item">
-
-
-
-                                <!--<i class="fa fa-double fa-lg fa-user"></i>-->
-
-
-
-                                <img for="profileImage" class="square" src="images/profile.png">
-
-
-
-                                <br>
-
-
-
-                                <span>Profile</span>
-
-                            </a>
+                            <a href="http://tech.ribbit.me/vault/export.html?data:application/json;filename=exportData;base64,W3siaGVhZGVyIjpbWyJMYWJlbCIsIkNvbXByZXNzZWQiLCJFbmNyeXB0ZWQiLCJBZGRyZXNzIiwiRm9ybWF0IiwiUHJpdmF0ZSBLZXkiLCJQdWJsaWMgS2V5Il1dLCJkYXRhIjpbWyJFbXB0eSIsImZhbHNlIiwiZmFsc2UiLCJSZWtyRlNoR3JhRGQyVGREODZLTG5ZVjFhdlBWcWhBaUhvIiwiSWRlbnRpdHkiLCIiLCIiXSxbIkVtcHR5IiwiZmFsc2UiLCJmYWxzZSIsIlJ0b0N2ak0zSFQ0RmY5OWJYdEFnYzNGamNYTVVTeXo5WHEiLCJJZGVudGl0eSIsIiIsIiJdXX1d"
+                               class="dropbox-saver">Save to DropBox</a>
                         </li>
                         <li>
-                            <a href="#wallet" class="navlink menuu menu-item">
-
-
-
-                                <i class="fa fa-lg fa-university"></i>
-
-
-
-                                <br>
-
-
-
-                                <span>Wallet</span>
-
-                            </a>
+                            <a href="javascript:void(0)">Another action</a>
                         </li>
                         <li>
-                            <a href="#keys" class="navlink menu-item">
-
-
-
-                                <i class="fa fa-lg fa-key"></i>
-
-
-
-                                <br>
-
-
-
-                                <span>Key Management</span>
-
-                            </a>
+                            <a href="javascript:void(0)">Something else here</a>
                         </li>
+                        <li class="divider"></li>
                         <li>
-                            <a href="#video-chat" class="navlink menu-item">
-
-
-
-                                <i class="fa-double fa fa-lg fa-weixin"></i>
-
-
-
-                                <i class="fa-double fa fa-lg fa-video-camera"></i>
-
-
-
-                                <br>
-
-
-
-                                <span>Chat  /  Video</span>
-
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#raw" class="navlink menu-item">
-
-
-
-                                <i class="fa fa-lg fa-cogs"></i>
-
-
-
-                                <br>
-
-
-
-                                <span>Raw Transactions</span>
-
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#import" class="navlink menu-item">
-
-
-
-                                <i class="fa-double fa fa-lg fa-download"></i>
-
-
-
-                                <i class="fa-double fa fa-lg fa-upload"></i>
-
-
-
-                                <br>
-
-
-
-                                <span>Import / Export</span>
-
-                            </a>
+                            <a href="javascript:void(0)">Separated link</a>
                         </li>
                     </ul>
-                </nav>
-                <nav style="width: 240px; float: left;" class="menu-items-sm">
-                    <ul>
-                        <li>
-                            <a href="#" class="profile-item menu-item-sm">
+                </li>
+                <!--<li class="dropup">
+                    <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-double fa fa-lg fa-weixin header-profile">
+                            <span class="badge alert-danger"></span>
+                        </i>
+                        <div class="ripple-wrapper"></div>
+                    </a>
+                </li>-->
+            </ul>
+            <img height="20" class="header-profile" src="images/profile.png">
+        </div>
+    </div>
+    <div class="container">
+        <!--<div class="hidden-xs page-header">
+            <h1>Loading...</h1>
+        </div>-->
+        <div>
 
-
-
-                                <!--<i class="fa fa-double fa-lg fa-user"></i>-->
-
-
-
-                                <img for="profileImage" class="square" src="images/profile.png">
-
-
-
-                                <br>
-
-
-
-                                <span></span>
-
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#wallet" class="navlink menuu menu-item-sm">
-
-
-
-                                <i class="fa fa-lg fa-university"></i>
-
-
-
-                                <br>
-
-
-
-                                <span></span>
-
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#keys" class="navlink menu-item-sm">
-
-
-
-                                <i class="fa fa-lg fa-key"></i>
-
-
-
-                                <br>
-
-
-
-                                <span></span>
-
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#video-chat" class="navlink menu-item-sm">
-
-
-
-                                <i class="fa-double fa fa-lg fa-weixin"></i>
-
-
-
-                                <br>
-
-
-
-                                <span></span>
-
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#raw" class="navlink menu-item-sm">
-
-
-
-                                <i class="fa fa-lg fa-cogs"></i>
-
-
-
-                                <br>
-
-
-
-                                <span></span>
-
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#import" class="navlink menu-item-sm">
-
-
-
-                                <i class="fa-double fa fa-lg fa-download"></i>
-
-
-
-                                <br>
-
-
-
-                                <span></span>
-
-                            </a>
-                        </li>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs hometabs" role="tablist">
+                <li role="presentation" class="active"><a class="frame-tab" href="#frame" aria-controls="frame" role="tab" data-toggle="tab">Loading...</a></li>
+                <li role="presentation">
+                    <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+                        Group Chat
+                        <i class="fa fa-lg fa-weixin">
+                            <span class="badge alert-info"></span>
+                        </i>
+                    </a>
+                </li>
+                <li style="display: none" role="presentation" class="dropdown">
+                    <!--<a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a>-->
+                    <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">Private Chats <span class="caret"></span></a>
+                    <ul class="dropdown-menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
+                        <li><a href="#messages" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1">@fat</a></li>
+                        <li><a href="#settings" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2">@mdo</a></li>
                     </ul>
-                </nav>
+                </li>
+            </ul>
+            <!-- Balance Container -->
+            <!--<div class="section">
+            <div class="container">-->
+            <div class="row-fluid">
+                <div class="col-md-2 hidden-xs span3"></div>
+                <div class="col-md-6 span8">
+                    <div class="row-fluid">
+                        <div class="balance-container"></div>
+                    </div>
+                </div>
+                <div class="col-md-2 hidden-xs span3"></div>
+            </div>
+            <!--</div>
+            </div>-->
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="frame">
+                    <iframe id="guestFrame" allowtransparency="true" name="guestFrame" style="padding-right: 75px; height: 949px;" src="profile.html"></iframe>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="profile">
+                    <div id="chatwindow">
+                        <div id="messagewindow" class="users">
+                            <ul class="chatlist"></ul>
+                        </div>
+                        <div id="messagewindow" class="msgs">
+
+                        </div>
+                        <!--<div id="inputcontainer">
+                            <p>Your message</p>
+                        </div>-->
+                        <input id="chatInput" placeholder="Chat here" class="form-control input-lg" type="text">
+                    </div>
+                    <span class="row"></span>
+                    <div class="togglebutton">
+                        <label>
+                            Hide offline users?
+                            <input type="checkbox" for="hide" toggletype="offline" data-original-title="" title="" style="margin: 5px;">
+                        </label>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="messages">c</div>
+                <div role="tabpanel" class="tab-pane" id="settings">d</div>
             </div>
         </div>
-        <div class="canvas" style="left: 60px;">
-            <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js"
-                    id="dropboxjs" data-app-key="70ecne41xbzbp3l"></script>
-            <div id="header" class="navbar navbar-default " role="navigation">
-                <button style="left: 0;" type="button" class="navbar-toggle" data-toggle="offcanvas"
-                        data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+    </div>
+</div>
+<!-- Name address modal -->
+<div class="modal fade" id="nameAccountModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Name your account</h4>
+            </div>
+            <div class="modal-body">
+                <input type="text" class="form-control" id="accountName" placeholder="Savings Account">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary saveNewAddress" data-dismiss="modal">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- wallet confirm send modal -->
+<div class="modal fade" id="modalWalletConfirm" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Please confirm</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    You are about to send a transaction to the value of
+                    <span id="spendAmount">0.00</span>RBR
+                </p>
+                <br>
+                <div id="walletSendConfirmStatus" class="alert alert-danger hidden"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="walletConfirmSend">Send</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"
+                        id="confirmClose">
+                    Close
                 </button>
-                <div class="navbar-right">
-                    <ul class="nav navbar-nav">
-                        <!--<li>
-                            <i class="fa-double fa fa-lg fa-weixin header-profile">
-                                <span class="badge alert-danger"></span>
-                            </i>
-                        </li>-->
-                        <li class="dropdown">
-                            <a for="name" href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"
-                               aria-expanded="false">
-                                Please configure your name <b class="caret"></b>
-                                <div class="ripple-wrapper"></div>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="http://tech.ribbit.me/vault/export.html?data:application/json;filename=exportData;base64,W3siaGVhZGVyIjpbWyJMYWJlbCIsIkNvbXByZXNzZWQiLCJFbmNyeXB0ZWQiLCJBZGRyZXNzIiwiRm9ybWF0IiwiUHJpdmF0ZSBLZXkiLCJQdWJsaWMgS2V5Il1dLCJkYXRhIjpbWyJFbXB0eSIsImZhbHNlIiwiZmFsc2UiLCJSZWtyRlNoR3JhRGQyVGREODZLTG5ZVjFhdlBWcWhBaUhvIiwiSWRlbnRpdHkiLCIiLCIiXSxbIkVtcHR5IiwiZmFsc2UiLCJmYWxzZSIsIlJ0b0N2ak0zSFQ0RmY5OWJYdEFnYzNGamNYTVVTeXo5WHEiLCJJZGVudGl0eSIsIiIsIiJdXX1d"
-                                       class="dropbox-saver">Save to DropBox</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)">Another action</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0)">Something else here</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="javascript:void(0)">Separated link</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <!--<li class="dropup">
-                            <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-double fa fa-lg fa-weixin header-profile">
-                                    <span class="badge alert-danger"></span>
-                                </i>
-                                <div class="ripple-wrapper"></div>
-                            </a>
-                        </li>-->
-                    </ul>
-                    <img height="20" class="header-profile" src="images/profile.png">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- wallet confirm send modal -->
+<!-- qrcode modal -->
+<div class="modal fade" id="modalQrcode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">qrcode</h4>
+            </div>
+            <div class="modal-body" align="center">
+                <div id="qrcode"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="qrCodeClose">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- qrcode modal -->
+<!-- old qrcode scanner modal -->
+<div class="modal fade" id="modalQrcodeScanner" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">Scan a QR Code or Barcode</h4>
+            </div>
+            <div class="modal-body" align="center">
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="qrScanClose">Close</button>
                 </div>
             </div>
-            <div class="container">
-                <div class="hidden-xs page-header">
-                    <h1>Loading...</h1>
-                </div>
-                <div>
+        </div>
+    </div>
+</div>
+<!-- new qrcode scanner modal -->
+<div class="modal fade" id="newModalQrcodeScanner" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">qrcode scanner</h4>
+            </div>
+            <div class="modal-body" align="center">
+                <div id="QR-Code" class="container" style="width: 100%">
+                <div class="panel">
+                    <div class="panel-heading" style="display: inline-block; width: 100%;">
 
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs hometabs" role="tablist">
-                        <li role="presentation" class="active"><a class="frame-tab" href="#frame" style="color: black !important" aria-controls="frame" role="tab" data-toggle="tab">Loading...</a></li>
-                        <li role="presentation">
-                            <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" style="color: black !important">
-                                Group Chat
-                                <i class="fa fa-lg fa-weixin">
-                                    <span class="badge alert-danger"></span>
-                                </i>
-                            </a>
-                        </li>
-                        <li style="display:none" role="presentation" class="dropdown">
-                            <!--<a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a>-->
-                            <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">Private Chats <span class="caret"></span></a>
-                            <ul class="dropdown-menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
-                                <li><a href="#messages" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1">@fat</a></li>
-                                <li><a href="#settings" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2">@mdo</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="frame">
-                            <iframe id="guestFrame" allowtransparency="true" name="guestFrame" style="padding-right: 75px; height: 949px;" src="profile.html"></iframe>
+                        <div style="width: 50%; float: right; margin-top: 5px; margin-bottom: 5px; text-align: right;">
+                            <select id="cameraId" class="form-control" style="display: inline-block; width: auto;"></select>
+                            <button id="save" data-toggle="tooltip" title="Image shoot" type="button" class="btn btn-info btn-sm disabled"><span class="glyphicon glyphicon-picture"></span></button>
+                            <button id="play" data-toggle="tooltip" title="Play" type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-play"></span></button>
+                            <button id="stop" data-toggle="tooltip" title="Stop" type="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-stop"></span></button>
+                            <button id="stopAll" data-toggle="tooltip" title="Stop streams" type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-stop"></span></button>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="profile">
-                            <div id="chatwindow">
-                                <div id="messagewindow" class="users">
-                                    <ul class="chatlist"></ul>
-                                </div>
-                                <div id="messagewindow" class="msgs">
-
-                                </div>
-                                <!--<div id="inputcontainer">
-                                    <p>Your message</p>
-                                </div>-->
-                                <input id="chatInput" placeholder="Chat here" class="form-control input-lg" type="text">
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-md-6" style="text-align: center;">
+                            <div class="well" style="position: relative; display: inline-block;">
+                                <canvas id="qr-canvas" width="320" height="240"></canvas>
+                                <div class="scanner-laser laser-rightBottom" style="opacity: 0.5;"></div>
+                                <div class="scanner-laser laser-rightTop" style="opacity: 0.5;"></div>
+                                <div class="scanner-laser laser-leftBottom" style="opacity: 0.5;"></div>
+                                <div class="scanner-laser laser-leftTop" style="opacity: 0.5;"></div>
                             </div>
-                            <span class="row"></span>
-                            <div class="togglebutton">
-                                <label>
-                                    Hide offline users?
-                                    <input type="checkbox" for="hide" toggletype="offline" data-original-title="" title="" style="margin: 5px;">
-                                </label>
+                            <div class="well" style="position: relative;">
+                                <label id="zoom-value" width="100">Zoom: 2</label>
+                                <input type="range" id="zoom" value="20" min="10" max="30" onchange=" Page.changeZoom(); " />
+                                <label id="brightness-value" width="100">Brightness: 0</label>
+                                <input type="range" id="brightness" value="0" min="0" max="128" onchange=" Page.changeBrightness(); " />
+                                <label id="contrast-value" width="100">Contrast: 0</label>
+                                <input type="range" id="contrast" value="0" min="0" max="64" onchange=" Page.changeContrast(); " />
+                                <label id="threshold-value" width="100">Threshold: 0</label>
+                                <input type="range" id="threshold" value="0" min="0" max="512" onchange=" Page.changeThreshold(); " />
+                                <label id="sharpness-value" width="100">Sharpness: off</label>
+                                <input type="checkbox" id="sharpness" onchange=" Page.changeSharpness(); " />
+                                <label id="grayscale-value" width="100">grayscale: off</label>
+                                <input type="checkbox" id="grayscale" onchange=" Page.changeGrayscale(); " />
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="messages">c</div>
-                        <div role="tabpanel" class="tab-pane" id="settings">d</div>
+                        <div class="col-md-6" style="text-align: center;">
+                            <div id="result" class="thumbnail">
+                                <div class="well" style="position: relative;display: inline-block;">
+                            <img id="scanned-img" src="" width="320" height="240">
+                        </div>
+                                <div class="caption">
+                                    <h3>Scanned result</h3>
+                                    <p id="scanned-QR"></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- wallet confirm send modal -->
-        <div class="modal fade" id="modalWalletConfirm" tabindex="-1" role="dialog"
-             aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">Please confirm</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            You are about to send a transaction to the value of
-                            <span id="spendAmount">0.00</span>RBR
-                        </p>
-                        <br>
-                        <div id="walletSendConfirmStatus" class="alert alert-danger hidden"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="walletConfirmSend">Send</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal"
-                                id="confirmClose">
-                            Close
-                        </button>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="qrScanClose">Close</button>
                 </div>
             </div>
         </div>
-        <!-- wallet confirm send modal -->
-        <!-- qrcode modal -->
-        <div class="modal fade" id="modalQrcode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">qrcode</h4>
-                    </div>
-                    <div class="modal-body" align="center">
-                        <div id="qrcode"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" id="qrCodeClose">Close</button>
+    </div>
+</div>
+<footer class="section section-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <h1>Copyright 2015 Ribbit.me</h1>
+                <p class="hidden-sm hidden-xs">
+                    This is beta software and should be used for testing purposes only.
+                    <br>No warranty is implied. Private key information is stored on your device
+                    or backed up into the cloud storage provider of your choice.
+                    <br>
+                    <a href="">We encourage suggestions &amp; value feedback</a>
+                </p>
+            </div>
+            <div class="col-sm-6">
+                <p class="hidden-sm hidden-xs text-info text-right">
+                    <br>
+                    <br>
+                </p>
+                <div class="row">
+                    <div class="col-md-12 hidden-lg hidden-md hidden-sm hidden-xs text-left">
+                        <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>
+                        <a href="#"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
+                        <a href="#"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
+                        <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
                     </div>
                 </div>
-            </div>
-        </div>
-        <!-- qrcode modal -->
-        <!-- qrcode scanner modal -->
-        <div class="modal fade" id="modalQrcodeScanner" tabindex="-1" role="dialog"
-             aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                        <h4 class="modal-title">qrcode scanner</h4>
-                    </div>
-                    <div class="modal-body" align="center">
-                        <select id="videoSource" class="form-control"></select>
-                        <div id="videoReaderError" class="hidden">Your browser does not offer camera support</div>
-                        <video id="videoReader"
-                               muted="" autoplay="" style="width: 100%; height: 100%"></video>
-                        <div id="qrcode-scanner-callback-to" class="hidden"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" id="qrScanClose">Close</button>
+                <div class="row">
+                    <div class="col-md-12 hidden-xs text-right footer-icons">
+                        <a href="#"><i class="fa fa-3x fa-fw fa-pied-piper text-inverse"></i></a>
+                        <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>
+                        <a href="#"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
+                        <a href="#"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
+                        <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <footer class="section section-primary">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-6">
-                    <h1>Copyright 2015 Ribbit.me</h1>
-                    <p class="hidden-sm hidden-xs">
-                        This is beta software and should be used for testing purposes only.
-                        <br>No warranty is implied. Private key information is stored on your device
-                        or backed up into the cloud storage provider of your choice.
-                        <br>
-                        <a href="">We encourage suggestions &amp; value feedback</a>
-                    </p>
-                </div>
-                <div class="col-sm-6">
-                    <p class="hidden-sm hidden-xs text-info text-right">
-                        <br>
-                        <br>
-                    </p>
-                    <div class="row">
-                        <div class="col-md-12 hidden-lg hidden-md hidden-sm hidden-xs text-left">
-                            <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>
-                            <a href="#"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
-                            <a href="#"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
-                            <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 hidden-xs text-right">
-                            <a href="#"><i class="fa fa-3x fa-fw fa-pied-piper text-inverse"></i></a>
-                            <a href="#"><i class="fa fa-3x fa-fw fa-instagram text-inverse"></i></a>
-                            <a href="#"><i class="fa fa-3x fa-fw fa-twitter text-inverse"></i></a>
-                            <a href="#"><i class="fa fa-3x fa-fw fa-facebook text-inverse"></i></a>
-                            <a href="#"><i class="fa fa-3x fa-fw fa-github text-inverse"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
+</footer>
+</div>
     <!-- Elements that libs require exist (depricate us) -->
     <div class="notifications top-right"></div>
     <div class="hidden" id="entropybucket"></div>
@@ -634,6 +713,11 @@
     <script src="js/database/model/chatTip.js"></script>
     <!--<script src="js/fabric.min.js"></script>-->
     <script src="js/mesh.js"></script>
+    <!-- QR Scanner -->
+    <script type="text/javascript" src="js/scanner/qrcodelib.js"></script>
+    <script type="text/javascript" src="js/scanner/WebCodeCam.js"></script>
+    <script type="text/javascript" src="js/scanner/Scanner.js"></script>
+    <script src="js/nouislider.min.js"></script>
 </body>
 
 </html>

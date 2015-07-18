@@ -1,249 +1,333 @@
 ﻿<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/jasny-bootstrap.css" rel="stylesheet">
-    <!-- Include roboto.css to use the Roboto web font, material.css to include the theme and ripples.css to style the ripple effect -->
-    <link href="css/roboto.min.css" rel="stylesheet">
-    <link href="https://fezvrasta.github.io/bootstrap-material-design/dist/css/material-fullpalette.css" rel="stylesheet">
-    <link href="css/ripples.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/navmenu-reveal.css" rel="stylesheet">
-    <link href="css/menu.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <!-- Crypto icons -->
-    <link href="css/demo.cryptocoins.css" rel="stylesheet">
-    <link href="css/cryptocoins.css" rel="stylesheet">
-    <!-- Bootstrap Notify -->
-    <link href="css/alert-bangtidy.css" rel="stylesheet">
-    <link href="css/bootstrap-notify.css" rel="stylesheet">
-    <!-- Normalize -->
-    <link href="css/normalize.css" rel="stylesheet">
-    <!-- Animate -->
-    <link rel="stylesheet" href="css/animate.css">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body height="750px" style="background-color: rgba(255,255,255,0);">
-<div class="notifications top-right"></div>
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="container-fluid highlight">
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <span class="address-label alert alert-dismissable "></span>
-                    </div>
-                    <div class="col-md-6">
-                        <div style="position: fixed;right:80px">
-                            <div class="togglebutton">
-                                <label>
-                                    Advanced
-                                    <input type="checkbox" for="wallet-" toggletype="advanced">
-                                </label>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <script src="js/jquery.min.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="https://fezvrasta.github.io/bootstrap-material-design/dist/css/material-fullpalette.css"
+        rel="stylesheet">
+        <link href="css/jasny-bootstrap.css" rel="stylesheet">
+        <link href="css/roboto.min.css" rel="stylesheet">
+        <link href="css/ripples.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/bootstrap-notify.css" rel="stylesheet">
+        <style>
+            .wallet-address-picker .dropdown-toggle {
+                                right: 5px;
+                                position: absolute;
+                              }
+                              .address-view {left: -20px;}
+                              .form-horizontal .form-control-feedback {
+                                    right: -5px !important;
+                                    left: inherit !important;
+                              }
+                              .dropdown-menu {
+                        
+                                color: gray;
+                              }
+                              .dropdown-menu a {
+                                color: gray !important;
+                              }
+                              .btn-primary:not(.btn-link):not(.btn-flat) {
+                                background-color: #26c281 !important;
+                                color: rgba(255, 255, 255, 0.84);
+                              }
+                              .form-group .control-label, .form-group-default .control-label, .btn-default {
+                                color: gray !important;
+                              }
+                              body {
+                                color: gray;
+                              }
+                              .wallet-address-picker {
+                                /*box-shadow: none;*/
+                                width: 100%;
+                                left: -20px;      
+                                margin: 0 1px;
+                                float: left;
+                              }
+                              .btn {
+                                text-transform: none !important;
+                              }
+                              .address-view.btn {
+                                /*left: -45px;
+                                color: #b2b2b2 !important;
+                              }
+                                *::-webkit-input-placeholder {
+                                color: #b2b2b2 !important;
+                              }
+                                *:-moz-placeholder {
+                                /* FF 4-18 */
+                                color: #b2b2b2 !important;
+                              }
+                              *::-moz-placeholder {
+                                /* FF 19+ */
+                                color: #b2b2b2 !important;
+                              }
+                              *:-ms-input-placeholder {
+                                /* IE 10+ */
+                                color: #b2b2b2 !important;
+                              }
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    
+    <body height="750px" style="background-color: rgba(255,255,255,0);">
+        <div class="section">
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="col-md-2 hidden-xs span3"></div>
+                    <div class="col-md-6 span8">
+                        <div class="row-fluid">
+                            <div class="container balance-container"></div><div class="shortCode"></div>
+                            
+                        </div>
+                        <form class="form-horizontal text-left" role="form">
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <label for="amount" class="control-label amount-label">SENDING:</label>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control input-lg amount" id="amount" placeholder="How much?">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <span class="wallet-address-picker-balance alert alert-dismissable"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="btn-group wallet-address-picker">
-                            <button class="qrcodeBtn btn btn-default" type="button">
-                                <span class="glyphicon glyphicon-qrcode"></span>
-                            </button>
-                            <button type="button" class="address-view btn btn-default">Choose Address</button>
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <span class="caret"></span>
-                                <span class="sr-only">Toggle Dropdown</span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li class="divider"></li>
-                                <li>
-                                    <a class="wallet-action">Generate new address</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container-fluid highlight">
-                <div class="menu-container collapse advanced">
-                    <label class="utxo-help ">Select one or more spendable amounts.</label>
-                    <div class="utxo button-container"></div>
-                    <div>
-                        <!--<h2>Form control: textarea</h2>
-                        <p>The form below contains a textarea for comments:</p>-->
-                        <form role="form">
-                            <div class="transaction-hash-form form-group collapse">
-                                <label for="comment">Transaction Hex:</label>
-                                <textarea class="transaction-hash form-control" rows="5" id="comment"></textarea>
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <label for="inputEmail3" class="control-label">FROM:</label>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="btn-group wallet-address-picker">
+                                        <button class="address-view btn btn-default" type="button">Choose Account to send from</button>
+                                        <button type="button" class="btn btn-default dropdown-toggle"
+                                                aria-expanded="false" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="caret sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li class="addressItem">
+                                                <div class="accountInPicker address-item">Primary Spend Account
+                                                    <span class="accountInPickerBalance positiveBalance">175</span>
+                                                </div>
+                                            </li>
+                                            <li class="addressItem">
+                                                <div class="accountInPicker address-item">Savings
+                                                    <span class="accountInPickerBalance">0</span>
+                                                </div>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a class="btn btn-lg wallet-action" href="#" data-toggle="modal" data-target="#basicModal">Generate new address</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <button class="btn btn-default qrButton" disabled>
+                                        <i class="glyphicon glyphicon-qrcode"></i>
+                                        <div class="ripple-wrapper"></div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2">
+                                    <label for="toAddress" class="control-label">TO:</label>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control toAddress" id="toAddress" placeholder="Recipient Address">
+                                        
+                                    </div>
+                                    <button class="btn btn-default qrScanButton">
+                                        <i class="glyphicon glyphicon-facetime-video"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-4 span3">
+                                    <button class="btn btn-default send-now">Send Now</button>
+                                </div>
+                                <div class="col-sm-3 span3">
+                                    <button class="btn btn-default send-later">Send Later</button>
+                                </div>
+                                <div class="col-sm-3 span3">
+                                    <button class="btn btn-default reset">Reset</button>
+                                </div>
                             </div>
                         </form>
                     </div>
+                    <div class="col-md-2 hidden-xs span3"></div>
                 </div>
             </div>
-            <div class="container-fluid highlight">
-                <div id="amountForm" class="output-container" style="display: none">
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <label for="output-address">To Address</label>
-                            <input type="text" class="form-control" id="output-address" placeholder="Ribbit134">
+        </div>
+        <div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">History</h3>
+                            </div>
+                            <div class="panel-body">
+                                <p>Account history coming soon</p>
+                            </div>
                         </div>
-
-                        <div class="form-control-wrapper">
-                            <input id="output-amount" data-fv-numeric="true" data-fv-numeric-separator="." step="0.00000001" type="number" class="form-control empty">
-                            <div class="floating-label" default="Amount">Amount</div>
-                            <span class="material-input"></span>
-                        </div>
-                        <button onclick=" return false " class="btn btn-default transaction-add-output">Sign</button>
-                        <button onclick=" return false " class="btn btn-default transaction-broadcast">Broadcast</button>
-                        <button onclick=" return false " class="btn btn-default transaction-reset advanced">Reset</button>
-                    </form>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="modal fade" id="nameAccountModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title">Name your account</h4>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" id="accountName" placeholder="Savings Account">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script>
+        $(document).ready(function() {
+            $.material.init()
+            loadAddressPicker()
+            $(document).on('click.customBindings', '.wallet-address-picker .dropdown-menu .wallet-action', function(data) {
+                if (this.text === "Generate new address") {
+                    //$(".wallet-address-picker").removeClass("open")
+                    top.$("#nameAccountModal").modal("show")
+                    return false
+                }
+            })
+            $(document).on('click.customBindings', 'input#toAddress', function(data) {
+                top.$(".contactList").css("visibility", "visible")
+                top.$(".contactList").removeClass("fadeOut")
+                top.$(".contactList").addClass("fadeIn")
+                setTimeout(function() {
+                    top.$(".contactList").removeClass("fadeIn")
+                    top.$(".contactList").addClass("fadeOut")
+                }, 10000)
+            })
 
-        </div>
-    </div>
-</div>
-<!-- wallet confirm send modal -->
-<div class="modal fade" id="modalWalletConfirm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Please confirm</h4>
-            </div>
-            <div class="modal-body">
-                <p>
-                    You are about to send a transaction to the value of
-                    <span id="spendAmount">0.00</span>RBR
-                </p>
-                <br>
-                <div id="walletSendConfirmStatus" class="alert alert-danger hidden"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="walletConfirmSend">Send</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="confirmClose">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- wallet confirm send modal -->
-<!-- qrcode modal -->
-<div class="modal fade" id="modalQrcode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">qrcode</h4>
-            </div>
-            <div class="modal-body" align="center">
-                <div id="qrcode"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="qrCodeClose">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- qrcode modal -->
-<!-- qrcode scanner modal -->
-<div class="modal fade" id="modalQrcodeScanner" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">qrcode scanner</h4>
-            </div>
-            <div class="modal-body" align="center">
-                <select id="videoSource" class="form-control"></select>
-                <div id="videoReaderError" class="hidden">Your browser does not offer camera support</div>
-                <video id="videoReader" muted autoplay style="width: 100%; height: 100%"></video>
-                <div id="qrcode-scanner-callback-to" class="hidden"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="qrScanClose">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Elements that libs require exist (depricate us) -->
+            /* bring up contact list */
+            $(document).on('click.customBindings', '.contactList', function(data) {
+                top.$(".contactList").removeClass("fadeIn")
+                top.$(".contactList").addClass("fadeOut")
+            })
 
-<div class="hidden" id="entropybucket"></div>
-<div class="hidden" id="my-number"></div>
-<div class="hidden" id="my-number-link"></div>
-<!-- ================================================== -->
-<script src="js/porthole.js"></script>
-<script src="js/porthole.guest.js"></script>
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="js/jquery-1.10.2.min.js"></script>
-<!-- Iframe Resize -->
-<script src="js/iframeResizer.contentWindow.min.js"></script>
-<!-- Vault specifics -->
-<script src="js/Vault.js"></script>
-<script src="js/app.js"></script>
-<script src="js/identity.js"></script>
-<!-- Socket.io -->
-<script src="js/socket.io.js"></script>
-<!-- Database -->
-<script src="js/database/pouchdb-3.4.0.min.js"></script>
-<script type="text/javascript" src="js/pouchdb.transform-pouch.js"></script>
-<script type="text/javascript" src="js/pouchdb.find.js"></script>
-<script src="js/database/pouch-crypto.js"></script>
-<script src="js/database/pouch.js"></script>
-<!-- Bitcore -->
-<script type="text/javascript" src="js/crypto-min.js"></script>
-<script type="text/javascript" src="js/crypto-sha256.js"></script>
-<script type="text/javascript" src="js/crypto-sha256-hmac.js"></script>
-<script type="text/javascript" src="js/ripemd160.js"></script>
-<script type="text/javascript" src="js/aes.js"></script>
-<script type="text/javascript" src="js/qrcode.js"></script>
-<script type="text/javascript" src="js/qcode-decoder.min.js"></script>
-<script type="text/javascript" src="js/jsbn.js"></script>
-<script type="text/javascript" src="js/ellipticcurve.js"></script>
-<script type="text/javascript" src="js/coin.js"></script>
-<script type="text/javascript" src="js/coinbin.js"></script>
-<script type="text/javascript" src="js/bitcore.min.js"></script>
-<script type="text/javascript" src="js/bitcore-ecies.min.js"></script>
-<script type="text/javascript" src="js/bitcore-explorers-multi.js"></script>
-<script type="text/javascript" src="js/bitcore-p2p.js"></script>
-<script type="text/javascript" src="js/bitcore-message.js"></script>
-<!-- Bootstrap and Material Design -->
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jasny-bootstrap.js"></script>
-<script src="js/ripples.min.js"></script>
-<script src="js/material.min.js"></script>
-<!-- Bootstrap Table -->
-<script src="js/bootstrap-table.js"></script>
-<script src="js/extensions/export/bootstrap-table-export.js"></script>
-<script src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/tableExport.js"></script>
-<script src="https://rawgit.com/kayalshri/tableExport.jquery.plugin/master/jquery.base64.js"></script>
-<script src="js/extensions/editable/bootstrap-table-editable.js"></script>
-<script src="https://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
-<!--<script src="//cdnjs.cloudflare.com/ajax/libs/noUiSlider/6.2.0/jquery.nouislider.min.js"></script>-->
-<!-- Bootstrap Notify -->
-<script src="js/bootstrap-notify.js"></script>
-<!-- Mock -->
-<script src="js/mock.js"></script>
-<!-- PubSub -->
-<!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
-<!-- WebRTC Peer Connections -->
-<!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
-<!--<script src="https://cdn.pubnub.com/pubnub-dev.js"></script>
-<script src="js/webrtc.js"></script>
-<script src="js/sound.js"></script-->
-<!--<script src="js/pubnub-3.7.1.min.js"></script> -->
-<!--<script src="js/pubsub.js"></script>-->
+            /* show QR modal */
+            $(document).on('click.customBindings', '.qrButton', function (data) {
+                top.$("#modalQrcode").modal("show")
+                return false
+            })
 
-    <script src="js/database/new-database.js"></script>
-</body>
+            /* show QR Scanner Modal */
+            $(document).on('click.customBindings', '.qrScanButton', function (data) {
+                top.showQrScannerModal()
+                return false
+            })
+
+            /* bind to send button */
+            $(document).on('click.customBindings', '.send-now', function(data) {
+                top.$("#modalWalletConfirm").modal("show")
+                $(".wallet-address-picker").removeClass("open")
+                return false
+            })
+
+            /* bind picker to the whole button */
+            $(document).on('click.customBindings', '.wallet-address-picker', function(data) {
+                $(".wallet-address-picker").addClass("open")
+                $(".wallet-address-picker .address-view .ripple-wrapper").remove()
+                return false
+            })
+
+            /*New address picker event binding*/
+            $(document).on('click.customBindings', '.wallet-address-picker .dropdown-menu .address-item', function(data) {
+                if ($(".address-view").html() !== "Choose Account to send from") {
+
+                    var previouslySelected = $(".address-view").html()
+                    $(previouslySelected).insertBefore($(this))
+                    //copy this one and put it back
+                }
+                $(".address-view").html($(this))
+                $(".qrButton").removeAttr("disabled");
+                //resetTransaction()
+                //resetToAmountFields()
+                /* Copy link text to root element */
+                var address = $(data.currentTarget).attr("data")
+                $(".wallet-address-picker").removeClass("open")
+                //var label = data.currentTarget.text
+                //$(".output-container").show()
+                //disableSpendFields()
+                //$(data.currentTarget.parentNode.parentNode.parentElement).find(".address-view").text(address)
+                //if (label != null && label !== address) {
+                //  $(".address-label").text(label)
+                //  $(".address-label").addClass("alert-info")
+                //} else {
+                //  $(".address-label").text("")
+                //  $(".address-label").removeClass("alert-info")
+                //}
+                //setSubmitButtonDisabled(true)
+                top.generateQr(address)
+                return false
+                //getBalance(address)
+            })
+        })
+
+        function loadAddressPicker() {
+            var label = "Basic"
+            var totalBalance = 0
+            var targetNetwork = top.bitcore.Networks.AvailableNetworks.currentNetwork().name
+            var shortCode = top.bitcore.Networks.AvailableNetworks.currentNetwork().insight.network.alias
+            $(".wallet-address-picker .dropdown-menu li.addressItem").remove()
+            $(".address-view").html('Choose Account to send from')
+            //$(".address-view").html('Choose Account to send from')
+            //<button class="address-view btn btn-default" type="button">Choose Account to send from</button>
+
+            top.newtables.privkey.allRecordsArray(function (records) {
+                $.each(records, function () {
+                    if ($(this)[0].isIdentity) { return }
+                    var hd = new top.bitcore.HDPrivateKey($(this)[0].key.xprivkey)
+                    var address = hd.privateKey.toAddress()
+                    var addressNetwork = address.network.name
+                    if ($(this)[0].label !== undefined) {
+                        label = $(this)[0].label
+                    }
+                    if (addressNetwork === "livenet") {
+                        addressNetwork = "bitcoin"
+                    }
+                    if (addressNetwork === targetNetwork) {
+                        $('<li class="addressItem"><div data="' + address + '" class="accountInPicker address-item"><div class="accountLabel">' + label + ' Account </div><span class="accountInPickerBalance"></span><div class="itemAddress">' + address + '</div></div>').insertBefore(".wallet-address-picker .dropdown-menu .divider");
+                        top.insight.getBalance(address, function (err, balance) {
+                            var target = $("div[data='" + address + "'] .accountInPickerBalance")
+                            target.html(balance * 0.00000001 + " " + shortCode)
+                            if (balance > 0) {
+                                balance = balance * 0.00000001
+                                target.addClass("positiveBalance")
+                                //totalBalance = totalBalance + balance
+                                //$(".balance-container").text(totalBalance + " " + shortCode)
+                            }
+                            //$(".balance-container").text(totalBalance + " " + shortCode)
+                            
+                            //$(".shortCode").text(shortCode)
+                        })
+                    }
+                })
+            })
+        }
+    </script>
+        <script src="js/porthole.js"></script>
+        <script src="js/porthole.guest.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jasny-bootstrap.js"></script>
+        <script src="js/ripples.min.js"></script>
+        <script src="js/material.min.js"></script>
+    </body>
+
 </html>

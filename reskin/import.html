@@ -1,41 +1,131 @@
 ﻿<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <script src="js/jquery.min.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="https://fezvrasta.github.io/bootstrap-material-design/dist/css/material-fullpalette.css"
+        rel="stylesheet">
+        <link href="css/jasny-bootstrap.css" rel="stylesheet">
+        <link href="css/roboto.min.css" rel="stylesheet">
+        <link href="css/ripples.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/bootstrap-notify.css" rel="stylesheet">
+        <style>
+            .wallet-address-picker .dropdown-toggle {
+                right: 5px;
+                position: absolute;
+              }
+              .address-view {left: -20px;}
+              .form-horizontal .form-control-feedback { left: -35px; }
+              .dropdown-menu {
+        
+                color: gray;
+              }
+              .dropdown-menu a {
+                color: gray !important;
+              }
+              .btn-primary:not(.btn-link):not(.btn-flat) {
+                background-color: #26c281 !important;
+                color: rgba(255, 255, 255, 0.84);
+              }
+              .form-group .control-label, .form-group-default .control-label, .btn-default {
+                color: gray !important;
+              }
+              body {
+                color: gray;
+              }
+              .wallet-address-picker {
+                /*box-shadow: none;*/
+                width: 100%;
+                left: -20px;      
+                margin: 0px 1px;
+              }
+              .btn {
+                text-transform: none !important;
+              }
+              .address-view.btn {
+                /*left: -45px;
+                color: #b2b2b2 !important;
+              }
+                *::-webkit-input-placeholder {
+                color: #b2b2b2 !important;
+              }
+                *:-moz-placeholder {
+                /* FF 4-18 */
+                color: #b2b2b2 !important;
+              }
+              *::-moz-placeholder {
+                /* FF 19+ */
+                color: #b2b2b2 !important;
+              }
+              *:-ms-input-placeholder {
+                /* IE 10+ */
+                color: #b2b2b2 !important;
+              }
+        </style>
+    </head>
+    
+    <body height="750px" style="background-color: rgba(255,255,255,0);">
+        <div class="section">
+            <div class="container">
+                <div class="row-fluid">
+                    <div class="col-md-2 hidden-xs span3"></div>
+                    <div class="col-md-6 span8">
+                        <div class="row-fluid">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <div class="col-sm-3">
+                                        <label for="inputpk" class="control-label">Copay Key</label>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <input type="password" class="form-control" id="inputpk" placeholder="xpriv">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-3">
+                                        <label for="labelInput" class="control-label">Label</label>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <input type="text" class="form-control" id="labelInput" placeholder="Label to reference this account">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <button class="btn btn-default importKey">Import</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-2 hidden-xs span3"></div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () { 
+                $.material.init()
+                top.loadBalance($(".balance-container"))
+                $(document).on('click.customBindings', '.importKey', function (data) {                                
+                  top.newtables.privkey.importHD($("#inputpk").val(), $("#labelInput").val() ,function(a,b){
+                    console.log(a,b)
+                    if (a) {
+                      top.popMsg(JSON.stringify(a))
+                    } else {
+                      top.popMsg("Sucessfully imported key")
+                    }
+                  })
+                })
+            })
+            
+        </script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jasny-bootstrap.js"></script>
+        <script src="js/ripples.min.js"></script>
+        <script src="js/material.min.js"></script>
+    </body>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Ribbit.Me Rewards Wallet</title>
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/jasny-bootstrap.css" rel="stylesheet">
-    <!-- Include roboto.css to use the Roboto web font, material.css to include the theme and ripples.css to style the ripple effect -->
-    <link href="css/roboto.min.css" rel="stylesheet">
-    <link href="css/material.min.css" rel="stylesheet">
-    <link href="css/ripples.min.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/navmenu-reveal.css" rel="stylesheet">
-    <link href="css/menu.css" rel="stylesheet">
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <!-- Crypto icons -->
-    <link href="css/demo.cryptocoins.css" rel="stylesheet">
-    <link href="css/cryptocoins.css" rel="stylesheet">
-    <!-- Bootstrap Notify -->
-    <link href="css/alert-bangtidy.css" rel="stylesheet">
-    <link href="css/bootstrap-notify.css" rel="stylesheet">
-    <!-- Normalize -->
-    <link href="css/normalize.css" rel="stylesheet">
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
-<body>
-    Import / Export Page
-    <br />
-    <br />
-</body>
 </html>

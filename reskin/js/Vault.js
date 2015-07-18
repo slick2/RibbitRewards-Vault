@@ -44,7 +44,7 @@ function loadAddressTable() {
 }
 
 function loadAddressPicker() {
-    getAllTablesAsDataTable(function (data) {
+/*    getAllTablesAsDataTable(function (data) {
         var rows = data.address.rows
         var targetNetwork = settings.currentcoin.name
         //remove list items
@@ -65,6 +65,26 @@ function loadAddressPicker() {
                     label = r.label
                 if (r.format !== "Identity") {
                     $("<li><a class=\"address-item\" data=\"" + r.addressData + "\">" + (label || r.addressData) + "</a></li>").insertBefore(".wallet-address-picker .dropdown-menu .divider");
+                }
+            }
+        })
+    })*/
+    var targetNetwork = settings.currentcoin.name
+    $(".wallet-address-picker .dropdown-menu li").remove()
+    $(".wallet-address-picker .dropdown-menu").append("<li class=\"divider\"></li>")
+    $("<li><a class=\"wallet-action\">Generate new address</a></li>").insertAfter(".wallet-address-picker .dropdown-menu .divider")
+    var label
+    newtables.privkey.allRecordsArray(function (records) {
+        $.each(records, function () {
+            if (!$(this)[0].isIdentity) {
+                var hd = new bitcore.HDPrivateKey($(this)[0].key.xprivkey)
+                var address = hd.privateKey.toAddress()
+                var addressNetwork = address.network.name
+                if (addressNetwork === "livenet") {
+                    addressNetwork = "bitcoin"
+                }
+                if (addressNetwork === targetNetwork) {
+                    $("<li><a class=\"address-item\" data=\"" + address + "\">" + (label || address) + "</a></li>").insertBefore(".wallet-address-picker .dropdown-menu .divider");
                 }
             }
         })

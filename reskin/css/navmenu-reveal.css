@@ -33,13 +33,6 @@ html, body {
   /*left:240px !important;*/
 }
 
-.navmenu {
-  z-index: 1;
-  background: #009688;
-  /*overflow: hidden !important;*/
-  overflow-x: hidden;
-}
-
 .canvas {
   position: relative;
   left: 0;

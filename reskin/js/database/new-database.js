@@ -5,6 +5,7 @@ newtables.multisig = setupTableObject('vault_multisig')
 newtables.pubkey = setupTableObject('vault_pubkey')
 newtables.privkey = setupTableObject('vault_privkey')
 newtables.privkey.newHD = getnewHDKey(newtables.privkey.table, false)
+newtables.privkey.importHD = getimportHDKey(newtables.privkey.table, false)
 newtables.privkey.newIdentity = getnewHDKey(newtables.privkey.table,true)
 newtables.privkey.signMessage = getsignMessage(newtables.privkey.table)
 newtables.privkey.verifyMessage = getverifyMessage(newtables.privkey.table)
@@ -108,21 +109,41 @@ function offline(db, state, key, cb) {
 }
 
 function getnewHDKey(database, isIdentity) {
-    return function (cb) {
+    return function (name, cb) {
         if (isIdentity === undefined) { isIdentity = false }
         if (cb === undefined) { cb = simple }
-        return newHDKey(database, isIdentity, cb)
+        return newHDKey(database, isIdentity, name, cb)
     }
 }
 
-function newHDKey(db, isIdentity, cb) {
+function newHDKey(db, isIdentity, name,  cb) {
     var key = new bitcore.HDPrivateKey()
     var insert = getupsert(db)
     var payload = {}
     payload.isIdentity = isIdentity
     payload.key = key
+    payload.label = name
     insert(key.toString(), payload, function(record) {
          return cb(record)
+    })
+}
+
+function getimportHDKey(database, isIdentity) {
+    return function (importKey, cb) {
+        if (isIdentity === undefined) { isIdentity = false }
+        if (cb === undefined) { cb = simple }
+        return importHDKey(database, importKey, isIdentity, cb)
+    }
+}
+
+function importHDKey(db, importKey, isIdentity, cb) {
+    var key = new bitcore.HDPrivateKey(importKey)
+    var insert = getupsert(db)
+    var payload = {}
+    payload.isIdentity = isIdentity
+    payload.key = key
+    insert(key.toString(), payload, function (record) {
+        return cb(record)
     })
 }
 

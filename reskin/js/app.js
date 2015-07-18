@@ -56,10 +56,8 @@ var onPage = function () {
 $(document).ready(function () {
     handleSettings(function () {
         preInit(function () {
-            /*check(function () {*/
                 setTimeout(function () { $(".navmenu").fadeIn("slow") }, 900)
                 initApplication()
-            //})
         })
     })
 })
@@ -167,7 +165,7 @@ var preInit = function(cb) {
         }
         newtables.privkey.keys(function(keys) {
              if (keys.error) {
-                 newtables.privkey.newIdentity(function(out) {
+                 newtables.privkey.newIdentity("Me",function(out) {
                     return setLocalIdentity()
                  })
              } else {
@@ -236,10 +234,11 @@ var loadPageByHash = function () {
         $("iframe").attr("src", pageData.page)
         $(".page-header h1").text(pageData.title)
         $(".frame-tab").text(pageData.title)
+        $(".frame-tab").tab("show")
     } //else {
         setTimeout(function(){handleSettingsElementFromStore()},500)
     //}
-    handleSettings(function() {})
+    //handleSettings(function() {})
 }
 
 function setSetting(value,target,type,cb) {
@@ -309,7 +308,7 @@ function matchPageSettingsToDatastore() {
         var togglefor = $(this).attr("for")
         var target = $(this).attr("toggletype")
         var toggle = $(this)
-        newtables.settings.getOrDefault(togglefor + target,false, function(err, doc) {
+        newtables.settings.getOrDefault(togglefor + target, false, function(err, doc) {
             toggle.prop("checked", doc.value)
             if (target === "advanced" && doc.value) {
                 $(".advanced").show()
@@ -384,7 +383,6 @@ function persistSettingToggleToDatastore(context) {
 }
 
 var initApplication = function() {
-	/* Video */
 
     initAllTheThings()
     console.log("Init Application")
@@ -393,6 +391,7 @@ var initApplication = function() {
         var options = { selectorAttribute: "data-target" };
         $('#tabs').stickyTabs(options);
         top.renderChatList()
+        top.loadBalance($(".balance-container"))
     }
 }
 
@@ -435,9 +434,15 @@ function bindClicks() {
         switchCoinImage(newCoin, newCoinName)
         bitcore.Networks.AvailableNetworks.set($(".coinPicker").attr("name"))
         insight = bitcore.Networks.AvailableNetworks.currentNetwork().insight
-        Vault.addSetting("currentcoin", { name: newCoinName, short: newCoin }, function () { })
-        windowProxy.post({ command: "contextSwitch", payload: insight })
-        popMsg("Wallet context changed to " + $(".coinPicker").attr("name"))
+        //Vault.addSetting("currentcoin", { name: newCoinName, short: newCoin }, function () { })
+        newtables.settings.insert("currentcoin", { name: newCoinName, short: newCoin }, function(doc) {
+            windowProxy.post({ command: "contextSwitch", payload: insight })
+            popMsg("Wallet context changed to " + $(".coinPicker").attr("name").toUpperCase())
+            //top.location.href = "#wallet"
+            //loadPageByHash()
+            loadBalance($(".balance-container"))
+        })
+        
     })
     
     $(document).on('click.customBindings', '.navlink', function () {
@@ -456,7 +461,7 @@ function bindClicks() {
     })
 
     $(document).on('click.customBindings', '.coinPicker', function () {
-        showCoinSelection()
+        toggleCoinSelection()
     })
     
     /* Upload Image */
@@ -483,6 +488,17 @@ function bindClicks() {
     /* Save name setting */
     $(document).on('click.customBindings', '.displayNameSave', function() {
         saveNameSetting()
+    })
+    
+    /* Save new address with name */
+    $(document).on('click.customBindings', '.saveNewAddress', function () {
+        if ($("#accountName").val() !== "") {
+            newtables.privkey.newHD($("#accountName").val(), function(record) {
+                windowProxy.post({ command: "loadAddressPicker", payload: record })
+                $("#accountName").val("")
+            })
+            
+        }
     })
 
     /* Add / Remove UTXO to/from transaction */
@@ -575,10 +591,19 @@ function bindClicks() {
         if (this.text === "Generate new address") {
             //top.window.location.assign(top.window.location.href.split('#')[0] + "#address")
             //parent.loadPageByHash()
-            Vault.saveHDAddress(false, function () {
+            /*Vault.saveHDAddress(false, function () {
                 loadAddressPicker()
+            })*/
+            newtables.privkey.newHD(function (key) {
+                 loadAddressPicker()   
             })
         }
+    })
+    
+    $(document).on('click.customBindings', '.contactList', function (data) {
+        
+        top.$(".contactList").removeClass("fadeIn")
+        top.$(".contactList").addClass("fadeOut")
     })
 
     /* Add output to transaction and sign */
@@ -696,6 +721,42 @@ function showQrModal() {
     $("#modalQrcode").modal("show")
 }
 
+function showQrScannerModal() {
+    $("#newModalQrcodeScanner").modal("show")
+    $('#play').click()
+}
+
+function loadBalance(balanceElement) {
+    var totalBalance = 0
+    var targetNetwork = top.bitcore.Networks.AvailableNetworks.currentNetwork().name
+    var shortCode = top.bitcore.Networks.AvailableNetworks.currentNetwork().insight.network.alias
+    if (targetNetwork === "bitcoin") { shortCode = "BTC" }
+    balanceElement.text(totalBalance + " " + shortCode)
+    top.newtables.privkey.allRecordsArray(function (records) {
+        $.each(records, function () {
+            var hd = new top.bitcore.HDPrivateKey($(this)[0].key.xprivkey)
+            var address = hd.privateKey.toAddress()
+            var addressNetwork = address.network.name
+            if ($(this)[0].label !== undefined) {
+                label = $(this)[0].label
+            }
+            if (addressNetwork === "livenet") {
+                addressNetwork = "bitcoin"
+            }
+            if (addressNetwork === targetNetwork) {
+                top.insight.getBalance(address, function (err, balance) {
+                    if (balance > 0) {
+                        balance = balance * 0.00000001
+                        totalBalance = totalBalance + balance
+                        balanceElement.text(totalBalance + " " + shortCode)
+                    }
+                    balanceElement.text(totalBalance + " " + shortCode)
+                })
+            }
+        })
+    })
+}
+
 function handleAmountInput() {
     resetTransaction()
     var amountField = $("#output-amount")
@@ -793,8 +854,11 @@ function switchCoinImage(coin,name) {
     lastCoinElement.attr("name", coinReplacingName)
 }
 
-function showCoinSelection() {
-    $(".coin-menu").show()
+function toggleCoinSelection() {
+    if ($(".coin-menu").is(":visible")) {
+        $(".coin-menu").hide()
+    } else { $(".coin-menu").show() }
+    
 }
 
 function hideCoinSelection() {
@@ -856,7 +920,10 @@ function addGroupChatMsg(payload) {
         }
         if (err) {
             meshnet.retrieveData(payload.address, function(err, data) {
-                newtables.peers.insert(data.address, data, function(err, doc) {
+                if (err) {
+                    formulateMsg(data)
+                }
+                newtables.peers.insert(data.address, data, function (err, doc) {
                     formulateMsg(data)
                     renderChatList()
                 })

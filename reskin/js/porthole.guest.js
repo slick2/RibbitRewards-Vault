@@ -22,23 +22,24 @@ function onMessage(messageEvent) {
             updateCoinTo = "bitcoin"
             short = "btc"
         }
-        newtables.settings.insert("currentcoin", { name: updateCoinTo, short: short }, function(err,response) {
-            console.log(err, response)
-            top.settings.currentcoin = { name: updateCoinTo, short: short }
-            settings.currentcoin = { name: updateCoinTo, short: short }
+        //newtables.settings.insert("currentcoin", { "name": updateCoinTo, "short": short }, function(response) {
+            //console.log(response)
+            top.settings.currentcoin = { "name": updateCoinTo, "short": short }
+            //settings.currentcoin = { "name": updateCoinTo, "short": short }
             loadAddressPicker()
-        })
+        //})
         /*Vault.addSetting("currentcoin", { name: updateCoinTo, short: short }, function () {
             loadAddressPicker()
         })*/
         top.bitcore.Networks.AvailableNetworks.set(updateCoinTo)
         top.insight = top.bitcore.Networks.AvailableNetworks.currentNetwork().insight
         top.settings.currentcoin = { name: updateCoinTo, short: short }
-        bitcore.Networks.AvailableNetworks.set(updateCoinTo)
-        insight = top.bitcore.Networks.AvailableNetworks.currentNetwork().insight
-        settings.currentcoin = { name: updateCoinTo, short: short }
-        
-
-        
+        top.bitcore.Networks.AvailableNetworks.set(updateCoinTo)
+        //insight = top.bitcore.Networks.AvailableNetworks.currentNetwork().insight
+        //settings.currentcoin = { "name": updateCoinTo, "short": short }
+    } else if (cmd === "loadAddressPicker") {
+        loadAddressPicker()
+    } else if (cmd === "scannedQR") {
+        $("#toAddress").val(payload.replace('bitcoin:',''))
     }
 }
