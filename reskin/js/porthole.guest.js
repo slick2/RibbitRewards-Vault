@@ -8,38 +8,35 @@ window.onload = function () {
     // Register an event handler to receive messages;
     windowProxy.addEventListener(onMessage);
 };
+
 function onMessage(messageEvent) {
     var cmd = messageEvent.data.command
     var payload = messageEvent.data.payload
     console.log("Guest received command: "+cmd) 
     console.log(payload)
-    
-    if (cmd === "contextSwitch") {
-        //insight = payload
-        var updateCoinTo = payload.network.name
-        var short = "rbr"
-        if (updateCoinTo === "livenet") {
-            updateCoinTo = "bitcoin"
-            short = "btc"
-        }
-        //newtables.settings.insert("currentcoin", { "name": updateCoinTo, "short": short }, function(response) {
-            //console.log(response)
+
+    switch (cmd) {
+        case "contextSwitch":
+            var updateCoinTo = payload.network.name
+            var short = "rbr"
+            if (updateCoinTo === "livenet") {
+                updateCoinTo = "bitcoin"
+                short = "btc"
+            }
             top.settings.currentcoin = { "name": updateCoinTo, "short": short }
-            //settings.currentcoin = { "name": updateCoinTo, "short": short }
             loadAddressPicker()
-        //})
-        /*Vault.addSetting("currentcoin", { name: updateCoinTo, short: short }, function () {
+            top.bitcore.Networks.AvailableNetworks.set(updateCoinTo)
+            top.insight = top.bitcore.Networks.AvailableNetworks.currentNetwork().insight
+            top.settings.currentcoin = { name: updateCoinTo, short: short }
+            top.bitcore.Networks.AvailableNetworks.set(updateCoinTo)
+            $("#toAddress").val("")
+
+            break;
+        case "loadAddressPicker":
             loadAddressPicker()
-        })*/
-        top.bitcore.Networks.AvailableNetworks.set(updateCoinTo)
-        top.insight = top.bitcore.Networks.AvailableNetworks.currentNetwork().insight
-        top.settings.currentcoin = { name: updateCoinTo, short: short }
-        top.bitcore.Networks.AvailableNetworks.set(updateCoinTo)
-        //insight = top.bitcore.Networks.AvailableNetworks.currentNetwork().insight
-        //settings.currentcoin = { "name": updateCoinTo, "short": short }
-    } else if (cmd === "loadAddressPicker") {
-        loadAddressPicker()
-    } else if (cmd === "scannedQR") {
-        $("#toAddress").val(payload.replace('bitcoin:',''))
+            break;
+        case "scannedQR": 
+            $("#toAddress").val(payload.replace('bitcoin:', ''))
+            break;
     }
 }

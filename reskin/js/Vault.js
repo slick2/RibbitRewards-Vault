@@ -332,9 +332,9 @@ function checkHash() {
 
 function generateQr(data) {
     $("#qrcode").html("");
-    $(".modal-title").text(data)
-    qrcode = new QRCode("qrcode");
-    qrcode.makeCode("bitcoin:" + data);
+    $("#modalQrcode .modal-title").text(data)
+    viewQrcode = new QRCode("qrcode");
+    viewQrcode.makeCode("bitcoin:" + data);
 
 }
 

@@ -414,7 +414,7 @@
                     <div class="togglebutton">
                         <label>
                             Hide offline users?
-                            <input type="checkbox" for="hide" toggletype="offline" data-original-title="" title="" style="margin: 5px;">
+                            <input type="checkbox" tabindex="-1" for="hide" toggletype="offline" data-original-title="" title="" style="margin: 5px;">
                         </label>
                     </div>
                 </div>
@@ -489,84 +489,29 @@
     </div>
 </div>
 <!-- qrcode modal -->
-<!-- old qrcode scanner modal -->
-<div class="modal fade" id="modalQrcodeScanner" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Scan a QR Code or Barcode</h4>
-            </div>
-            <div class="modal-body" align="center">
 
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" id="qrScanClose">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- new qrcode scanner modal -->
+<!-- QRcode scanner modal -->
 <div class="modal fade" id="newModalQrcodeScanner" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">qrcode scanner</h4>
+                <h4 class="modal-title">Scan or Upload a QR Code</h4>
             </div>
             <div class="modal-body" align="center">
-                <div id="QR-Code" class="container" style="width: 100%">
-                <div class="panel">
-                    <div class="panel-heading" style="display: inline-block; width: 100%;">
+                <section id="main_content" class="inner center">
+                    <div id="mainbody" style="display: inline;">
+                        <i id="webcamimg" class="glyphicon glyphicon-facetime-video" onclick=" setwebcam() " align="left" style="opacity: 1;"></i>
+                        <!--<img class="selector" id="webcamimg" src="vid.png" onclick=" setwebcam() " align="left" style="opacity: 1;">-->
+                        <i id="qrimg" class="fa-double fa fa-lg fa-download" onclick="setimg()" align="right" style="opacity: 0.2;"></i>
+                        <!--<img class="selector" id="qrimg" src="cam.png" onclick="setimg()" align="right" style="opacity: 0.2;">-->
 
-                        <div style="width: 50%; float: right; margin-top: 5px; margin-bottom: 5px; text-align: right;">
-                            <select id="cameraId" class="form-control" style="display: inline-block; width: auto;"></select>
-                            <button id="save" data-toggle="tooltip" title="Image shoot" type="button" class="btn btn-info btn-sm disabled"><span class="glyphicon glyphicon-picture"></span></button>
-                            <button id="play" data-toggle="tooltip" title="Play" type="button" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-play"></span></button>
-                            <button id="stop" data-toggle="tooltip" title="Stop" type="button" class="btn btn-warning btn-sm"><span class="glyphicon glyphicon-stop"></span></button>
-                            <button id="stopAll" data-toggle="tooltip" title="Stop streams" type="button" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-stop"></span></button>
-                        </div>
+                        <div id="outdiv"></div>
+                        <div id="result">- scanning -</div>
                     </div>
-                    <div class="panel-body">
-                        <div class="col-md-6" style="text-align: center;">
-                            <div class="well" style="position: relative; display: inline-block;">
-                                <canvas id="qr-canvas" width="320" height="240"></canvas>
-                                <div class="scanner-laser laser-rightBottom" style="opacity: 0.5;"></div>
-                                <div class="scanner-laser laser-rightTop" style="opacity: 0.5;"></div>
-                                <div class="scanner-laser laser-leftBottom" style="opacity: 0.5;"></div>
-                                <div class="scanner-laser laser-leftTop" style="opacity: 0.5;"></div>
-                            </div>
-                            <div class="well" style="position: relative;">
-                                <label id="zoom-value" width="100">Zoom: 2</label>
-                                <input type="range" id="zoom" value="20" min="10" max="30" onchange=" Page.changeZoom(); " />
-                                <label id="brightness-value" width="100">Brightness: 0</label>
-                                <input type="range" id="brightness" value="0" min="0" max="128" onchange=" Page.changeBrightness(); " />
-                                <label id="contrast-value" width="100">Contrast: 0</label>
-                                <input type="range" id="contrast" value="0" min="0" max="64" onchange=" Page.changeContrast(); " />
-                                <label id="threshold-value" width="100">Threshold: 0</label>
-                                <input type="range" id="threshold" value="0" min="0" max="512" onchange=" Page.changeThreshold(); " />
-                                <label id="sharpness-value" width="100">Sharpness: off</label>
-                                <input type="checkbox" id="sharpness" onchange=" Page.changeSharpness(); " />
-                                <label id="grayscale-value" width="100">grayscale: off</label>
-                                <input type="checkbox" id="grayscale" onchange=" Page.changeGrayscale(); " />
-                            </div>
-                        </div>
-                        <div class="col-md-6" style="text-align: center;">
-                            <div id="result" class="thumbnail">
-                                <div class="well" style="position: relative;display: inline-block;">
-                            <img id="scanned-img" src="" width="320" height="240">
-                        </div>
-                                <div class="caption">
-                                    <h3>Scanned result</h3>
-                                    <p id="scanned-QR"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <canvas id="qr-canvas" width="800" height="600" style="width: 800px; height: 600px; display: none"></canvas>
+                </section>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" id="qrScanClose">Close</button>
                 </div>
@@ -623,25 +568,14 @@
     <script src="js/porthole.js"></script>
     <script>
         var node;
-
         var windowProxy;
-
         window.onload = function () {
-
             // Create a proxy window to send to and receive
-
             // messages from the iFrame
-
             windowProxy = new Porthole.WindowProxy(
-
                 'proxy.html', 'guestFrame');
-
-
-
             // Register an event handler to receive messages;
-
             //windowProxy.addEventListener(onMessage);
-
         };
     </script>
     <!-- Placed at the end of the document so the pages load faster
@@ -679,7 +613,7 @@
     <script type="text/javascript" src="js/jsbn.js"></script>
     <script type="text/javascript" src="js/ellipticcurve.js"></script>
     <script type="text/javascript" src="js/coin.js"></script>
-    <script type="text/javascript" src="js/coinbin.js"></script>
+    <!--<script type="text/javascript" src="js/coinbin.js"></script>-->
     <script type="text/javascript" src="js/bitcore.min.js"></script>
     <script type="text/javascript" src="js/bitcore-ecies.min.js"></script>
     <script type="text/javascript" src="js/bitcore-message.js"></script>
@@ -711,12 +645,13 @@
     <script src="js/database/new-database.js"></script>
     <script src="js/database/model/chat.js"></script>
     <script src="js/database/model/chatTip.js"></script>
+<script src="js/database/model/peer.js"></script>
+    <script src="js/database/model/me.js"></script>
     <!--<script src="js/fabric.min.js"></script>-->
     <script src="js/mesh.js"></script>
     <!-- QR Scanner -->
-    <script type="text/javascript" src="js/scanner/qrcodelib.js"></script>
-    <script type="text/javascript" src="js/scanner/WebCodeCam.js"></script>
-    <script type="text/javascript" src="js/scanner/Scanner.js"></script>
+    <script type="text/javascript" src="js/llqrcode.js"></script>
+    <script type="text/javascript" src="js/webqr.js"></script>
     <script src="js/nouislider.min.js"></script>
 </body>
 

@@ -52,14 +52,14 @@
                                 <div class="section">
                                     <div class="container">
                                         <div class="row">
-                                            <div class="col-md-3 col-xs-3">
+                                            <div class="col-md-4 col-xs-4">
                                                 <div class="col-md-6">
                                                     <label class="control-label">Profile Picture</label>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <div class="togglebutton">
                                                         <label>Public
-                                                            <input type="checkbox" for="picture" toggletype="public">
+                                                            <input tabindex="-1" type="checkbox" for="profileImage" toggletype="public">
                                                         </label>
                                                     </div>
                                                 </div>
@@ -69,7 +69,7 @@
                                                     <p></p>
                                                 <div class="form-group">
                                                     <div class="col-sm-3">
-                                                        <input type="file">
+                                                        <input id="profileImageUpload" type="file">
                                                     </div>
                                                 </div>
                                             </div>
@@ -87,7 +87,7 @@
                                                         <div class="col-sm-2">
                                                             <div class="togglebutton">
                                                                 <label>Public
-                                                                    <input type="checkbox" for="name" toggletype="public">
+                                                                    <input tabindex="-1" type="checkbox" for="name" toggletype="public">
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -102,7 +102,7 @@
                                                         <div class="col-sm-2">
                                                             <div class="togglebutton">
                                                                 <label>Public
-                                                                    <input type="checkbox" for="nickname" toggletype="public">
+                                                                    <input tabindex="-1" type="checkbox" for="nickname" toggletype="public">
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -124,7 +124,7 @@
                                                         <div class="col-sm-2">
                                                             <div class="togglebutton">
                                                                 <label>Public
-                                                                    <input type="checkbox" for="social" toggletype="public">
+                                                                    <input tabindex="-1" type="checkbox" for="social" toggletype="public">
                                                                 </label>
                                                             </div>
                                                         </div>
@@ -262,7 +262,7 @@
             <!-- Mock -->
             <script src="js/mock.js"></script>
             <script src="js/database/new-database.js"></script>
-            <script src="js/mesh.js"></script>
+            <!--<script src="js/mesh.js"></script>-->
             <!--<script src="js/sound.js"></script>-->
             <!-- PubSub -->
             <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

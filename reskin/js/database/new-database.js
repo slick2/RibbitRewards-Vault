@@ -13,6 +13,8 @@ newtables.channel = setupTableObject('vault_channel')
 newtables.peers = setupTableObject('vault_peers')
 newtables.peers.offline = getoffline(newtables.peers.table)
 newtables.peers.online = getonline(newtables.peers.table)
+newtables.peers.tofriend = gettofriend(newtables.peers.table)
+newtables.peers.unfriend = getunfriend(newtables.peers.table)
 
 function setupTableObject(tablename) {
     var obj = {}
@@ -107,6 +109,41 @@ function offline(db, state, key, cb) {
         })
     })
 }
+
+function gettofriend(database) {
+    return function (key, cb) {
+        if (cb === undefined) { cb = simple }
+        return setfriend(database, true, key, cb)
+    }
+}
+
+function getunfriend(database) {
+    return function (key, cb) {
+        if (cb === undefined) { cb = simple }
+        return setfriend(database, false, key, cb)
+    }
+}
+
+function setfriend(db, state, key, cb) {
+    var insert = getupsert(db)
+    db.allDocs({
+        include_docs: true
+    }, function (err, response) {
+        if (err) { return cb(err); }
+        console.log(response)
+        $.each(response.rows, function (index, value) {
+            if ($(this)[0].doc.value.address === key || key === null || $(this)[0].doc.value.isfriend === undefined) {
+                var doc = $(this)[0].doc.value
+                doc.isfriend = state;
+                insert(doc.address, doc, function (resp) {
+                    if (key !== null || index === (response.rows.length - 1))
+                        return cb(resp)
+                })
+            }
+        })
+    })
+}
+
 
 function getnewHDKey(database, isIdentity) {
     return function (name, cb) {
@@ -372,7 +409,7 @@ function allRecordsArray(db, cb) {
 function getPublicIdentity(cb) {
     var payload = {}
     //public picture
-    newtables.settings.get("picturepublic", function(err, publicdata) {
+    newtables.settings.get("profileImagepublic", function(err, publicdata) {
         newtables.settings.get("profileImage", function (err, data) {
             if (publicdata.value) {payload.photo = data.value}
             newtables.settings.get("namepublic", function (err, publicdata) {

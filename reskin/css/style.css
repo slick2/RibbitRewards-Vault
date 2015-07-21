@@ -19,8 +19,6 @@ html, body {
     font-family: Raleway;
 }
 
-
-
 body {
 	background-color:#ffffff;
     overflow-x: hidden;
@@ -71,38 +69,6 @@ iframe {
     z-index: -1;
     overflow: hidden;
 }
-/* QRScanner */
-
-.scanner-laser{
-    position: absolute;
-    margin: 40px;
-    height: 30px;
-    width: 30px;
-}
-.laser-leftTop{
-    top: 0;
-    left: 0;
-    border-top: solid red 5px;
-    border-left: solid red 5px;
-}
-.laser-leftBottom{
-    bottom: 0;
-    left: 0;
-    border-bottom: solid red 5px;
-    border-left: solid red 5px;
-}
-.laser-rightTop{
-    top: 0;
-    right: 0;
-    border-top: solid red 5px;
-    border-right: solid red 5px;
-}
-.laser-rightBottom{
-    bottom: 0;
-    right: 0;
-    border-bottom: solid red 5px;
-    border-right: solid red 5px;
-}
 
 /* QR Scanner */
 .qrButton {
@@ -112,6 +78,14 @@ iframe {
   right: -15px !important;
   padding: 5px;
   padding-bottom: 1px;
+}
+
+#toAddress {
+    font-size: .8em;
+}
+
+#v {
+    width: 55vw;
 }
 
 .qrButton .glyphicon-qrcode {
@@ -167,7 +141,7 @@ iframe {
   position: relative;
   top: 3px;
   left: 15px;
-  font-size: .8vw;
+  font-size: .7em;
 }
 
 .canvas:after {
@@ -350,6 +324,9 @@ li .accountInPicker {
   color: #26C281;
 }
 
+.togglebutton {
+    display: none;
+}
 
 
 .dropdown-menu li:hover {
@@ -360,7 +337,7 @@ li .accountInPicker {
     width: 250px !important;    
 }
 
-input[type=file] {
+#profileImageUpload {
       top: 15px;
   position: absolute;
 }
@@ -498,6 +475,7 @@ input[type=file] {
     overflow:auto;
     top:0;
     bottom:3em;
+    overflow-x: hidden;
 }
 #inputcontainer{
     display:block;

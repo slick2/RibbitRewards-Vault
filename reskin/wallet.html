@@ -287,9 +287,7 @@
             var shortCode = top.bitcore.Networks.AvailableNetworks.currentNetwork().insight.network.alias
             $(".wallet-address-picker .dropdown-menu li.addressItem").remove()
             $(".address-view").html('Choose Account to send from')
-            //$(".address-view").html('Choose Account to send from')
-            //<button class="address-view btn btn-default" type="button">Choose Account to send from</button>
-
+            
             top.newtables.privkey.allRecordsArray(function (records) {
                 $.each(records, function () {
                     if ($(this)[0].isIdentity) { return }
@@ -310,12 +308,8 @@
                             if (balance > 0) {
                                 balance = balance * 0.00000001
                                 target.addClass("positiveBalance")
-                                //totalBalance = totalBalance + balance
-                                //$(".balance-container").text(totalBalance + " " + shortCode)
                             }
-                            //$(".balance-container").text(totalBalance + " " + shortCode)
-                            
-                            //$(".shortCode").text(shortCode)
+
                         })
                     }
                 })

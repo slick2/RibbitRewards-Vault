@@ -1,5 +1,5 @@
  /* Globals */
-var bitcore, ECIES, explorers, insight, transaction, qrcode, p2p, message, node
+var bitcore, ECIES, explorers, insight, transaction, viewQrcode, p2p, message, node
 var settings = {}
 var foundIdentity = []
 var lazyCheck, getDisplayName, checkLocalIdentity
@@ -134,7 +134,7 @@ var preInit = function(cb) {
         bitcore.Networks.AvailableNetworks.set("ribbit")
     }
     transaction = new bitcore.Transaction()
-    qrcode = new QRCode("qrcode")
+    viewQrcode = new QRCode("qrcode")
 
     handleMenuToggle()
     loadPageByHash()
@@ -158,7 +158,7 @@ var preInit = function(cb) {
                     var record = $(this)[0]
                     if (record.isIdentity) {
                         foundIdentity.push(record.key)
-                        return meshnet.checkInit()
+                        return top.meshnet.checkInit()
                     }
                 })
             })
@@ -255,17 +255,6 @@ function adjustDesign() {
     $(".canvas .container").css("min-height", $(window).height() - ($("footer").height() + 60))
     $(".togglebutton input").css("margin", "5px")
     $("iframe").height($(".canvas .container").height() - $("footer").height())
-   /* $("img[for='profileImage']").height("165px")
-    $("img[for='profileImage']").css("top", "-60px")
-    $("img[for='profileImage']").css("position", "absolute")
-    $("img[for='profileImage']").css("left", "-43px")*/
-
-
-    /*$(".profile-item.menu-item-sm img").height("165px")
-    $(".profile-item.menu-item-sm img").css("top", "-60px")
-    $(".profile-item.menu-item-sm img").css("position", "absolute")
-    $(".profile-item.menu-item-sm img").css("left", "-43px")*/
-/*    $(".togglebutton label").css("margin-top","15px")*/
 }
 
 function handleSettingsElementFromStore() {
@@ -289,8 +278,8 @@ function handleProfileImageUpload(context) {
             newtables.settings.insert("profileImage", { location: "base64", data: reader.result }, function (doc) {
                 fileDisplayArea.css('background-image', 'url(' + reader.result + ')')
                 console.log(doc)
-                meshnet.publicUpdateIdentity()
-                top.matchPageSettingsToDatastore()
+                top.meshnet.publicUpdateIdentity()
+                //top.matchPageSettingsToDatastore()
             })
         }
         
@@ -409,7 +398,7 @@ function popMsg(msg) {
  * 
  * *****************************************/
 function bindClicks() {
-
+    if ($("iframe").length < 1 ) { return    }
     /* Unbind by localnamespace togglebutton(Awesome way to unbind a selective everything) */
     $(document).unbind(".customBindings")
     
@@ -423,7 +412,8 @@ function bindClicks() {
     })
     /* Toggle Profile Pic */
     $(document).on('click.customBindings', 'div[for="profileImage"]', function () {
-       top.changeProfileImageStock($(this))
+        //toggleOn($(this))
+        top.changeProfileImageStock($(this))
     })
     
     /* Change Coin */
@@ -454,10 +444,29 @@ function bindClicks() {
         e.preventDefault()
         $(this).tab("show")
     })
+
     
+    /* add a friend */
+    $(document).on('click.customBindings', '.addFriend', function (e) {
+        var address = $(this).attr("data")
+        $(this).removeClass("fa-plus-circle").addClass("fa-minus-circle")
+        makeFriend(address, function() {
+            console.log("added: " + address)
+        })
+    })
+
+    /* remove a friend */
+    $(document).on('click.customBindings', '.removeFriend', function (e) {
+        var address = $(this).attr("data")
+        $(this).removeClass("fa-minus-circle").addClass("fa-plus-circle")
+        loseFriend(address, function () {
+            console.log("removed: "+ address)
+        })
+    })
+
     $(document).on('click.customBindings', '.togglebutton input', function () {
         handleToggleSettingAction($(this))
-        meshnet.publicUpdateIdentity()
+        top.meshnet.publicUpdateIdentity()
     })
 
     $(document).on('click.customBindings', '.coinPicker', function () {
@@ -465,7 +474,7 @@ function bindClicks() {
     })
     
     /* Upload Image */
-    $(document).on('change.customBindings', "input[type='file']", function () {
+    $(document).on('change.customBindings', "#profileImageUpload", function () {
         handleProfileImageUpload($(this))
     })
     /* Join Chat */
@@ -491,14 +500,14 @@ function bindClicks() {
     })
     
     /* Save new address with name */
-    $(document).on('click.customBindings', '.saveNewAddress', function () {
+    $(document).on('change.customBindings', '#accountName', function () {
         if ($("#accountName").val() !== "") {
             newtables.privkey.newHD($("#accountName").val(), function(record) {
                 windowProxy.post({ command: "loadAddressPicker", payload: record })
                 $("#accountName").val("")
             })
             
-        }
+        } $("#nameAccountModal").modal("hide")
     })
 
     /* Add / Remove UTXO to/from transaction */
@@ -559,12 +568,9 @@ function bindClicks() {
     })
     
     $(document).on('change.customBindings', "input[type='text'][for]", function () {
-        var target = $(this)
-       /* newtables.settings.insert(target.attr("for"), target.val(), function(doc) {
-            console.log(doc)*/
-            meshnet.publicUpdateIdentity()
+            toggleOn($(this))
+            top.meshnet.publicUpdateIdentity()
             top.matchPageSettingsToDatastore()
-       /* })*/
     })
     
     $(document).on('change.customBindings', "#chatInput", function () {
@@ -589,11 +595,6 @@ function bindClicks() {
     //wallet-action
     $(document).on('click.customBindings', '.wallet-address-picker .dropdown-menu .wallet-action', function (data) {
         if (this.text === "Generate new address") {
-            //top.window.location.assign(top.window.location.href.split('#')[0] + "#address")
-            //parent.loadPageByHash()
-            /*Vault.saveHDAddress(false, function () {
-                loadAddressPicker()
-            })*/
             newtables.privkey.newHD(function (key) {
                  loadAddressPicker()   
             })
@@ -717,14 +718,43 @@ function bindClicks() {
     });
 }
 
+function toggleOn(elem) {
+
+    var toggle 
+    var preState
+    if (elem.prop('tagName') === "DIV") {
+        prestate = false
+        toggle = elem.parent().find("input[for='" + elem.attr("for") + "']")
+    } else if (elem.val() === "") {
+        prestate = true
+        toggle = $("input[for='" + elem.attr("for") + "']")
+    } else {
+        prestate = false
+        toggle = $("input[for='" + elem.attr("for") + "']")
+    }
+    toggle.prop("checked", prestate)
+    toggle.click()
+}
+
 function showQrModal() {
     $("#modalQrcode").modal("show")
 }
 
 function showQrScannerModal() {
+    QRScanload(function (scannedData) {
+        $("#newModalQrcodeScanner").modal("hide")
+        windowProxy.post({ command: "scannedQR", payload: scannedData })
+    })
     $("#newModalQrcodeScanner").modal("show")
-    $('#play').click()
 }
+
+$('#newModalQrcodeScanner').on('hidden', function () {
+    camstream.close()
+})
+
+$(document).on('hide.bs.modal', '#newModalQrcodeScanner', function () {
+    camstream.close()
+});
 
 function loadBalance(balanceElement) {
     var totalBalance = 0
@@ -883,13 +913,15 @@ function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 function changeProfileImageStock(context) {
+    
     var rnd = randomIntFromInterval(1, 94)
     context.css("background-image", "url(./images/avatars/characters_" + rnd + ".png)")
     top.$(".profile-item img").attr("src","")
     top.$(".profile-item img").css("background-image", "url(./images/avatars/characters_" + rnd + ".png)")
     newtables.settings.insert("profileImage", {location: "stock", id: rnd}, function(doc) {
+        toggleOn(context)
         console.log(doc)
-        meshnet.publicUpdateIdentity()
+        top.meshnet.publicUpdateIdentity()
     })
 }
 
@@ -936,10 +968,21 @@ function addGroupChatMsg(payload) {
     })
 }
 
+function loseFriend(address, cb) {
+    var peer = new Peer(address)
+    peer.loseFriend(cb)
+}
+
+function makeFriend(address, cb) {
+    var peer = new Peer(address)
+    peer.makeFriend(cb)
+}
+
 function renderChatList() {
     newtables.peers.allRecords(function (rows) {
         $(".chatlist").html("")
         var onlineCnt = 0
+        var listActionIcon, listActionClass
         $.each(rows, function () {
             var data = $(this).get(0)
             var photo = data.photo
@@ -964,16 +1007,25 @@ function renderChatList() {
             var isonline = ""
             var border = "border: 2px solid green;"
             var detailstyle = " position: relative;  left: 45px;  top: -15px;"
-            var communicate = '<a href=""><i class="fa-double fa fa-lg fa-plus-circle" style="float:right;"></i> </a>'
+            var listAction
+            if (data.isfriend) {
+                listAction = "data='" + data.address + "'"
+                listActionIcon = "fa-minus-circle"
+                listActionClass = "removeFriend"
+            } else {
+                listAction = "data='" + data.address + "'"
+                listActionIcon = "fa-plus-circle"
+                listActionClass = "addFriend"
+            }
+            var communicate = '<i '+ listAction+' class="'+ listActionClass +' fa-double fa fa-lg '+ listActionIcon +'" style="float:right;"></i>'
             var shadow = "  box-shadow: 0 1px 6px 0 rgba(0,0,0,.12),0 1px 6px 0 rgba(0,0,0,.12); transition: box-shadow .28s cubic-bezier(.4,0,.2,1);"
             if (!data.online) {
                 onlineclass = "btn-danger";
                 onlinestyle = "opacity: 0.4;filter: alpha(opacity=40);";
                 border = "border: 2px solid red;";
-
             } else {
-                communicate += ' <a href=""><i class="fa fa-lg fa-weixin" style="float:right;"></i></a>'
-                communicate += ' <a href=""><i class="fa fa-lg fa-video-camera" style="float:right;"></i></a>'
+                communicate += '<i class="fa fa-lg fa-weixin" style="float:right;"></i>'
+                communicate += '<i class="fa fa-lg fa-video-camera" style="float:right;"></i>'
                 onlineclass = "btn-success";
                 onlineCnt = onlineCnt + 1
                 $(".hometabs .badge").text(onlineCnt)

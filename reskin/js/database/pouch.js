@@ -86,7 +86,6 @@ Vault.deleteTable = function (table, tableName, cb) {
 /* ADD Records */
 Vault.page.saveAddress = function(cb) {
     var payload = {}
-    //if ($("#newBitcoinAddress:visible()").length > 0) {
         payload.address = $("#newBitcoinAddress").val()
         payload.pubkey = $("#newPubKey").val()
         payload.encrypted = $("#encryptKey:checked").length != 0
@@ -105,7 +104,6 @@ Vault.page.saveAddress = function(cb) {
         Vault.insertAddress(payload, function(row) {
             return cb(row)
         })
-    //}
 }
 
 Vault.generateHDAddress = function(isIdentity, cb) {
