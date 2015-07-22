@@ -127,6 +127,7 @@ iframe {
 }
 
 .nav-tabs {
+  display: none !important;
   top: -60px;
   position: relative;
   left: 120px;
@@ -438,21 +439,6 @@ li .accountInPicker {
 .modal-backdrop {
     display: none !important;
 }
-.contactList{
-  width: 190px;
-  background-color: rgba(210,215,211,0.6);
-  height: 99%;
-  position: fixed;
-  bottom: 16px;
-  top: 55px;
-  left: 60px;
-  visibility: hidden;
-}
-
-.contactList p {
-    padding: 15px;
-}
-
 
 .circular img {
 	opacity: 0;

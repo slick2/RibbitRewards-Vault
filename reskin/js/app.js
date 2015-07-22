@@ -183,23 +183,6 @@ var preInit = function(cb) {
              }
         })
     }
-    /*checkLocalIdentity = function() {
-        if (foundIdentity.length === 0) {
-            Vault.saveHDAddress(true, function() {
-                if (top.verbose) console.log("Created a new identity")
-                check(function() {
-                    console.log("checked identity again")
-                    lazyCheck()
-                })
-            })
-        } else {
-            if (top.verbose) console.log("Using identity address: " + top.foundIdentity[0].address.addressData)
-            $(".identity").html(top.foundIdentity[0].address.addressData)
-            $("#identityAddress").val(top.foundIdentity[0].address.addressData)
-            joinIdentity()
-            meshnet.checkInit()
-        }
-    }*/
     explorers = require('bitcore-explorers-multi')
     adjustDesign()
     cb()
@@ -574,9 +557,9 @@ function bindClicks() {
             toggleCoinSelection()
         })
         
-        /* Menu show Contact list */
+        /* Menu Chat */
         $(document).on('click.customBindings', '.small-chat-link', function () {
-            showContactList()
+            showChat()
         })
 
         /* Change Coin */
@@ -659,13 +642,6 @@ function bindClicks() {
                     loadAddressPicker()
                 })
             }
-        })
-        
-        /* Hide contact list after selecting a contact */
-        $(document).on('click.customBindings', '.contactList', function (data) {
-            
-            top.$(".contactList").removeClass("fadeIn")
-            top.$(".contactList").addClass("fadeOut")
         })
 
     /******************  End Host Bindings  *****************/
@@ -967,14 +943,8 @@ function addGroupChatMsg(payload) {
     })
 }
 
-function showContactList() {
-    top.$(".contactList").css("visibility", "visible")
-    top.$(".contactList").removeClass("fadeOut")
-    top.$(".contactList").addClass("fadeIn")
-    setTimeout(function () {
-        top.$(".contactList").removeClass("fadeIn")
-        top.$(".contactList").addClass("fadeOut")
-    }, 8000)
+function showChat() {
+    $(".chatTab").tab("show")
 }
 
 /* HandleBars compile template */
@@ -1074,7 +1044,6 @@ function renderChatList() {
             }
             if (this.online) {
                 renderPeerRow(this, $("#messagewindow .peerlist .peers"))
-                //renderPeerRow(this, $(".contactList"))
             }
         })
     })

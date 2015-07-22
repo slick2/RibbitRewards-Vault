@@ -205,21 +205,6 @@
                     return false
                 }
             })
-            $(document).on('click.customBindings', 'input#toAddress', function(data) {
-                top.$(".contactList").css("visibility", "visible")
-                top.$(".contactList").removeClass("fadeOut")
-                top.$(".contactList").addClass("fadeIn")
-                setTimeout(function() {
-                    top.$(".contactList").removeClass("fadeIn")
-                    top.$(".contactList").addClass("fadeOut")
-                }, 10000)
-            })
-
-            /* bring up contact list */
-            $(document).on('click.customBindings', '.contactList', function(data) {
-                top.$(".contactList").removeClass("fadeIn")
-                top.$(".contactList").addClass("fadeOut")
-            })
 
             /* show QR modal */
             $(document).on('click.customBindings', '.qrButton', function (data) {

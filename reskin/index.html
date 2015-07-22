@@ -109,12 +109,11 @@
             <div class="logo coinSelect" data="frk" name="franko" style="background-image: url(./images/SVG/FRK.svg)"></div>
         </div>
     </div>
-    <div class="menu-profile menu-items">
+    <!--<div class="menu-profile menu-items">
         <ul>
             <li></li>
         </ul>
-    </div>
-    <div class="menu-bg "></div>
+    </div>-->
     <div style="width: 480px">
         <nav style="width: 240px; float: left;" class="menu-items">
             <ul>
@@ -167,15 +166,23 @@
         </nav>
         <nav style="width: 240px; float: left;" class="menu-items-sm">
             <ul>
-                <li>
-                    <div style="cursor: pointer" onclick=" location.href = '#profile'; loadPageByHash() " class="profile-item menu-item-sm">
-                        <img for="profileImage" class="square" src="images/profile.png">
+                <!--<li>
+                    <div style="cursor: pointer" onclick=" location.href = '#profile'; loadPageByHash() " class="">$1$profile-item menu-item-sm#1#
+                        $1$<img for="profileImage" class="square" src="images/profile.png">#1#
                         <br>
                         <span></span>
                     </div>
+                </li>-->
+                
+                <li>
+                    <a href="#profile" class="navlink menu-item-sm">
+                        <i class="fa fa-lg fa-user"></i>
+                        <br>
+                        <span></span>
+                    </a>
                 </li>
                 <li>
-                    <a href="#wallet" class="navlink menuu menu-item-sm">
+                    <a href="#wallet" class="navlink menu-item-sm">
                         <i class="fa fa-lg fa-university"></i>
                         <br>
                         <span></span>
@@ -207,12 +214,6 @@
     </div>
 </div>
 <div class="canvas">
-<div class="contactList animated">
-    <p>It looks like you don't have any contacts in your address book</p>
-    <section class="peerlist module">
-        <ol class="peers"></ol>
-    </section>
-</div>
 <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js"
         id="dropboxjs" data-app-key="70ecne41xbzbp3l"></script>
 <div id="header" class="navbar navbar-default " role="navigation">
@@ -254,9 +255,11 @@
 <div class="container">
     <div>
         <ul class="nav nav-tabs hometabs" role="tablist">
-            <li role="presentation" class="active"><a class="frame-tab" href="#frame" aria-controls="frame" role="tab" data-toggle="tab">Loading...</a></li>
+            <li role="presentation" class="active">
+                <a class="frame-tab" href="#frame" aria-controls="frame" role="tab" data-toggle="tab">Loading...</a>
+            </li>
             <li role="presentation">
-                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+                <a class="chatTab" href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
                     Group Chat
                     <i class="fa fa-lg fa-weixin">
                         <span class="badge alert-info"></span>
