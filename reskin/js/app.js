@@ -1000,7 +1000,7 @@ function showQrModal() {
 function showQrScannerModal() {
     QRScanload(function (scannedData) {
         $("#newModalQrcodeScanner").modal("hide")
-        windowProxy.post({ command: "scannedQR", payload: scannedData })
+        $("#toAddress").val(scannedData.replace('bitcoin:', ''))
     })
     $("#newModalQrcodeScanner").modal("show")
 }
