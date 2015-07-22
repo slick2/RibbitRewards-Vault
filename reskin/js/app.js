@@ -305,9 +305,7 @@ function initTables(){
         $remove = $('#remove'),
         selections = [];
     $(function () {
-        $table.bootstrapTable({
-            height: getHeight()
-        });
+        $table.bootstrapTable({});
         $table.on('check.bs.table uncheck.bs.table ' +
             'check-all.bs.table uncheck-all.bs.table', function () {
             $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
@@ -1252,7 +1250,7 @@ function renderChatRow(data) {
 /* HandleBars compile Wallet template */
 function renderWalletTemplate(data) {
     $.ajax({
-        url : '../templates/wallet.html',
+        url : './templates/wallet.html',
         success : function (data) {
             var template = Handlebars.compile(data)
             animateOut(template, function() {
@@ -1271,7 +1269,7 @@ function renderProfileTemplate(data) {
         profile.photo = photoObjectToUrl(a.photo).photo
         
         $.ajax({
-            url : '../templates/profile.html',
+            url : './templates/profile.html',
             success : function (data) {
                 var template = Handlebars.compile(data)
                 animateOut(template(profile), function () {
@@ -1287,7 +1285,7 @@ function renderProfileTemplate(data) {
 /* HandleBars compile keys template */
 function renderKeysTemplate(data) {
     $.ajax({
-        url : '../templates/keys.html',
+        url : './templates/keys.html',
         success : function (data) {
             var template = Handlebars.compile(data)
             animateOut(template(profile), function() {
@@ -1302,7 +1300,7 @@ function renderKeysTemplate(data) {
 /* Handlebars compile import template */
 function renderImportTemplate(data) {
     $.ajax({
-        url : '../templates/import.html',
+        url : './templates/import.html',
         success : function (data) {
             var template = Handlebars.compile(data)
             animateOut(template(profile), function() {})
@@ -1318,10 +1316,6 @@ function animateOut(template, cb) {
         $("#frame").html(template)
         cb()
     },500)
-   /* $("#frame").children().one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-        $("#frame").html(template)
-        cb()
-    })*/
 }
 
 function locatePeerRow(address, cb) {
