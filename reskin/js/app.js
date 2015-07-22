@@ -571,7 +571,21 @@ function bindClicks() {
             bitcore.Networks.AvailableNetworks.set($(".coinPicker").attr("name"))
             insight = bitcore.Networks.AvailableNetworks.currentNetwork().insight
             newtables.settings.insert("currentcoin", { name: newCoinName, short: newCoin }, function(doc) {
-                windowProxy.post({ command: "contextSwitch", payload: insight })
+                //windowProxy.post({ command: "contextSwitch", payload: insight })
+                var updateCoinTo = insight.network.name
+                var short = "rbr"
+                if (updateCoinTo === "livenet") {
+                    updateCoinTo = "bitcoin"
+                    short = "btc"
+                }
+                top.settings.currentcoin = { "name": updateCoinTo, "short": short }
+                loadAddressPicker()
+                top.bitcore.Networks.AvailableNetworks.set(updateCoinTo)
+                top.insight = top.bitcore.Networks.AvailableNetworks.currentNetwork().insight
+                top.settings.currentcoin = { name: updateCoinTo, short: short }
+                top.bitcore.Networks.AvailableNetworks.set(updateCoinTo)
+                $("#toAddress").val("")
+            
                 popMsg("Wallet context changed to " + $(".coinPicker").attr("name").toUpperCase())
                 loadBalance($(".balance-container"))
             })
@@ -622,7 +636,8 @@ function bindClicks() {
         $(document).on('change.customBindings', '#accountName', function () {
             if ($("#accountName").val() !== "") {
                 newtables.privkey.newHD($("#accountName").val(), function (record) {
-                    windowProxy.post({ command: "loadAddressPicker", payload: record })
+                /* windowProxy.post({ command: "loadAddressPicker", payload: record })*/
+                   loadAddressPicker()
                     $("#accountName").val("")
                 })
             
