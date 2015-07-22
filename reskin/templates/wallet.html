@@ -1,119 +1,104 @@
-﻿<div class="section">
-    <div class="container">
-        <div class="row-fluid">
-            <div class="col-md-2 hidden-xs span3"></div>
-            <div class="col-md-6 span8">
-               <!-- <div class="row-fluid">
-                    <div class="container balance-container"></div><div class="shortCode"></div>
-                </div>-->
-                <form class="form-horizontal text-left" role="form">
-                    <div class="form-group">
-                        <div class="col-sm-2">
-                            <label for="amount" class="control-label amount-label">SENDING:</label>
-                        </div>
-                        <div class="col-sm-7">
-                            <div class="form-group">
-                                <input type="text" class="form-control input-lg amount" id="amount" placeholder="How much?">
+﻿<div class="animated fadeInUp">
+    <div class="section">
+        <div class="container">
+            <div class="row-fluid">
+                <div class="col-md-2 hidden-xs span3"></div>
+                <div class="col-md-6 span8">
+                    <!-- <div class="row-fluid">
+                         <div class="container balance-container"></div><div class="shortCode"></div>
+                     </div>-->
+                    <form class="form-horizontal text-left" role="form">
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                <label for="amount" class="control-label amount-label">SENDING:</label>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-lg amount" id="amount" placeholder="How much?">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-2">
-                            <label for="inputEmail3" class="control-label">FROM:</label>
-                        </div>
-                        <div class="col-sm-7">
-                            <div class="btn-group wallet-address-picker">
-                                <button class="address-view btn btn-default" type="button">Choose Account to send from</button>
-                                <button type="button" class="btn btn-default dropdown-toggle"
-                                        aria-expanded="false" data-toggle="dropdown">
-                                    <span class="caret"></span>
-                                    <span class="caret sr-only">Toggle Dropdown</span>
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                <label for="inputEmail3" class="control-label">FROM:</label>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="btn-group wallet-address-picker">
+                                    <button class="address-view btn btn-default" type="button">Choose Account to send from</button>
+                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                            aria-expanded="false" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                        <span class="caret sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li class="addressItem">
+                                            <div class="accountInPicker address-item">
+                                                Primary Spend Account
+                                                <span class="accountInPickerBalance positiveBalance">175</span>
+                                            </div>
+                                        </li>
+                                        <li class="addressItem">
+                                            <div class="accountInPicker address-item">
+                                                Savings
+                                                <span class="accountInPickerBalance">0</span>
+                                            </div>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a class="btn btn-lg wallet-action" href="#" data-toggle="modal" data-target="#basicModal">Generate new address</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <button class="btn btn-default qrButton" disabled>
+                                    <i class="glyphicon glyphicon-qrcode"></i>
+                                    <div class="ripple-wrapper"></div>
                                 </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li class="addressItem">
-                                        <div class="accountInPicker address-item">
-                                            Primary Spend Account
-                                            <span class="accountInPickerBalance positiveBalance">175</span>
-                                        </div>
-                                    </li>
-                                    <li class="addressItem">
-                                        <div class="accountInPicker address-item">
-                                            Savings
-                                            <span class="accountInPickerBalance">0</span>
-                                        </div>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a class="btn btn-lg wallet-action" href="#" data-toggle="modal" data-target="#basicModal">Generate new address</a>
-                                    </li>
-                                </ul>
                             </div>
-                            <button class="btn btn-default qrButton" disabled>
-                                <i class="glyphicon glyphicon-qrcode"></i>
-                                <div class="ripple-wrapper"></div>
-                            </button>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-2">
-                            <label for="toAddress" class="control-label">TO:</label>
-                        </div>
-                        <div class="col-sm-7">
-                            <div class="form-group">
-                                <input type="text" class="form-control toAddress" id="toAddress" placeholder="Recipient Address">
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                <label for="toAddress" class="control-label">TO:</label>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="form-group">
+                                    <input type="text" class="form-control toAddress" id="toAddress" placeholder="Recipient Address">
 
+                                </div>
+                                <button class="btn btn-default qrScanButton">
+                                    <i class="glyphicon glyphicon-facetime-video"></i>
+                                </button>
                             </div>
-                            <button class="btn btn-default qrScanButton">
-                                <i class="glyphicon glyphicon-facetime-video"></i>
-                            </button>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-4 span3">
-                            <button class="btn btn-default send-now">Send Now</button>
+                        <div class="form-group">
+                            <div class="col-sm-4 span3">
+                                <button class="btn btn-default send-now">Send Now</button>
+                            </div>
+                            <div class="col-sm-3 span3">
+                                <button class="btn btn-default send-later">Send Later</button>
+                            </div>
+                            <div class="col-sm-3 span3">
+                                <button class="btn btn-default reset">Reset</button>
+                            </div>
                         </div>
-                        <div class="col-sm-3 span3">
-                            <button class="btn btn-default send-later">Send Later</button>
-                        </div>
-                        <div class="col-sm-3 span3">
-                            <button class="btn btn-default reset">Reset</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
+                <div class="col-md-2 hidden-xs span3"></div>
             </div>
-            <div class="col-md-2 hidden-xs span3"></div>
         </div>
     </div>
-</div>
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">History</h3>
-                    </div>
-                    <div class="panel-body">
-                        <p>Account history coming soon</p>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">History</h3>
+                        </div>
+                        <div class="panel-body">
+                            <p>Account history coming soon</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="nameAccountModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">Name your account</h4>
-            </div>
-            <div class="modal-body">
-                <input type="text" class="form-control" id="accountName" placeholder="Savings Account">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>

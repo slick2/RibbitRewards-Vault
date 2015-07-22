@@ -1255,8 +1255,9 @@ function renderWalletTemplate(data) {
         url : '../templates/wallet.html',
         success : function (data) {
             var template = Handlebars.compile(data)
-            $("#frame").html(template)
-            loadAddressPicker()
+            animateOut(template, function() {
+                loadAddressPicker()
+            })
         },
         dataType: "text",
         async : false
@@ -1265,16 +1266,22 @@ function renderWalletTemplate(data) {
 
 /* HandleBars compile wallet template */
 function renderProfileTemplate(data) {
-    $.ajax({
-        url : '../templates/profile.html',
-        success : function (data) {
-            var template = Handlebars.compile(data)
-            $("#frame").html(template)
-            handleSettingsElementFromStore()
-        },
-        dataType: "text",
-        async : false
-    });
+    getPublicIdentity(function (a) {
+        var profile = a
+        profile.photo = photoObjectToUrl(a.photo).photo
+        
+        $.ajax({
+            url : '../templates/profile.html',
+            success : function (data) {
+                var template = Handlebars.compile(data)
+                animateOut(template(profile), function () {
+                    handleSettingsElementFromStore()
+                })
+            },
+            dataType: "text",
+            async : false
+        })
+    })
 }
 
 /* HandleBars compile keys template */
@@ -1283,8 +1290,9 @@ function renderKeysTemplate(data) {
         url : '../templates/keys.html',
         success : function (data) {
             var template = Handlebars.compile(data)
-            $("#frame").html(template)
-            initTables()
+            animateOut(template(profile), function() {
+                initTables()
+            })
         },
         dataType: "text",
         async : false
@@ -1297,11 +1305,23 @@ function renderImportTemplate(data) {
         url : '../templates/import.html',
         success : function (data) {
             var template = Handlebars.compile(data)
-            $("#frame").html(template)
+            animateOut(template(profile), function() {})
         },
         dataType: "text",
         async : false
     });
+}
+
+function animateOut(template, cb) {
+    $("#frame").children().removeClass("fadeInUp").addClass("fadeOutUp")
+    setTimeout(function() {
+        $("#frame").html(template)
+        cb()
+    },500)
+   /* $("#frame").children().one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+        $("#frame").html(template)
+        cb()
+    })*/
 }
 
 function locatePeerRow(address, cb) {
