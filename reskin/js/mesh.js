@@ -6,6 +6,7 @@ var signaler
             /* jshint node: true */
             'use strict'
             meshnet = {}
+            meshnet.alone = true
         var mesh = require('rtc-mesh');
             var quickconnect = require('rtc-quickconnect');
             var crel = require('crel');
@@ -18,6 +19,9 @@ var signaler
                 iceServers: require('freeice')()
             }).on('call:started', function(id, pc, data) {
                 console.log('we have a new connection to: ' + id);
+                if (meshnet.alone) {
+                    openChat()
+                }
                 renderChatList()
             }).on('connected', function () {
                 newtables.peers.offline(null, function (response) {
@@ -52,6 +56,12 @@ var signaler
                 // add the object into mesh data
                 model.set(obj._label, obj.toJSON());
             }
+
+        function openChat() {
+                $("#chatInput").prop('disabled', false);
+                $("#chatInput").attr("placeholder","Chat Here")
+            meshnet.alone = false
+        }
 
         function checkInit() {
             if (settings.inFrame()) {return}
@@ -2432,10 +2442,10 @@ module.exports = isArray || function (val) {
                 function chunkInvalid(state, chunk) {
                     var er = null;
                     if (!Buffer.isBuffer(chunk) &&
-      'string' !== typeof chunk &&
-      chunk !== null &&
-      chunk !== undefined &&
-      !state.objectMode) {
+                      'string' !== typeof chunk &&
+                      chunk !== null &&
+                      chunk !== undefined &&
+                      !state.objectMode) {
                         er = new TypeError('Invalid non-string/buffer chunk');
                     }
                     return er;

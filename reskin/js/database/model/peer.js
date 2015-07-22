@@ -50,3 +50,8 @@ peerObj.loseFriend = function (cb) {
     newtables.peers.unfriend(peerObj.address, cb)
 }
 
+peerObj.isMe = function (cb) {
+    var myIdenttityAddress = bitcore.HDPrivateKey(foundIdentity[0].xprivkey).privateKey.toAddress().toString()
+    return cb(peerObj.address === myIdenttityAddress )
+}
+

@@ -56,8 +56,12 @@ var onPage = function () {
 $(document).ready(function () {
     handleSettings(function () {
         preInit(function () {
-                setTimeout(function () { $(".navmenu").fadeIn("slow") }, 900)
-                initApplication()
+            if ($("iframe").length > 0) {
+                renderChatModule()
+                renderPeerChatModule()
+            }
+            setTimeout(function () { $(".navmenu").fadeIn("slow") }, 900)
+            initApplication()
         })
     })
 })
@@ -533,7 +537,7 @@ function bindClicks() {
     /*********************
     *    Host Bindings *
     *********************/
-    if ($("iframe").length === 0) {
+    if ($("iframe").length > 0) {
         
         /* Change Coin Menu */
         $(document).on('click.customBindings', '.coinPicker', function () {
@@ -870,48 +874,89 @@ function changeProfileImageStock(context) {
         top.meshnet.publicUpdateIdentity()
     })
 }
-
+/* CHAT  */
 function addGroupChatMsg(payload) {
     var msg = payload.msg
     var address = payload.address
     newtables.peers.get(payload.address, function (err, data) {
-        var formulateMsg = function (data) {
-            var photo = data.photo
-            var user, url
-            if (data.name !== undefined) {
-                user = data.name
-            } else if (data.nickname !== undefined) {
-                user = data.nickname
+        var peer = new Peer(data)
+        data = photoObjectToUrl(data.value)
+        data.msg = escapeHtml(msg)
+        peer.isMe(function(me) {
+            if (data.address === bitcore.HDPrivateKey(foundIdentity[0].xprivkey).privateKey.toAddress().toString()) {
+                data.class = "self"
             } else {
-                user = "Anonymous"
+                data.class = "other"
             }
-            if (photo !== undefined && photo.location !== undefined && photo.location === "stock") {
-                url = "./images/avatars/characters_" + photo.id + ".png"
-            } else if (photo !== undefined && photo.location !== undefined && photo.location === "base64") {
-                url = photo.data
-            } else {
-                url = "./images/profile.png"
-            }
-            
-            $("#messagewindow.msgs").append('<div class="chatmsg"> <div style="margin-left: 10px;" class="messages row"><img address="' + escapeHtml(address) + '" class="circular" style="width:35px !important; height:35px !important; cursor: pointer; " src="' + escapeHtml(url) + '"></div><div class="username" style="left: 55px;position: relative;  top: -20px;float: left;">(' + escapeHtml(user) + ')</div><div class="msg" style="left: 185px;position: relative; top:-20px;">' + escapeHtml(msg) + '</div></div>')
-            $("#messagewindow.msgs").animate({ scrollTop: $("#messagewindow.msgs").prop("scrollHeight") - $("#messagewindow.msgs").height() }, 300);
-        }
-        if (err) {
-            meshnet.retrieveData(payload.address, function(err, data) {
-                if (err) {
-                    formulateMsg(data)
-                }
-                newtables.peers.insert(data.address, data, function (err, doc) {
-                    formulateMsg(data)
-                    renderChatList()
-                })
-            })
-        } else {
-            formulateMsg(data.value)
-            //renderChatList()
+                renderChatRow(data)
+        })
+    })
+}
+function renderChatModule() {
+    var source = $("#chatModule").html();
+    var template = Handlebars.compile(source);
+    var data = {}
+    $("#messagewindow.msgs").html(template(data));
+}
+
+function renderPeerChatModule() {
+    var source = $("#peerModule").html();
+    var template = Handlebars.compile(source);
+    var data = {}
+    $("#messagewindow.users").html(template(data));
+}
+
+function renderPeerRow(data) {
+    locatePeerRow(data.address, function (row) {
+        var source = $("#peerRow").html();
+        var template = Handlebars.compile(source);
+        if (row !== null) {
+            $(row).remove()
         }
         
+        $(".peerlist .peers").append(template(data));
     })
+}
+
+function renderChatRow(data) {
+    var source = $("#chatRow").html();
+    var template = Handlebars.compile(source);
+    
+    if (continuationOfLastChat(data)) {
+        $(".discussion li .messages").last().append("<p>" + data.msg + "</p>")
+    } else {
+        $(".discussion").append(template(data));
+    }
+    scrollChat()
+}
+
+function locatePeerRow(address, cb) {
+    var continueEach = true
+    var peers = $(".peer")
+    if (peers.length === 0) {
+        return cb(null)
+    }
+    $.each(peers, function (i) {
+        if (continueEach) {
+            var found = $(this).find("[address='" + address + "']").get(0)
+            if (found) {
+                continueEach = false
+                return cb($(this))
+            }
+            if (i === peers.length - 1) {
+                return cb(null)
+            }
+        }
+    })
+}
+
+function continuationOfLastChat(data) {
+    return data.address === $(".discussion li").last().find("img[address]").attr("address")
+}
+
+
+function scrollChat() {
+    $("#messagewindow.msgs").animate({ scrollTop: $("#messagewindow.msgs").prop("scrollHeight") - $("#messagewindow.msgs").height() }, 300);
 }
 
 function loseFriend(address, cb) {
@@ -926,7 +971,27 @@ function makeFriend(address, cb) {
 
 function renderChatList() {
     newtables.peers.allRecords(function (rows) {
-        $(".chatlist").html("")
+        $.each(rows, function () {
+            /* Adjust Name */
+            if (this.name === undefined && this.nickname === undefined) {
+                this.name = "Anonymous"
+            } else if (this.name === undefined && this.nickname !== undefined) {
+                this.name = this.nickname
+            }
+            /* Adjust Image */
+            if (this.photo === undefined) {
+                this.photo = "./images/profile.png"
+            } else if (this.photo.location === "base64") {
+                this.photo = this.photo.data               
+            } else if (this.photo.location === "stock") {
+                this.photo = "./images/avatars/characters_"+this.photo.id+".png"
+            }
+            if (this.online) {
+                renderPeerRow(this)
+            }
+        })
+    })
+        /*$(".chatlist").html("")
         var onlineCnt = 0
         var listActionIcon, listActionClass
         $.each(rows, function () {
@@ -983,7 +1048,7 @@ function renderChatList() {
                 $(".chatlist").append('<li style="' + isonline + '"><div><div>' + onlineindicator + '<img address="' + escapeHtml(data.address) + '" class="circular" style="width:35px !important; height:35px !important; cursor: pointer; ' + onlinestyle + shadow + border + '" src="' + escapeHtml(url) + '"></div><div style="' + detailstyle + '">' + escapeHtml(user) + communicate + '</div></div></li>')
                 $(".chatlist .row").css("height", "38px")
 
-                /* update past chats */
+                /* update past chats #1#
                 $.each($(".chatmsg"), function () {
                     var image = $(this).find($("img[address='"+ escapeHtml(data.address) +"']")).get(0)
                     var display = $(this).find($(".username")).get(0)
@@ -999,7 +1064,19 @@ function renderChatList() {
             //onlineindicator = '<a href="javascript:void(0)" class="btn '+onlineclass+' btn-fab btn-raised" style="width:40px; height:40px; position: absolute;"></a>'
             
         })
-    })
+    })*/
+}
+/* CHAT */
+
+function photoObjectToUrl(data) {
+    if (data.photo === undefined) {
+        data.photo = "./images/profile.png"
+    } else if (data.photo.location === "base64") {
+        data.photo = data.photo.data
+    } else if (data.photo.location === "stock") {
+        data.photo = "./images/avatars/characters_" + data.photo.id + ".png"
+    }
+    return data
 }
 
 function escapeHtml(html) {
