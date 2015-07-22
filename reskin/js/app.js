@@ -57,10 +57,10 @@ var onPage = function () {
 $(document).ready(function () {
     handleSettings(function () {
         preInit(function () {
-            if ($("iframe").length > 0) {
+            
                 renderChatModule()
                 renderPeerChatModule()
-            }
+            
             setTimeout(function () { $(".navmenu").fadeIn("slow") }, 900)
             initApplication()
         })
