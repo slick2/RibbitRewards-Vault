@@ -99,298 +99,180 @@
 <body>
 <div id="wrap">
 <div class="navmenu navmenu-default navmenu-fixed-left" style="display: none">
-<!-- Coin Select -->
-<div style="z-index: 1600" class="logo coinPicker small-menu" data="rbr" name="ribbit"></div>
-<div class="coin-menu" style="display: none">
-    <div class="">
-        <div class="logo coinSelect" data="btc" name="bitcoin" style="background-image: url(./images/SVG/BTC.svg)"></div>
-    </div>
-    <div class="">
-        <div class="logo coinSelect" data="frk" name="franko" style="background-image: url(./images/SVG/FRK.svg)"></div>
-    </div>
-</div>
-<div class="menu-profile menu-items">
-    <ul>
-        <li></li>
-    </ul>
-</div>
-<div class="menu-bg "></div>
-<div style="width: 480px">
-<nav style="width: 240px; float: left;" class="menu-items">
-    <ul>
-        <li>
-            <a href="#profile" class="navlink profile-item menu-item">
-
-
-
-                <!--<i class="fa fa-double fa-lg fa-user"></i>-->
-
-
-
-                <img for="profileImage" class="square" src="images/profile.png">
-
-
-
-                <br>
-
-
-
-                <span>Profile</span>
-
-            </a>
-        </li>
-        <li>
-            <a href="#wallet" class="navlink menuu menu-item">
-
-
-
-                <i class="fa fa-lg fa-university"></i>
-
-
-
-                <br>
-
-
-
-                <span>Wallet</span>
-
-            </a>
-        </li>
-        <li>
-            <a href="#keys" class="navlink menu-item">
-                <i class="fa fa-lg fa-key"></i>
-                <br>
-                <span>Key Management</span>
-
-            </a>
-        </li>
-        <li>
-            <a href="#video-chat" class="navlink menu-item">
-
-
-
-                <i class="fa-double fa fa-lg fa-weixin"></i>
-
-
-
-                <i class="fa-double fa fa-lg fa-video-camera"></i>
-
-
-
-                <br>
-
-
-
-                <span>Chat  /  Video</span>
-
-            </a>
-        </li>
-        <li>
-            <a href="#raw" class="navlink menu-item">
-
-
-
-                <i class="fa fa-lg fa-cogs"></i>
-
-
-
-                <br>
-
-
-
-                <span>Raw Transactions</span>
-
-            </a>
-        </li>
-        <li>
-            <a href="#import" class="navlink menu-item">
-
-
-
-                <i class="fa-double fa fa-lg fa-download"></i>
-
-
-
-                <i class="fa-double fa fa-lg fa-upload"></i>
-
-
-
-                <br>
-
-
-
-                <span>Import / Export</span>
-
-            </a>
-        </li>
-    </ul>
-</nav>
-<nav style="width: 240px; float: left;" class="menu-items-sm">
-    <ul>
-        <li>
-            <div style="cursor: pointer" onclick=" location.href = '#profile'; loadPageByHash() " class="profile-item menu-item-sm">
-                <img for="profileImage" class="square" src="images/profile.png">
-                <br>
-                <span></span>
-            </div>
-        </li>
-        <li>
-            <a href="#wallet" class="navlink menuu menu-item-sm">
-
-
-
-                <i class="fa fa-lg fa-university"></i>
-
-
-
-                <br>
-
-
-
-                <span></span>
-
-            </a>
-        </li>
-        <li>
-            <a href="#keys" class="navlink menu-item-sm">
-
-
-
-                <i class="fa fa-lg fa-key"></i>
-
-
-
-                <br>
-
-
-
-                <span></span>
-
-            </a>
-        </li>
-        <li>
-            <a class="navlink menu-item-sm">
-                <i class="small-chat-link fa-double fa fa-lg fa-weixin"></i>
-                <br>
-                <span></span>
-            </a>
-        </li>
-        <!--<li>
-            <a href="#raw" class="navlink menu-item-sm">
-                <i class="fa fa-lg fa-cogs"></i>
-                <br>
-                <span></span>
-            </a>
-        </li>-->
-        <li>
-            <a href="#import" class="navlink menu-item-sm">
-
-
-
-                <i class="fa-double fa fa-lg fa-download"></i>
-
-
-
-                <br>
-
-
-
-                <span></span>
-
-            </a>
-        </li>
-    </ul>
-</nav>
-</div>
-</div>
-<div class="canvas" style="left: 60px;">
-    <div class="contactList animated">
-        <p>It looks like you don't have any contacts in your address book</p>
-        <section class="peerlist module">
-            <ol class="peers"></ol>
-        </section>
-
-    </div>
-    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js"
-            id="dropboxjs" data-app-key="70ecne41xbzbp3l"></script>
-    <div id="header" class="navbar navbar-default " role="navigation">
-        <button style="left: 0;" type="button" class="navbar-toggle" data-toggle="offcanvas"
-                data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-        <div class="navbar-right">
-            <ul class="nav navbar-nav">
-                <!--<li>
-                    <i class="fa-double fa fa-lg fa-weixin header-profile">
-                        <span class="badge alert-danger"></span>
-                    </i>
-                </li>-->
-                <li class="dropdown">
-                    <a for="name" href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span>Please configure your name </span>
-                        <b class="caret"></b>
-                        <div class="ripple-wrapper"></div>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="http://tech.ribbit.me/vault/export.html?data:application/json;filename=exportData;base64,W3siaGVhZGVyIjpbWyJMYWJlbCIsIkNvbXByZXNzZWQiLCJFbmNyeXB0ZWQiLCJBZGRyZXNzIiwiRm9ybWF0IiwiUHJpdmF0ZSBLZXkiLCJQdWJsaWMgS2V5Il1dLCJkYXRhIjpbWyJFbXB0eSIsImZhbHNlIiwiZmFsc2UiLCJSZWtyRlNoR3JhRGQyVGREODZLTG5ZVjFhdlBWcWhBaUhvIiwiSWRlbnRpdHkiLCIiLCIiXSxbIkVtcHR5IiwiZmFsc2UiLCJmYWxzZSIsIlJ0b0N2ak0zSFQ0RmY5OWJYdEFnYzNGamNYTVVTeXo5WHEiLCJJZGVudGl0eSIsIiIsIiJdXX1d"
-                               class="dropbox-saver">Save to DropBox</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">Another action</a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)">Something else here</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="javascript:void(0)">Separated link</a>
-                        </li>
-                    </ul>
-                </li>
-                <!--<li class="dropup">
-                    <a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-double fa fa-lg fa-weixin header-profile">
-                            <span class="badge alert-danger"></span>
-                        </i>
-                        <div class="ripple-wrapper"></div>
-                    </a>
-                </li>-->
-            </ul>
-            <img height="20" class="header-profile" src="images/profile.png">
+    <!-- Coin Select -->
+    <div style="z-index: 1600" class="logo coinPicker small-menu" data="rbr" name="ribbit"></div>
+    <div class="coin-menu" style="display: none">
+        <div class="">
+            <div class="logo coinSelect" data="btc" name="bitcoin" style="background-image: url(./images/SVG/BTC.svg)"></div>
+        </div>
+        <div class="">
+            <div class="logo coinSelect" data="frk" name="franko" style="background-image: url(./images/SVG/FRK.svg)"></div>
         </div>
     </div>
-    <div class="container">
-        <!--<div class="hidden-xs page-header">
-            <h1>Loading...</h1>
-        </div>-->
-        <div>
-
-            <!-- Nav tabs -->
-            <ul class="nav nav-tabs hometabs" role="tablist">
-                <li role="presentation" class="active"><a class="frame-tab" href="#frame" aria-controls="frame" role="tab" data-toggle="tab">Loading...</a></li>
-                <li role="presentation">
-                    <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
-                        Group Chat
-                        <i class="fa fa-lg fa-weixin">
-                            <span class="badge alert-info"></span>
-                        </i>
+    <div class="menu-profile menu-items">
+        <ul>
+            <li></li>
+        </ul>
+    </div>
+    <div class="menu-bg "></div>
+    <div style="width: 480px">
+        <nav style="width: 240px; float: left;" class="menu-items">
+            <ul>
+                <li>
+                    <a href="#profile" class="navlink profile-item menu-item"><img for="profileImage" class="square" src="images/profile.png">
+                        <br>
+                        <span>Profile</span>
                     </a>
                 </li>
-                <li style="display: none" role="presentation" class="dropdown">
-                    <!--<a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a>-->
-                    <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">Private Chats <span class="caret"></span></a>
-                    <ul class="dropdown-menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
-                        <li><a href="#messages" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1">@fat</a></li>
-                        <li><a href="#settings" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2">@mdo</a></li>
-                    </ul>
+                <li>
+                    <a href="#wallet" class="navlink menuu menu-item">
+                        <i class="fa fa-lg fa-university"></i>
+                        <br>
+                        <span>Wallet</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#keys" class="navlink menu-item">
+                        <i class="fa fa-lg fa-key"></i>
+                        <br>
+                        <span>Key Management</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#video-chat" class="navlink menu-item">
+                        <i class="fa-double fa fa-lg fa-weixin"></i>
+                        <i class="fa-double fa fa-lg fa-video-camera"></i>
+                        <br>
+                        <span>Chat  /  Video</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#raw" class="navlink menu-item">
+                        <i class="fa fa-lg fa-cogs"></i>
+                        <br>
+                        <span>Raw Transactions</span>
+
+                    </a>
+                </li>
+                <li>
+                    <a href="#import" class="navlink menu-item">
+                        <i class="fa-double fa fa-lg fa-download"></i>
+                        <i class="fa-double fa fa-lg fa-upload"></i>
+                        <br>
+                        <span>Import / Export</span>
+
+                    </a>
                 </li>
             </ul>
-            <!-- Balance Container -->
-            <!--<div class="section">
-            <div class="container">-->
+        </nav>
+        <nav style="width: 240px; float: left;" class="menu-items-sm">
+            <ul>
+                <li>
+                    <div style="cursor: pointer" onclick=" location.href = '#profile'; loadPageByHash() " class="profile-item menu-item-sm">
+                        <img for="profileImage" class="square" src="images/profile.png">
+                        <br>
+                        <span></span>
+                    </div>
+                </li>
+                <li>
+                    <a href="#wallet" class="navlink menuu menu-item-sm">
+                        <i class="fa fa-lg fa-university"></i>
+                        <br>
+                        <span></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#keys" class="navlink menu-item-sm">
+                        <i class="fa fa-lg fa-key"></i>
+                        <br>
+                        <span></span>
+                    </a>
+                </li>
+                <li>
+                    <a class="navlink menu-item-sm">
+                        <i class="small-chat-link fa-double fa fa-lg fa-weixin"></i>
+                        <br>
+                        <span></span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#import" class="navlink menu-item-sm">
+                        <i class="fa-double fa fa-lg fa-download"></i>
+                        <br>
+                        <span></span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<div class="canvas">
+<div class="contactList animated">
+    <p>It looks like you don't have any contacts in your address book</p>
+    <section class="peerlist module">
+        <ol class="peers"></ol>
+    </section>
+</div>
+<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js"
+        id="dropboxjs" data-app-key="70ecne41xbzbp3l"></script>
+<div id="header" class="navbar navbar-default " role="navigation">
+    <button style="left: 0;" type="button" class="navbar-toggle" data-toggle="offcanvas"
+            data-recalc="false" data-target=".navmenu" data-canvas=".canvas">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+    </button>
+    <div class="navbar-right">
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a for="name" href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <span>Please configure your name </span>
+                    <b class="caret"></b>
+                    <div class="ripple-wrapper"></div>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="http://tech.ribbit.me/vault/export.html?data:application/json;filename=exportData;base64,W3siaGVhZGVyIjpbWyJMYWJlbCIsIkNvbXByZXNzZWQiLCJFbmNyeXB0ZWQiLCJBZGRyZXNzIiwiRm9ybWF0IiwiUHJpdmF0ZSBLZXkiLCJQdWJsaWMgS2V5Il1dLCJkYXRhIjpbWyJFbXB0eSIsImZhbHNlIiwiZmFsc2UiLCJSZWtyRlNoR3JhRGQyVGREODZLTG5ZVjFhdlBWcWhBaUhvIiwiSWRlbnRpdHkiLCIiLCIiXSxbIkVtcHR5IiwiZmFsc2UiLCJmYWxzZSIsIlJ0b0N2ak0zSFQ0RmY5OWJYdEFnYzNGamNYTVVTeXo5WHEiLCJJZGVudGl0eSIsIiIsIiJdXX1d"
+                           class="dropbox-saver">Save to DropBox</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">Another action</a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">Something else here</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="javascript:void(0)">Separated link</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <img height="20" class="header-profile" src="images/profile.png">
+    </div>
+</div>
+<div class="container">
+    <div>
+        <ul class="nav nav-tabs hometabs" role="tablist">
+            <li role="presentation" class="active"><a class="frame-tab" href="#frame" aria-controls="frame" role="tab" data-toggle="tab">Loading...</a></li>
+            <li role="presentation">
+                <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+                    Group Chat
+                    <i class="fa fa-lg fa-weixin">
+                        <span class="badge alert-info"></span>
+                    </i>
+                </a>
+            </li>
+            <li style="display: none" role="presentation" class="dropdown">
+                <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">Private Chats <span class="caret"></span></a>
+                <ul class="dropdown-menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
+                    <li><a href="#messages" role="tab" id="dropdown1-tab" data-toggle="tab" aria-controls="dropdown1">@fat</a></li>
+                    <li><a href="#settings" role="tab" id="dropdown2-tab" data-toggle="tab" aria-controls="dropdown2">@mdo</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!-- Balance Container -->
+        <div class="container">
             <div class="row-fluid">
                 <div class="col-md-2 hidden-xs span3"></div>
                 <div class="col-md-6 span8">
@@ -400,12 +282,10 @@
                 </div>
                 <div class="col-md-2 hidden-xs span3"></div>
             </div>
-            <!--</div>
-            </div>-->
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="frame">
-                    <iframe id="guestFrame" allowtransparency="true" name="guestFrame" style="padding-right: 75px; height: 949px;" src="profile.html"></iframe>
+                    <iframe id="guestFrame" allowtransparency="true" name="guestFrame" style="padding-left: 60px;" src="profile.html"></iframe>
                 </div>
                 <div role="tabpanel" class="tab-pane" id="profile">
                     <div class="handleIt"></div>
@@ -416,9 +296,6 @@
                         <div id="messagewindow" class="msgs">
 
                         </div>
-                        <!--<div id="inputcontainer">
-                            <p>Your message</p>
-                        </div>-->
                         <input id="chatInput" placeholder="Loading..." class="form-control input-lg" type="text" disabled>
                     </div>
                     <span class="row"></span>
@@ -580,7 +457,7 @@
 <script>
     var node;
     var windowProxy;
-    window.onload = function () {
+    window.onload = function() {
         // Create a proxy window to send to and receive
         // messages from the iFrame
         windowProxy = new Porthole.WindowProxy(
@@ -589,8 +466,6 @@
         //windowProxy.addEventListener(onMessage);
     };
 </script>
-<!-- Placed at the end of the document so the pages load faster
--->
 <script src="js/modernizr.custom.63321.js"></script>
 <script src="js/database/pouchdb-3.4.0.min.js"></script>
 <!-- Iframe Resize -->
@@ -664,6 +539,7 @@
 <script type="text/javascript" src="js/llqrcode.js"></script>
 <script type="text/javascript" src="js/webqr.js"></script>
 <script src="js/nouislider.min.js"></script>
+</div>
 </body>
 
 </html>

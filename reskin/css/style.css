@@ -55,12 +55,25 @@ body {
         }
       }
 
+footer {
+    position: fixed;
+    bottom: 0;
+}
+.navmenu-fixed-left {
+    display: block !important;
+    width: 60px;
+    z-index: 100 !important;
+}
+
 iframe {
-    overflow: auto;
-    margin: 0;
-    padding: 0;
+    position: fixed;
     border: none;
+    top: 210px; 
+    right: 0;
+    bottom: 0; 
+    left: 0;
     width: 100%;
+    height: 100%;
 }
 .menu-bg {
 	position: absolute;
@@ -82,6 +95,10 @@ iframe {
   right: -15px !important;
   padding: 5px;
   padding-bottom: 1px;
+}
+
+.tab-content {
+    padding-left: 60px;
 }
 
 #toAddress {
@@ -112,8 +129,9 @@ iframe {
 .nav-tabs {
   top: -60px;
   position: relative;
-  left: 60px;
+  left: 120px;
   margin-right: 250px;
+  width: 300px;
 }
 
 .togglebutton label input[type=checkbox]:checked+.toggle:after, .togglebutton-default label input[type=checkbox]:checked+.toggle:after {
@@ -127,8 +145,8 @@ iframe {
 .navmenu {
   z-index: 1;
   background: #26C281;
-  /*overflow: hidden !important;*/
-  overflow-x: hidden;
+  overflow: hidden !important;
+  /*overflow-x: hidden;*/
 }
 
 .dropdown-menu .itemAddress {
@@ -147,7 +165,9 @@ iframe {
   left: 15px;
   font-size: .7em;
 }
-
+.modal-backdrop {
+    z-index: -1;
+}
 .canvas:after {
   content: "";
   /*background: url(../images/svg/btc.svg);*/
@@ -159,6 +179,8 @@ iframe {
   position: absolute;
   z-index: -1;
   background-size: cover;
+  height: 1000px;
+  overflow-y: hidden;
 }
 
 .panel {
@@ -413,13 +435,17 @@ li .accountInPicker {
         color: #b2b2b2 !important;
       }
 
+.modal-backdrop {
+    display: none !important;
+}
 .contactList{
   width: 190px;
   background-color: rgba(210,215,211,0.6);
   height: 99%;
-  position: absolute;
+  position: fixed;
   bottom: 16px;
-    top: 55px;
+  top: 55px;
+  left: 60px;
   visibility: hidden;
 }
 

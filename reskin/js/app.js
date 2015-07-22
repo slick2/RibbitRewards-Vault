@@ -265,11 +265,11 @@ function setSetting(value,target,type,cb) {
 }
 
 function adjustDesign() {
-    $("#wrap, .menu-bg").css("margin-bottom", Number("-" + $("footer").height()))
-    $(".navmenu").css("max-height", $(window).height() - $("footer").height())
-    $(".canvas .container").css("min-height", $(window).height() - ($("footer").height() + 60))
+    //$("#wrap, .menu-bg").css("margin-bottom", Number("-" + $("footer").height()))
+    //$(".navmenu").css("max-height", $(window).height() - $("footer").height())
+    //$(".canvas .container").css("min-height", $(window).height() - ($("footer").height() + 160 + $(".balance-container").height() ))
     $(".togglebutton input").css("margin", "5px")
-    $("iframe").height($(".canvas .container").height() - $("footer").height())
+    //$("iframe").height($(".canvas .container").height() - ($("footer").height() + $(".balance-container").height()))
 }
 
 function handleSettingsElementFromStore() {
