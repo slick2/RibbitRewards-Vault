@@ -100,7 +100,7 @@
 <div id="wrap">
 <div class="navmenu navmenu-default navmenu-fixed-left" style="display: none">
 <!-- Coin Select -->
-<div class="logo coinPicker small-menu" data="rbr" name="ribbit"></div>
+<div style="z-index: 1600" class="logo coinPicker small-menu" data="rbr" name="ribbit"></div>
 <div class="coin-menu" style="display: none">
     <div class="">
         <div class="logo coinSelect" data="btc" name="bitcoin" style="background-image: url(./images/SVG/BTC.svg)"></div>
@@ -269,39 +269,19 @@
             </a>
         </li>
         <li>
-            <a href="#video-chat" class="navlink menu-item-sm">
-
-
-
-                <i class="fa-double fa fa-lg fa-weixin"></i>
-
-
-
+            <a class="navlink menu-item-sm">
+                <i class="small-chat-link fa-double fa fa-lg fa-weixin"></i>
                 <br>
-
-
-
                 <span></span>
-
             </a>
         </li>
-        <li>
+        <!--<li>
             <a href="#raw" class="navlink menu-item-sm">
-
-
-
                 <i class="fa fa-lg fa-cogs"></i>
-
-
-
                 <br>
-
-
-
                 <span></span>
-
             </a>
-        </li>
+        </li>-->
         <li>
             <a href="#import" class="navlink menu-item-sm">
 
@@ -324,7 +304,13 @@
 </div>
 </div>
 <div class="canvas" style="left: 60px;">
-    <div class="contactList animated"></div>
+    <div class="contactList animated">
+        <p>It looks like you don't have any contacts in your address book</p>
+        <section class="peerlist module">
+            <ol class="peers"></ol>
+        </section>
+
+    </div>
     <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js"
             id="dropboxjs" data-app-key="70ecne41xbzbp3l"></script>
     <div id="header" class="navbar navbar-default " role="navigation">
@@ -342,9 +328,9 @@
                     </i>
                 </li>-->
                 <li class="dropdown">
-                    <a for="name" href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"
-                       aria-expanded="false">
-                        Please configure your name <b class="caret"></b>
+                    <a for="name" href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span>Please configure your name </span>
+                        <b class="caret"></b>
                         <div class="ripple-wrapper"></div>
                     </a>
                     <ul class="dropdown-menu">

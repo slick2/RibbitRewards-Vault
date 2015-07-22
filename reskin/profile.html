@@ -63,10 +63,10 @@
                                                         </label>
                                                     </div>
                                                 </div>
-                                                <div for="profileImage" class="circular" style="background-image: url(./images/profile.png);">
+                                                <div for="profileImage" class="square" style="background-image: url(./images/profile.png);">
                                                     <!--<img src="images\profile.png" class="circular img-responsive" id="profileImage">-->
                                                 </div>
-                                                    <p></p>
+                                                <p></p>
                                                 <div class="form-group">
                                                     <div class="col-sm-3">
                                                         <input id="profileImageUpload" type="file">
@@ -116,11 +116,6 @@
                                                         <div class="col-sm-6">
                                                             <input for="social" type="text" class="form-control input-lg" id="inputSocial" placeholder="What is your twitter handle">
                                                         </div>
-                                                        <!-- <div class="col-sm-offset-2 col-sm-10">
-
-                                                        <p class="help-block">Twitter, Facebook, Github, LinkedIn</p>
-
-                                                    </div>-->
                                                         <div class="col-sm-2">
                                                             <div class="togglebutton">
                                                                 <label>Public
@@ -130,31 +125,40 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
+                                                        <div class="col-sm-2">
+                                                            <label for="inputBio" class="control-label">
+                                                                Bio
+                                                                <br>
+                                                            </label>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <!--<input for="bio" type="text" class="form-control input-lg" id="inputBio" placeholder="Something about yourself">-->
+                                                            <textarea for="bio" class="form-control" rows="3" id="inputBio"></textarea>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <div class="togglebutton">
+                                                                <label>
+                                                                    Public
+                                                                    <input tabindex="-1" type="checkbox" for="bio" toggletype="public">
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
                                                         <div class="col-sm-offset-2 col-sm-10"></div>
                                                     </div>
                                                 </form>
+                                                <button class="pull-right profileSaveButton btn btn-primary btn-flat">
+                                                    <i class="mdi-navigation-check"></i>
+                                                    <span>Click to Save Profile</span>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="panel-footer"></div>
                         </div>
-                        <!--<div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Display
-                                    <br>
-                                </h3>
-                            </div>
-                            <div class="panel-body"></div>
-                        </div>
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Display
-                                    <br>
-                                </h3>
-                            </div>
-                            <div class="panel-body"></div>
-                        </div>-->
                     </div>
                 </div>
             </div>

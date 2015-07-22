@@ -421,7 +421,12 @@ function getPublicIdentity(cb) {
                             newtables.settings.get("socialpublic", function (err, publicdata) {
                                 newtables.settings.getOrDefault("social", "", function (err, data) {
                                     if (publicdata.value) { payload.social = data.value }
+                                    newtables.settings.get("biopublic", function (err, publicdata) {
+                                        newtables.settings.getOrDefault("bio", "", function (err, data) {
+                                            if (publicdata.value) { payload.bio = data.value }
                                     return cb(payload)
+                                        })
+                                    })
                                 })
                             })
                         })

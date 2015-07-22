@@ -230,6 +230,7 @@ ul.menu-items {
 .menu-items-sm {
       position: absolute;
       left: -35px;
+      top: -140px;
 }
 
 .menu-items-sm .profile-item {

@@ -3,6 +3,7 @@ var bitcore, ECIES, explorers, insight, transaction, viewQrcode, p2p, message, n
 var settings = {}
 var foundIdentity = []
 var lazyCheck, getDisplayName, checkLocalIdentity
+/*var loading = false*/
 /*Vault = top.Vault*/
 /*var check = function (cb) {
     Vault.getAddressesByPrivateKeyFormat("Extended Identity", function (keys) {
@@ -64,6 +65,11 @@ $(document).ready(function () {
             initApplication()
         })
     })
+})
+/* Page is completely loaded */
+$(window).load(function() {
+/*    loading = false*/
+    setTimeout(function () { handleSettingsElementFromStore() }, 500)
 })
 
 function handleSettings(cb) {
@@ -230,6 +236,11 @@ var getQueryStringParam = function(target) {
 }
 
 var loadPageByHash = function () {
+/*    if (loading || $("iframe").length === 0) {
+        
+        return
+    }
+    loading = true*/
     var pageData = onPage()
     if (pageData.page === "video-chat.html" && getQueryStringParam("call") !== undefined) {
         pageData.page = pageData.page + "?call=" + getQueryStringParam("call")
@@ -346,6 +357,16 @@ function matchPageSettingsToDatastore() {
     $.each($("input[for][type='text']"), function() {
         var target = $(this).attr("for")
         var input = $(this)
+        handleProfileSaveButton()
+        newtables.settings.get(target, function (err, out) {
+            if (err) { return }
+            input.val(out.value)
+        })
+    })
+    /* Text Area Inputs */
+    $.each($("textarea[for]"), function () {
+        var target = $(this).attr("for")
+        var input = $(this)
         newtables.settings.get(target, function (err, out) {
             if (err) { return }
             input.val(out.value)
@@ -354,10 +375,12 @@ function matchPageSettingsToDatastore() {
     /* Links */
     $.each($("a[for]"), function () {
         var target = $(this).attr("for")
-        var input = $(this)
+        var input = $(this).find("span")
         newtables.settings.get(target, function (err, out) {
             if (err) { return }
-            input.text(out.value)
+            if (out.value !== undefined && out.value !== "") {
+                input.text(out.value)
+            }
         })
     })
 }
@@ -418,6 +441,13 @@ function bindClicks() {
     *    Framed Bindings *
     *********************/
     if ($("iframe").length === 0) {
+        
+        
+        /* Profile Save Button */
+        //profileSaveButton 
+        $(document).on('click.customBindings', '.profileSaveButton', function () {
+            top.popMsg("Saved profile settings")
+        })
 
         /* Toggle Profile Pic */
         $(document).on('click.customBindings', 'div[for="profileImage"]', function() {
@@ -543,6 +573,11 @@ function bindClicks() {
         $(document).on('click.customBindings', '.coinPicker', function () {
             toggleCoinSelection()
         })
+        
+        /* Menu show Contact list */
+        $(document).on('click.customBindings', '.small-chat-link', function () {
+            showContactList()
+        })
 
         /* Change Coin */
         $(document).on('click.customBindings', '.coinSelect', function() {
@@ -560,7 +595,8 @@ function bindClicks() {
         })
         
         /* Any hash link that should load framed content */
-        $(document).on('click.customBindings', '.navlink', function() {
+        $(document).on('click.customBindings', '.navlink', function () {
+            if ($(this).attr("href") === undefined) { return }
             setTimeout(function() { top.loadPageByHash() }, 500)
         })
 
@@ -657,9 +693,23 @@ function bindClicks() {
         top.meshnet.publicUpdateIdentity()
         top.matchPageSettingsToDatastore()
     })
+    /* text area setting binding */
+    $(document).on('change.customBindings', "textarea[for]", function () {
+        toggleOn($(this))
+        top.meshnet.publicUpdateIdentity()
+        top.matchPageSettingsToDatastore()
+    })
     //TODO: Combine this and the method above
     $(document).on('keyup.customBindings', "input[type='text'][for]", function () {
         var target = $(this)
+        handleProfileSaveButton()
+        newtables.settings.insert(target.attr("for"), target.val(), function (doc) {
+            //top.matchPageSettingsToDatastore()
+        })
+    })
+    $(document).on('keyup.customBindings', "textarea[for]", function () {
+        var target = $(this)
+        handleProfileSaveButton()
         newtables.settings.insert(target.attr("for"), target.val(), function (doc) {
             //top.matchPageSettingsToDatastore()
         })
@@ -668,17 +718,41 @@ function bindClicks() {
     /******************  End Multi Bindings  *****************/
 }
 
+function handleProfileSaveButton() {
+    var empty = []
+    var state
+    $.each($("input:text"), function () {
+        if ($(this).val() === "") { empty.push($(this)) }
+    })
+    
+    if (empty.length === $("input:text").length) { state = true }
+    else {state = false}
+
+    if (state) {
+        $(".profileSaveButton span").text("Identity Information Required") 
+        $(".profileSaveButton").removeClass("btn-primary").addClass("btn-warning").prop("disabled",true)
+        $(".profileSaveButton i").removeClass("mdi-navigation-check").addClass("mdi-navigation-close")
+        
+    } else {
+        $(".profileSaveButton span").text("Click to Save Profile")
+        $(".profileSaveButton").addClass("btn-primary").removeClass("btn-warning").prop("disabled", false)
+        $(".profileSaveButton i").addClass("mdi-navigation-check").removeClass("mdi-navigation-close")
+        
+
+    }
+}
+
 function toggleOn(elem) {
 
     var toggle 
     var preState
-    if (elem.prop('tagName') === "DIV") {
+    if (elem.prop('tagName') === "DIV") { //Turn on
         prestate = false
         toggle = elem.parent().find("input[for='" + elem.attr("for") + "']")
-    } else if (elem.val() === "") {
+    } else if (elem.val() === "") { //Turn off
         prestate = true
         toggle = $("input[for='" + elem.attr("for") + "']")
-    } else {
+    } else { //Turn on
         prestate = false
         toggle = $("input[for='" + elem.attr("for") + "']")
     }
@@ -892,21 +966,33 @@ function addGroupChatMsg(payload) {
         })
     })
 }
+
+function showContactList() {
+    top.$(".contactList").css("visibility", "visible")
+    top.$(".contactList").removeClass("fadeOut")
+    top.$(".contactList").addClass("fadeIn")
+    setTimeout(function () {
+        top.$(".contactList").removeClass("fadeIn")
+        top.$(".contactList").addClass("fadeOut")
+    }, 8000)
+}
+
+/* HandleBars compile template */
 function renderChatModule() {
     var source = $("#chatModule").html();
     var template = Handlebars.compile(source);
     var data = {}
     $("#messagewindow.msgs").html(template(data));
 }
-
+/* HandleBars compile template */
 function renderPeerChatModule() {
     var source = $("#peerModule").html();
     var template = Handlebars.compile(source);
     var data = {}
     $("#messagewindow.users").html(template(data));
 }
-
-function renderPeerRow(data) {
+/* HandleBars compile template */
+function renderPeerRow(data, target) {
     locatePeerRow(data.address, function (row) {
         var source = $("#peerRow").html();
         var template = Handlebars.compile(source);
@@ -914,10 +1000,10 @@ function renderPeerRow(data) {
             $(row).remove()
         }
         
-        $(".peerlist .peers").append(template(data));
+        $(target).append(template(data));
     })
 }
-
+/* HandleBars compile template */
 function renderChatRow(data) {
     var source = $("#chatRow").html();
     var template = Handlebars.compile(source);
@@ -932,7 +1018,7 @@ function renderChatRow(data) {
 
 function locatePeerRow(address, cb) {
     var continueEach = true
-    var peers = $(".peer")
+    var peers = $("#messagewindow .peer")
     if (peers.length === 0) {
         return cb(null)
     }
@@ -987,7 +1073,8 @@ function renderChatList() {
                 this.photo = "./images/avatars/characters_"+this.photo.id+".png"
             }
             if (this.online) {
-                renderPeerRow(this)
+                renderPeerRow(this, $("#messagewindow .peerlist .peers"))
+                //renderPeerRow(this, $(".contactList"))
             }
         })
     })

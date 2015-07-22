@@ -2,7 +2,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8" />
+    <script src="js/jquery-1.10.2.min.js"></script>
+    <meta charset="utf-8"/>
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/jasny-bootstrap.css" rel="stylesheet">
@@ -31,24 +32,23 @@
     <link rel="stylesheet" href="css/animate.css">
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<body >
+<body style="background-color: rgba(255,255,255,0);">
     <div class="container">
         <div class="row">
             
             <div class="col-md-12">
-                
-                <div id="toolbar">
+                <!--<div id="toolbar">
                     <button id="remove" class="btn btn-danger" disabled>
                         <i class="glyphicon glyphicon-remove"></i>Delete
                     </button>
-                </div>
-                <table id="table" data-toolbar="#toolbar" data-search="true" data-show-refresh="true" data-show-toggle="true" data-show-columns="true"
-                       data-show-export="true" data-show-pagination-switch="true" data-pagination="true" data-page-list="[10, 25, 50, 100, ALL]"
-                       data-show-footer="true" data-side-pagination="server" data-response-handler="responseHandler">
+                </div>-->
+                <table id="table" data-toolbar="#toolbar" data-search="false" data-show-refresh="false" data-show-toggle="false" data-show-columns="false"
+                       data-show-export="false" data-show-pagination-switch="false" data-pagination="true" data-page-list="[10, 25, 50, 100, ALL]"
+                       data-show-footer="false" data-side-pagination="server" data-response-handler="responseHandler">
                     <thead>
                         <!--data-url="data/sample"-->
                         <tr>
@@ -134,40 +134,13 @@
     <div class="hidden" id="my-number-link"></div>
     <!-- ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery-1.10.2.min.js"></script>
-    <!-- Iframe Resize -->
-    <script src="js/iframeResizer.contentWindow.min.js"></script>
-    <!-- Vault specifics -->
-    <script src="js/Vault.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/identity.js"></script>
-    <!-- Socket.io -->
-    <script src="js/socket.io.js"></script>
-    <!-- Database -->
+    <script src="js/modernizr.custom.63321.js"></script>
     <script src="js/database/pouchdb-3.4.0.min.js"></script>
-    <script type="text/javascript" src="js/pouchdb.transform-pouch.js"></script>
-    <script type="text/javascript" src="js/pouchdb.find.js"></script>
-    <script src="js/database/pouch-crypto.js"></script>
-    <script src="js/database/pouch.js"></script>
-    <!-- Bitcore -->
-    <script type="text/javascript" src="js/crypto-min.js"></script>
-    <script type="text/javascript" src="js/crypto-sha256.js"></script>
-    <script type="text/javascript" src="js/crypto-sha256-hmac.js"></script>
-    <script type="text/javascript" src="js/ripemd160.js"></script>
-    <script type="text/javascript" src="js/aes.js"></script>
-    <script type="text/javascript" src="js/qrcode.js"></script>
-    <script type="text/javascript" src="js/qcode-decoder.min.js"></script>
-    <script type="text/javascript" src="js/jsbn.js"></script>
-    <script type="text/javascript" src="js/ellipticcurve.js"></script>
-    <script type="text/javascript" src="js/coin.js"></script>
-    <script type="text/javascript" src="js/coinbin.js"></script>
-    <script type="text/javascript" src="js/bitcore.min.js"></script>
-    <script type="text/javascript" src="js/bitcore-ecies.min.js"></script>
-    <script type="text/javascript" src="js/bitcore-p2p.js"></script>
-    <script type="text/javascript" src="js/bitcore-message.js"></script>
-    <script type="text/javascript" src="js/bitcore-explorers-multi.js"></script>
+    <!-- Iframe Resize -->
+    <script src="js/iframeResizer.min.js"></script>
     <!-- Bootstrap and Material Design -->
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.stickytabs.js"></script>
     <script src="js/jasny-bootstrap.js"></script>
     <script src="js/ripples.min.js"></script>
     <script src="js/material.min.js"></script>
@@ -180,16 +153,58 @@
     <script src="https://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js"></script>
     <!-- Bootstrap Notify -->
     <script src="js/bootstrap-notify.js"></script>
-    <!-- Mock -->
-    <script src="js/mock.js"></script>
+    <script src="js/identity.js"></script>
+    <!-- Socket.io -->
+    <script src="js/socket.io.js"></script>
+    <!-- Bitcore -->
+    <script type="text/javascript" src="js/crypto-min.js"></script>
+    <script type="text/javascript" src="js/crypto-sha256.js"></script>
+    <script type="text/javascript" src="js/crypto-sha256-hmac.js"></script>
+    <script type="text/javascript" src="js/ripemd160.js"></script>
+    <script type="text/javascript" src="js/aes.js"></script>
+    <script type="text/javascript" src="js/qrcode.js"></script>
+    <script type="text/javascript" src="js/qcode-decoder.min.js"></script>
+    <script type="text/javascript" src="js/jsbn.js"></script>
+    <script type="text/javascript" src="js/ellipticcurve.js"></script>
+    <script type="text/javascript" src="js/coin.js"></script>
+    <!--<script type="text/javascript" src="js/coinbin.js"></script>-->
+    <script type="text/javascript" src="js/bitcore.min.js"></script>
+    <script type="text/javascript" src="js/bitcore-ecies.min.js"></script>
+    <script type="text/javascript" src="js/bitcore-message.js"></script>
+    <script type="text/javascript" src="js/bitcore-p2p.js"></script>
+    <script type="text/javascript" src="js/bitcore-explorers-multi.js"></script>
+    <script type="text/javascript" src="js/out-wallet.js"></script>
+    <!-- VAULT -->
+    <script src="js/app.js"></script>
+    <script src="js/Vault.js"></script>
     <!-- PubSub -->
-    <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
+    <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    -->
     <!-- WebRTC Peer Connections -->
-    <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
-    <!--<script src="https://cdn.pubnub.com/pubnub-dev.js"></script>
+    <!--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+    -->
+    <script src="https://cdn.pubnub.com/pubnub-dev.js"></script>
     <script src="js/webrtc.js"></script>
-    <script src="js/sound.js"></script-->
+    <!--<script src="js/sound.js"></script>-->
     <!--<script src="js/pubnub-3.7.1.min.js"></script> -->
-    <!--<script src="js/pubsub.js"></script>-->
+    <script src="js/handlebars-v3.0.3.js"></script>
+    <script src="js/pubsub.js"></script>
+    <!-- Database -->
+    <script src="js/pouchdb-3.4.0.min.js"></script>
+    <script src="js/pouchdb.transform-pouch.js"></script>
+    <script src="js/pouchdb.find.js"></script>
+    <script src="js/database/pouchdb.upsert.js"></script>
+    <script src="js/database/pouch-crypto.js"></script>
+    <script src="js/database/store.pouchdb.js"></script>
+    <script src="js/database/pouch.js"></script>
+    <script src="js/database/new-database.js"></script>
+    <script src="js/database/model/chat.js"></script>
+    <script src="js/database/model/chatTip.js"></script>
+    <script src="js/database/model/peer.js"></script>
+    <script src="js/database/model/me.js"></script>
+    <!-- QR Scanner -->
+    <script type="text/javascript" src="js/llqrcode.js"></script>
+    <script type="text/javascript" src="js/webqr.js"></script>
+    <script src="js/nouislider.min.js"></script>
 </body>
 </html>
