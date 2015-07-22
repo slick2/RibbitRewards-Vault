@@ -440,6 +440,63 @@ li .accountInPicker {
     display: none !important;
 }
 
+.wallet-address-picker .dropdown-toggle {
+        right: 5px;
+        position: absolute;
+    }
+
+    .address-view {
+        left: -20px;
+    }
+
+    .form-horizontal .form-control-feedback {
+        right: -5px !important;
+        left: inherit !important;
+    }
+
+    .dropdown-menu {
+        color: gray;
+    }
+
+        .dropdown-menu a {
+            color: gray !important;
+        }
+
+    .btn-primary:not(.btn-link):not(.btn-flat) {
+        background-color: #26c281 !important;
+        color: rgba(255, 255, 255, 0.84);
+    }
+
+    .form-group .control-label, .form-group-default .control-label, .btn-default {
+        color: gray !important;
+    }
+
+    .wallet-address-picker {
+        /*box-shadow: none;*/
+        width: 100%;
+        left: -20px;
+        margin: 0 1px;
+        float: left;
+    }
+
+    .btn {
+        text-transform: none !important;
+    }
+
+    .address-view.btn {
+        color: #b2b2b2 !important;
+    }
+
+    *::-moz-placeholder {
+        /* FF 19+ */
+        color: #b2b2b2 !important;
+    }
+
+    *:-ms-input-placeholder {
+        /* IE 10+ */
+        color: #b2b2b2 !important;
+    }
+
 .circular img {
 	opacity: 0;
 	filter: alpha(opacity=0);

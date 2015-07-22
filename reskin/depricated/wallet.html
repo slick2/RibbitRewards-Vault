@@ -263,6 +263,20 @@
                 return false
                 //getBalance(address)
             })
+
+            /* Monitor To Address */
+            $(document).on('keyup.customBindings', '.toAddress', function () {
+                var addressString = $(this).val()
+                try {
+                    var address = top.bitcore.Address(addressString)
+                    if (address.network.name === top.bitcore.Networks.AvailableNetworks.currentNetwork().name) {
+                        $(".send-now").removeClass("btn-default").addClass("btn-success")
+                    }
+                } catch (e) {
+                    $(".send-now").addClass("btn-default").removeClass("btn-success")
+                    console.log(e)
+                }
+            })
         })
 
         function loadAddressPicker() {

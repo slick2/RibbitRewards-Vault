@@ -219,12 +219,18 @@ var getQueryStringParam = function(target) {
 }
 
 var loadPageByHash = function () {
-/*    if (loading || $("iframe").length === 0) {
-        
-        return
-    }
-    loading = true*/
     var pageData = onPage()
+    showContent()
+    switch(pageData.title) {
+        case "Wallet":
+            return renderWalletTemplate({})
+        case "Profile":
+            return renderProfileTemplate({})
+        case "Key Management":
+            return renderKeysTemplate({})
+        case "Import / Export":
+            return renderImportTemplate({})
+    }
     if (pageData.page === "video-chat.html" && getQueryStringParam("call") !== undefined) {
         pageData.page = pageData.page + "?call=" + getQueryStringParam("call")
     }
@@ -233,10 +239,8 @@ var loadPageByHash = function () {
         $(".page-header h1").text(pageData.title)
         $(".frame-tab").text(pageData.title)
         $(".frame-tab").tab("show")
-    } //else {
-        setTimeout(function(){handleSettingsElementFromStore()},500)
-    //}
-    //handleSettings(function() {})
+    }
+    setTimeout(function (){ handleSettingsElementFromStore() }, 500)
 }
 
 function setSetting(value,target,type,cb) {
@@ -287,7 +291,119 @@ function handleProfileImageUpload(context) {
     }
 }
 
+function getHeight() {
+    return $(window).height() - $('h1').outerHeight(true);
+}
 
+/************* DATATABLE STUFF ***********
+ * 
+ *              Much is boilerplate
+ * 
+ *****************************************/
+function initTables(){
+    var $table = $('#table'),
+        $remove = $('#remove'),
+        selections = [];
+    $(function () {
+        $table.bootstrapTable({
+            height: getHeight()
+        });
+        $table.on('check.bs.table uncheck.bs.table ' +
+            'check-all.bs.table uncheck-all.bs.table', function () {
+            $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+            // save your data, here just save the current page
+            selections = getIdSelections();
+                // push or splice the selections if you want to save all data selections
+        });
+        $table.on('all.bs.table', function (e, name, args) {
+            //This is where I can save the changes
+            if (name.indexOf('editable-save') === 0) {
+                var interestingRecord = args[1]._id
+                var fieldEdited = args[0]
+                Vault.getRecordFilteredOfType(Vault.tables.address, "_id", interestingRecord, function (data) {
+                    data[fieldEdited] = args[1][fieldEdited]
+                    initAllTheThings()
+                    return Vault.tables.address.put(data)
+                })
+            }
+            if (verbose) console.log(name, args);
+        });
+        $remove.click(function () {
+            var ids = getIdSelections();
+            $table.bootstrapTable('remove', {
+                field: 'id',
+                values: ids
+            });
+            $remove.prop('disabled', true);
+        });
+        $(window).resize(function () {
+            $table.bootstrapTable('resetView', {
+                height: getHeight()
+            });
+        });
+    });
+}
+
+function getIdSelections() {
+    return $.map($table.bootstrapTable('getSelections'), function (row) {
+        return row.id
+    });
+}
+function responseHandler(res) {
+    $.each(res.rows, function (i, row) {
+        row.state = $.inArray(row.id, selections) !== -1;
+    });
+    return res;
+}
+function operateFormatter(value, row, index) {
+    return [
+        '<a class="like" href="javascript:void(0)" title="Like">',
+        '<i class="glyphicon glyphicon-heart"></i>',
+        '</a>  ',
+        '<a class="remove" href="javascript:void(0)" title="Remove">',
+        '<i class="glyphicon glyphicon-remove"></i>',
+        '</a>'
+    ].join('');
+}
+window.operateEvents = {
+    'click .like': function (e, value, row, index) {
+        alert('You click like action, row: ' + JSON.stringify(row));
+    },
+    'click .remove': function (e, value, row, index) {
+        $table.bootstrapTable('remove', {
+            field: 'id',
+            values: [row.id]
+        });
+    }
+};
+function totalTextFormatter(data) {
+    return 'Total';
+}
+function totalNameFormatter(data) {
+    return data.length;
+}
+function totalPriceFormatter(data) {
+    var total = 0;
+    $.each(data, function (i, row) {
+        total += +(row.price.substring(1));
+    });
+    return '$' + total;
+}
+
+function linkPrivKeyFormatter(value, row, index) {
+    return [
+        '<a href="javascript:void(0)" title="Like">',
+        '<i class="glyphicon glyphicon-eye-open"></i>',
+        '</a>  '
+    ].join('');
+}
+function linkPubKeyFormatter(value, row, index) {
+    return [
+        '<a href="javascript:void(0)" title="Like">',
+        '<i class="glyphicon glyphicon-eye-open"></i>',
+        '</a>  '
+    ].join('');
+}
 
 function matchPageSettingsToDatastore() {
     /* Toggles */
@@ -419,15 +535,8 @@ function bindClicks() {
     $(document).on('click.customBindings', '.navbar-toggle', function() {
         handleMenuToggle()
     })
-    
-    /*********************
-    *    Framed Bindings *
-    *********************/
-    if ($("iframe").length === 0) {
-        
         
         /* Profile Save Button */
-        //profileSaveButton 
         $(document).on('click.customBindings', '.profileSaveButton', function () {
             top.popMsg("Saved profile settings")
         })
@@ -442,116 +551,7 @@ function bindClicks() {
             handleProfileImageUpload($(this))
         })
 
-        /* Add / Remove UTXO to/from transaction */
-        $(document).on('click.customBindings', '.button-container a', function () {
-            if ($(this).hasClass("hit")) {
-                $(this).removeClass("hit")
-                transaction.removeInput(Number(JSON.parse(JSON.parse($(this).data("index")))))
-            } else {
-                $(this).addClass("hit")
-                transaction.from(JSON.parse(JSON.parse($(this).data("utxo"))))
-            }
-            $(".transaction-hash").val(transaction.toString())
-            if (transaction.toString() === "01000000000000000000") {
-                $(".transaction-hash-form").addClass("collapse")
-            } else {
-                $(".transaction-hash-form").removeClass("collapse")
-            }
-        })
-
-        /* QR rewrite */
-        $(document).on('click.customBindings', ".qrcodeBtn", function () {
-            var address = $('.wallet-address-picker .address-view').text()
-            if (settings.inFrame()) {
-                top.generateQr(address)
-                top.showQrModal()
-            } else {
-                generateQr(address)
-                showQrModal()
-            }
-        })
-
-        /* Address Picker Magic */
-        $(document).on('click.customBindings', '.wallet-address-picker .dropdown-menu .address-item', function (data) {
-            resetTransaction()
-            resetToAmountFields()
-            /* Copy link text to root element */
-            var address = $(data.currentTarget).attr("data")
-            var label = data.currentTarget.text
-            $(".output-container").show()
-            disableSpendFields()
-            $(data.currentTarget.parentNode.parentNode.parentElement).find(".address-view").text(address)
-            if (label != null && label !== address) {
-                $(".address-label").text(label)
-                $(".address-label").addClass("alert-info")
-            } else {
-                $(".address-label").text("")
-                $(".address-label").removeClass("alert-info")
-            }
-            setSubmitButtonDisabled(true)
-            generateQr(address)
-            getBalance(address)
-        })
-
-        /* Broadcast TX */
-        $(document).on('click.customBindings', '.transaction-broadcast', function (data) {
-            try {
-                if (!transaction.isFullySigned()) {
-                    console.log("forgot to sign")
-                    $(".transaction-add-output").click()
-                }
-                insight.broadcast(transaction, function (err, txid) {
-                    if (err) {
-                        popMsg("Broadcast Error: " + err)
-                    } else {
-                        popMsg("Broadcast Success: " + txid)
-                    }
-                })
-            } catch (e) {
-                popMsg("Critical: " + e.message)
-            }
-        })
-
-        /* Add output to transaction and sign */
-        $(document).on('click.customBindings', '.transaction-add-output', function () {
-            var fromAddress = $(".address-view").text()
-            var toAddress = $("#output-address").val()
-            var amount = $("#output-amount").val() * 100000000
-            var key
-            try {
-                transaction.to(toAddress, amount)
-                transaction.change(fromAddress)
-                getKeyFromAddress(fromAddress, function (keydata) {
-                    key = new bitcore.PrivateKey(keydata)
-                    transaction.sign(key)
-                    $(".transaction-hash").val(transaction.toString())
-                    if (transaction.isFullySigned()) {
-                        popMsg("Signed and verified")
-                    } else {
-                        popMsg("Transaction is not finished.")
-                    }
-                    return
-                })
-            } catch (e) {
-                popMsg("Critical Error: " + e.message)
-            }
-        })
-        
-        /* reset the transaction */
-        $(document).on('click.customBindings', '.transaction-reset', function () {
-            resetTransaction()
-            var address = $(".address-view").text()
-            getBalance(address)
-        })
-
-    /******************* End Framed Bindings *****************/
-    }
-    
-    /*********************
-    *    Host Bindings *
-    *********************/
-    if ($("iframe").length > 0) {
-        
+       
         /* Change Coin Menu */
         $(document).on('click.customBindings', '.coinPicker', function () {
             toggleCoinSelection()
@@ -582,6 +582,17 @@ function bindClicks() {
             if ($(this).attr("href") === undefined) { return }
             setTimeout(function() { top.loadPageByHash() }, 500)
         })
+    
+    $(document).on('click.customBindings', '.importKey', function (data) {
+        top.newtables.privkey.importHD($("#inputpk").val(), $("#labelInput").val() , function (a, b) {
+            console.log(a, b)
+            if (a) {
+                top.popMsg(JSON.stringify(a))
+            } else {
+                top.popMsg("Sucessfully imported key")
+            }
+        })
+    })
 
         /* Hometabs switch */
         $(document).on('click.customBindings', '.hometabs a', function(e) {
@@ -638,19 +649,169 @@ function bindClicks() {
         /* Address Picker Actions */
         $(document).on('click.customBindings', '.wallet-address-picker .dropdown-menu .wallet-action', function (data) {
             if (this.text === "Generate new address") {
-                newtables.privkey.newHD(function (key) {
-                    loadAddressPicker()
-                })
+                top.$("#nameAccountModal").modal("show")
+                return false
             }
         })
 
-    /******************  End Host Bindings  *****************/
-    }
-    
-    /*********************
-    *    Multi Bindings  *
-    *********************/
+        /* show QR modal */
+        $(document).on('click.customBindings', '.qrButton', function (data) {
+            top.$("#modalQrcode").modal("show")
+            return false
+        })
+        
+        /* show QR Scanner Modal */
+        $(document).on('click.customBindings', '.qrScanButton', function (data) {
+            top.showQrScannerModal()
+            return false
+        })
+        
+        /* bind to send button */
+        $(document).on('click.customBindings', '.send-now', function (data) {
+            top.$("#modalWalletConfirm").modal("show")
+            $(".wallet-address-picker").removeClass("open")
+            return false
+        })
+        
+        /* bind picker to the whole button */
+        $(document).on('click.customBindings', '.wallet-address-picker', function (data) {
+            $(".wallet-address-picker").addClass("open")
+            $(".wallet-address-picker .address-view .ripple-wrapper").remove()
+            return false
+        })
 
+        /* Add / Remove UTXO to/from transaction */
+        $(document).on('click.customBindings', '.button-container a', function () {
+            if ($(this).hasClass("hit")) {
+                $(this).removeClass("hit")
+                transaction.removeInput(Number(JSON.parse(JSON.parse($(this).data("index")))))
+            } else {
+                $(this).addClass("hit")
+                transaction.from(JSON.parse(JSON.parse($(this).data("utxo"))))
+            }
+            $(".transaction-hash").val(transaction.toString())
+            if (transaction.toString() === "01000000000000000000") {
+                $(".transaction-hash-form").addClass("collapse")
+            } else {
+                $(".transaction-hash-form").removeClass("collapse")
+            }
+        })
+
+    
+    /* QR rewrite */
+        $(document).on('click.customBindings', ".qrcodeBtn", function () {
+        var address = $('.wallet-address-picker .address-view').text()
+        if (settings.inFrame()) {
+            top.generateQr(address)
+            top.showQrModal()
+        } else {
+            generateQr(address)
+            showQrModal()
+        }
+    })
+    
+    /*New address picker event binding*/
+    $(document).on('click.customBindings', '.wallet-address-picker .dropdown-menu .address-item', function (data) {
+        if ($(".address-view").html() !== "Choose Account to send from") {
+            var previouslySelected = $(".address-view").html()
+            $(previouslySelected).insertBefore($(this))
+        }
+        $(".address-view").html($(this))
+        $(".qrButton").removeAttr("disabled")
+        var address = $(data.currentTarget).attr("data")
+        $(".wallet-address-picker").removeClass("open")
+        top.generateQr(address)
+        return false
+    })
+    
+    /* Monitor To Address */
+    $(document).on('keyup.customBindings', '.toAddress', function () {
+        var addressString = $(this).val()
+        try {
+            var address = top.bitcore.Address(addressString)
+            if (address.network.name === top.bitcore.Networks.AvailableNetworks.currentNetwork().name) {
+                $(".send-now").removeClass("btn-default").addClass("btn-success")
+            }
+        } catch (e) {
+            $(".send-now").addClass("btn-default").removeClass("btn-success")
+            //console.log(e)
+        }
+    })
+    
+    /* OLD Address Picker Magic */
+    /*$(document).on('click.customBindings', '.wallet-address-picker .dropdown-menu .address-item', function (data) {
+            resetTransaction()
+            resetToAmountFields()
+            /* Copy link text to root element #1#
+            var address = $(data.currentTarget).attr("data")
+            var label = data.currentTarget.text
+            $(".output-container").show()
+            disableSpendFields()
+            $(data.currentTarget.parentNode.parentNode.parentElement).find(".address-view").text(address)
+            if (label != null && label !== address) {
+                $(".address-label").text(label)
+                $(".address-label").addClass("alert-info")
+            } else {
+                $(".address-label").text("")
+                $(".address-label").removeClass("alert-info")
+            }
+            setSubmitButtonDisabled(true)
+            generateQr(address)
+            getBalance(address)
+        })*/
+
+        /* Broadcast TX */
+        $(document).on('click.customBindings', '.transaction-broadcast', function (data) {
+        try {
+            if (!transaction.isFullySigned()) {
+                console.log("forgot to sign")
+                $(".transaction-add-output").click()
+            }
+            insight.broadcast(transaction, function (err, txid) {
+                if (err) {
+                    popMsg("Broadcast Error: " + err)
+                } else {
+                    popMsg("Broadcast Success: " + txid)
+                }
+            })
+        } catch (e) {
+            popMsg("Critical: " + e.message)
+        }
+    })
+    
+    /* Add output to transaction and sign */
+    $(document).on('click.customBindings', '.transaction-add-output', function () {
+        var fromAddress = $(".address-view").text()
+        var toAddress = $("#output-address").val()
+        var amount = $("#output-amount").val() * 100000000
+        var key
+        try {
+            transaction.to(toAddress, amount)
+            transaction.change(fromAddress)
+            getKeyFromAddress(fromAddress, function (keydata) {
+                key = new bitcore.PrivateKey(keydata)
+                transaction.sign(key)
+                $(".transaction-hash").val(transaction.toString())
+                if (transaction.isFullySigned()) {
+                    popMsg("Signed and verified")
+                } else {
+                    popMsg("Transaction is not finished.")
+                }
+                return
+            })
+        } catch (e) {
+            popMsg("Critical Error: " + e.message)
+        }
+    })
+    
+    /* reset the transaction */
+    $(document).on('click.customBindings', '.transaction-reset', function () {
+        resetTransaction()
+        var address = $(".address-view").text()
+        getBalance(address)
+    })
+
+    /* Toggle */
     $(document).on('click.customBindings', '.togglebutton input', function () {
         handleToggleSettingAction($(this))
         top.meshnet.publicUpdateIdentity()
@@ -690,9 +851,92 @@ function bindClicks() {
             //top.matchPageSettingsToDatastore()
         })
     })
-
-    /******************  End Multi Bindings  *****************/
 }
+
+function loadAddressPicker() {
+    var label = "Basic"
+    var totalBalance = 0
+    var targetNetwork = top.bitcore.Networks.AvailableNetworks.currentNetwork().name
+    var shortCode = top.bitcore.Networks.AvailableNetworks.currentNetwork().insight.network.alias
+    $(".wallet-address-picker .dropdown-menu li.addressItem").remove()
+    $(".address-view").html('Choose Account to send from')
+    
+    top.newtables.privkey.allRecordsArray(function (records) {
+        $.each(records, function () {
+            if ($(this)[0].isIdentity) { return }
+            var hd = new top.bitcore.HDPrivateKey($(this)[0].key.xprivkey)
+            var address = hd.privateKey.toAddress()
+            var addressNetwork = address.network.name
+            if ($(this)[0].label !== undefined) {
+                label = $(this)[0].label
+            }
+            if (addressNetwork === "livenet") {
+                addressNetwork = "bitcoin"
+            }
+            if (addressNetwork === targetNetwork) {
+                $('<li class="addressItem"><div data="' + address + '" class="accountInPicker address-item"><div class="accountLabel">' + label + ' Account </div><span class="accountInPickerBalance"></span><div class="itemAddress">' + address + '</div></div>').insertBefore(".wallet-address-picker .dropdown-menu .divider");
+                top.insight.getBalance(address, function (err, balance) {
+                    var target = $("div[data='" + address + "'] .accountInPickerBalance")
+                    target.html(balance * 0.00000001 + " " + shortCode)
+                    if (balance > 0) {
+                        balance = balance * 0.00000001
+                        target.addClass("positiveBalance")
+                    }
+
+                })
+            }
+        })
+    })
+}
+
+/* OLD Load Address Picker */
+/*function loadAddressPicker() {
+/*    getAllTablesAsDataTable(function (data) {
+        var rows = data.address.rows
+        var targetNetwork = settings.currentcoin.name
+        //remove list items
+        $(".wallet-address-picker .dropdown-menu li").remove()
+        $(".wallet-address-picker .dropdown-menu").append("<li class=\"divider\"></li>")
+        $("<li><a class=\"wallet-action\">Generate new address</a></li>").insertAfter(".wallet-address-picker .dropdown-menu .divider")
+        $.each(rows, function (row) {
+            var r = rows[row]
+            var label
+            var address = bitcore.Address(r.addressData)
+            var addressNetwork = address.network.name
+            if (addressNetwork === "livenet") {
+                addressNetwork = "bitcoin"
+            }
+
+            if (addressNetwork === targetNetwork) {
+                if (r.label !== "")
+                    label = r.label
+                if (r.format !== "Identity") {
+                    $("<li><a class=\"address-item\" data=\"" + r.addressData + "\">" + (label || r.addressData) + "</a></li>").insertBefore(".wallet-address-picker .dropdown-menu .divider");
+                }
+            }
+        })
+    })#1#
+    var targetNetwork = settings.currentcoin.name
+    $(".wallet-address-picker .dropdown-menu li").remove()
+    $(".wallet-address-picker .dropdown-menu").append("<li class=\"divider\"></li>")
+    $("<li><a class=\"wallet-action\">Generate new address</a></li>").insertAfter(".wallet-address-picker .dropdown-menu .divider")
+    var label
+    newtables.privkey.allRecordsArray(function (records) {
+        $.each(records, function () {
+            if (!$(this)[0].isIdentity) {
+                var hd = new bitcore.HDPrivateKey($(this)[0].key.xprivkey)
+                var address = hd.privateKey.toAddress()
+                var addressNetwork = address.network.name
+                if (addressNetwork === "livenet") {
+                    addressNetwork = "bitcoin"
+                }
+                if (addressNetwork === targetNetwork) {
+                    $("<li><a class=\"address-item\" data=\"" + address + "\">" + (label || address) + "</a></li>").insertBefore(".wallet-address-picker .dropdown-menu .divider");
+                }
+            }
+        })
+    })
+}*/
 
 function handleProfileSaveButton() {
     var empty = []
@@ -947,6 +1191,10 @@ function showChat() {
     $(".chatTab").tab("show")
 }
 
+function showContent() {
+    $(".frame-tab").tab("show")
+}
+
 /* HandleBars compile template */
 function renderChatModule() {
     var source = $("#chatModule").html();
@@ -984,6 +1232,61 @@ function renderChatRow(data) {
         $(".discussion").append(template(data));
     }
     scrollChat()
+}
+
+/* HandleBars compile Wallet template */
+function renderWalletTemplate(data) {
+    $.ajax({
+        url : '../templates/wallet.html',
+        success : function (data) {
+            var template = Handlebars.compile(data)
+            $("#frame").html(template)
+            loadAddressPicker()
+        },
+        dataType: "text",
+        async : false
+    });
+}
+
+/* HandleBars compile wallet template */
+function renderProfileTemplate(data) {
+    $.ajax({
+        url : '../templates/profile.html',
+        success : function (data) {
+            var template = Handlebars.compile(data)
+            $("#frame").html(template)
+            handleSettingsElementFromStore()
+        },
+        dataType: "text",
+        async : false
+    });
+}
+
+/* HandleBars compile keys template */
+function renderKeysTemplate(data) {
+    $.ajax({
+        url : '../templates/keys.html',
+        success : function (data) {
+            var template = Handlebars.compile(data)
+            $("#frame").html(template)
+            initTables()
+        },
+        dataType: "text",
+        async : false
+    });
+}
+
+/* Handlebars compile import template */
+function renderImportTemplate(data) {
+    $.ajax({
+        url : '../templates/import.html',
+        success : function (data) {
+            var template = Handlebars.compile(data)
+            $("#frame").html(template)
+        },
+        dataType: "text",
+        async : false
+    });
 }
 
 function locatePeerRow(address, cb) {
