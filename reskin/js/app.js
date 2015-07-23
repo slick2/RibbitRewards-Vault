@@ -743,10 +743,10 @@ function bindClicks() {
         try {
             var address = top.bitcore.Address(addressString)
             if (address.network.name === top.bitcore.Networks.AvailableNetworks.currentNetwork().name) {
-                $(".send-now").removeClass("btn-default").addClass("btn-success")
+                $(".send-now").removeClass("btn-default").addClass("btn-primary")
             }
         } catch (e) {
-            $(".send-now").addClass("btn-default").removeClass("btn-success")
+            $(".send-now").addClass("btn-default").removeClass("btn-primary")
             //console.log(e)
         }
     })
