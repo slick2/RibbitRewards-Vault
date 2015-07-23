@@ -1457,7 +1457,10 @@ function renderChatList() {
 /* CHAT */
 
 function photoObjectToUrl(data) {
-    if (data.photo === undefined) {
+    if (data === undefined) {
+        data = {}
+        data.photo = "./images/profile.png"
+    } else if (data.photo === undefined) {
         data.photo = "./images/profile.png"
     } else if (data.photo.location === "base64") {
         data.photo = data.photo.data

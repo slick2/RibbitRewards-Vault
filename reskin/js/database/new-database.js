@@ -409,19 +409,19 @@ function allRecordsArray(db, cb) {
 function getPublicIdentity(cb) {
     var payload = {}
     //public picture
-    newtables.settings.get("profileImagepublic", function(err, publicdata) {
-        newtables.settings.get("profileImage", function (err, data) {
+    newtables.settings.getOrDefault("profileImagepublic", "", function(err, publicdata) {
+        newtables.settings.getOrDefault("profileImage", {}, function (err, data) {
             if (publicdata.value) {payload.photo = data.value}
-            newtables.settings.get("namepublic", function (err, publicdata) {
+            newtables.settings.getOrDefault("namepublic", "", function (err, publicdata) {
                 newtables.settings.getOrDefault("name","", function (err, data) {
                     if (publicdata.value) { payload.name = data.value }
-                    newtables.settings.get("nicknamepublic", function (err, publicdata) {
+                    newtables.settings.getOrDefault("nicknamepublic", "", function (err, publicdata) {
                         newtables.settings.getOrDefault("nickname", "", function (err, data) {
                             if (publicdata.value) { payload.nickname = data.value }
-                            newtables.settings.get("socialpublic", function (err, publicdata) {
+                            newtables.settings.getOrDefault("socialpublic", "", function (err, publicdata) {
                                 newtables.settings.getOrDefault("social", "", function (err, data) {
                                     if (publicdata.value) { payload.social = data.value }
-                                    newtables.settings.get("biopublic", function (err, publicdata) {
+                                    newtables.settings.getOrDefault("biopublic", "", function (err, publicdata) {
                                         newtables.settings.getOrDefault("bio", "", function (err, data) {
                                             if (publicdata.value) { payload.bio = data.value }
                                     return cb(payload)
