@@ -252,11 +252,7 @@ function setSetting(value,target,type,cb) {
 }
 
 function adjustDesign() {
-    //$("#wrap, .menu-bg").css("margin-bottom", Number("-" + $("footer").height()))
-    //$(".navmenu").css("max-height", $(window).height() - $("footer").height())
-    //$(".canvas .container").css("min-height", $(window).height() - ($("footer").height() + 160 + $(".balance-container").height() ))
     $(".togglebutton input").css("margin", "5px")
-    //$("iframe").height($(".canvas .container").height() - ($("footer").height() + $(".balance-container").height()))
 }
 
 function handleSettingsElementFromStore() {
@@ -629,6 +625,15 @@ function bindClicks() {
                 console.log("removed: " + address)
             })
         })
+    
+        /* Sign and Send Transaction */
+        $(document).on('click.customBindings', '#walletConfirmSend', function () {
+            $("#modalWalletConfirm").modal("hide")
+            addOutputToTransaction(function () {
+                broadcastSignedTransaction()
+                resetTransaction()
+            })
+        })
 
         /* Save new address with name */
         $(document).on('change.customBindings', '#accountName', function () {
@@ -642,9 +647,8 @@ function bindClicks() {
             } $("#nameAccountModal").modal("hide")
         })
 
-        /* On Change Output Amount */
-        //TODO: Integrate into new wallet page
-        $(document).on('change.customBindings', '.form-control.amount', function () {
+        /* On Keyup Output Amount */
+        $(document).on('keyup.customBindings', '.form-control.amount', function () {
             handleAmountInput()
         })
 
@@ -680,8 +684,10 @@ function bindClicks() {
         })
         
         /* bind to send button */
-        $(document).on('click.customBindings', '.send-now', function (data) {
-            top.$("#modalWalletConfirm").modal("show")
+    $(document).on('click.customBindings', '.send-now', function (data) {
+        var shortCode = bitcore.Networks.AvailableNetworks.currentNetwork().insight.network.alias
+            $("#modalWalletConfirm #spendAmount").text($("#amount").val() + " "+ shortCode)
+            $("#modalWalletConfirm").modal("show")
             $(".wallet-address-picker").removeClass("open")
             return false
         })
@@ -723,7 +729,7 @@ function bindClicks() {
         }
     })
     
-    /*New address picker event binding*/
+    /*New address picker event binding (Click on an account) */
     $(document).on('click.customBindings', '.wallet-address-picker .dropdown-menu .address-item', function (data) {
         if ($(".address-view").html() !== "Choose Account to send from") {
             var previouslySelected = $(".address-view").html()
@@ -734,89 +740,28 @@ function bindClicks() {
         var address = $(data.currentTarget).attr("data")
         $(".wallet-address-picker").removeClass("open")
         top.generateQr(address)
+        loadSelectedAddressBalance()
+        getUtxos(address)
+        
         return false
     })
+    
     
     /* Monitor To Address */
     $(document).on('keyup.customBindings', '.toAddress', function () {
         var addressString = $(this).val()
         try {
             var address = top.bitcore.Address(addressString)
-            if (address.network.name === top.bitcore.Networks.AvailableNetworks.currentNetwork().name) {
-                $(".send-now").removeClass("btn-default").addClass("btn-primary")
+            if (address.network.name === top.bitcore.Networks.AvailableNetworks.currentNetwork().name
+                && $(".amount-warning").text().length === 0
+                && $(".amount").val() > 0) {
+                setSubmitButtonDisabled(false)
             }
         } catch (e) {
-            $(".send-now").addClass("btn-default").removeClass("btn-primary")
-            //console.log(e)
-        }
-    })
-    
-    /* OLD Address Picker Magic */
-    /*$(document).on('click.customBindings', '.wallet-address-picker .dropdown-menu .address-item', function (data) {
-            resetTransaction()
-            resetToAmountFields()
-            /* Copy link text to root element #1#
-            var address = $(data.currentTarget).attr("data")
-            var label = data.currentTarget.text
-            $(".output-container").show()
-            disableSpendFields()
-            $(data.currentTarget.parentNode.parentNode.parentElement).find(".address-view").text(address)
-            if (label != null && label !== address) {
-                $(".address-label").text(label)
-                $(".address-label").addClass("alert-info")
-            } else {
-                $(".address-label").text("")
-                $(".address-label").removeClass("alert-info")
-            }
             setSubmitButtonDisabled(true)
-            generateQr(address)
-            getBalance(address)
-        })*/
+        }
+    })
 
-        /* Broadcast TX */
-        $(document).on('click.customBindings', '.transaction-broadcast', function (data) {
-        try {
-            if (!transaction.isFullySigned()) {
-                console.log("forgot to sign")
-                $(".transaction-add-output").click()
-            }
-            insight.broadcast(transaction, function (err, txid) {
-                if (err) {
-                    popMsg("Broadcast Error: " + err)
-                } else {
-                    popMsg("Broadcast Success: " + txid)
-                }
-            })
-        } catch (e) {
-            popMsg("Critical: " + e.message)
-        }
-    })
-    
-    /* Add output to transaction and sign */
-    $(document).on('click.customBindings', '.transaction-add-output', function () {
-        var fromAddress = $(".address-view").text()
-        var toAddress = $("#output-address").val()
-        var amount = $("#output-amount").val() * 100000000
-        var key
-        try {
-            transaction.to(toAddress, amount)
-            transaction.change(fromAddress)
-            getKeyFromAddress(fromAddress, function (keydata) {
-                key = new bitcore.PrivateKey(keydata)
-                transaction.sign(key)
-                $(".transaction-hash").val(transaction.toString())
-                if (transaction.isFullySigned()) {
-                    popMsg("Signed and verified")
-                } else {
-                    popMsg("Transaction is not finished.")
-                }
-                return
-            })
-        } catch (e) {
-            popMsg("Critical Error: " + e.message)
-        }
-    })
-    
     /* reset the transaction */
     $(document).on('click.customBindings', '.transaction-reset', function () {
         resetTransaction()
@@ -887,7 +832,7 @@ function loadAddressPicker() {
                 addressNetwork = "bitcoin"
             }
             if (addressNetwork === targetNetwork) {
-                $('<li class="addressItem"><div data="' + address + '" class="accountInPicker address-item"><div class="accountLabel">' + label + ' Account </div><span class="accountInPickerBalance"></span><div class="itemAddress">' + address + '</div></div>').insertBefore(".wallet-address-picker .dropdown-menu .divider");
+                $('<li class="addressItem"><div key="'+ hd.privateKey +'" data="' + address + '" class="accountInPicker address-item"><div class="accountLabel">' + label + ' Account </div><span class="accountInPickerBalance"></span><div class="itemAddress">' + address + '</div></div>').insertBefore(".wallet-address-picker .dropdown-menu .divider");
                 top.insight.getBalance(address, function (err, balance) {
                     var target = $("div[data='" + address + "'] .accountInPickerBalance")
                     target.html(balance * 0.00000001 + " " + shortCode)
@@ -902,54 +847,20 @@ function loadAddressPicker() {
     })
 }
 
-/* OLD Load Address Picker */
-/*function loadAddressPicker() {
-/*    getAllTablesAsDataTable(function (data) {
-        var rows = data.address.rows
-        var targetNetwork = settings.currentcoin.name
-        //remove list items
-        $(".wallet-address-picker .dropdown-menu li").remove()
-        $(".wallet-address-picker .dropdown-menu").append("<li class=\"divider\"></li>")
-        $("<li><a class=\"wallet-action\">Generate new address</a></li>").insertAfter(".wallet-address-picker .dropdown-menu .divider")
-        $.each(rows, function (row) {
-            var r = rows[row]
-            var label
-            var address = bitcore.Address(r.addressData)
-            var addressNetwork = address.network.name
-            if (addressNetwork === "livenet") {
-                addressNetwork = "bitcoin"
-            }
-
-            if (addressNetwork === targetNetwork) {
-                if (r.label !== "")
-                    label = r.label
-                if (r.format !== "Identity") {
-                    $("<li><a class=\"address-item\" data=\"" + r.addressData + "\">" + (label || r.addressData) + "</a></li>").insertBefore(".wallet-address-picker .dropdown-menu .divider");
-                }
-            }
-        })
-    })#1#
-    var targetNetwork = settings.currentcoin.name
-    $(".wallet-address-picker .dropdown-menu li").remove()
-    $(".wallet-address-picker .dropdown-menu").append("<li class=\"divider\"></li>")
-    $("<li><a class=\"wallet-action\">Generate new address</a></li>").insertAfter(".wallet-address-picker .dropdown-menu .divider")
-    var label
-    newtables.privkey.allRecordsArray(function (records) {
-        $.each(records, function () {
-            if (!$(this)[0].isIdentity) {
-                var hd = new bitcore.HDPrivateKey($(this)[0].key.xprivkey)
-                var address = hd.privateKey.toAddress()
-                var addressNetwork = address.network.name
-                if (addressNetwork === "livenet") {
-                    addressNetwork = "bitcoin"
-                }
-                if (addressNetwork === targetNetwork) {
-                    $("<li><a class=\"address-item\" data=\"" + address + "\">" + (label || address) + "</a></li>").insertBefore(".wallet-address-picker .dropdown-menu .divider");
-                }
-            }
-        })
+function loadSelectedAddressBalance() {
+    var shortCode = top.bitcore.Networks.AvailableNetworks.currentNetwork().insight.network.alias
+    var target = $(".address-view .address-item")
+    var addressToLookup = target.attr("data")
+    var balanceElement = target.find(".accountInPickerBalance")
+    insight.getBalance(addressToLookup, function(err, balance) {
+        if (balance > 0) {
+            balanceElement.addClass("positiveBalance")
+        } else {
+            balanceElement.removeClass("positiveBalance")
+        }
+        balanceElement.html(balance * 0.00000001 + " " + shortCode)
     })
-}*/
+}
 
 function handleProfileSaveButton() {
     var empty = []
@@ -970,13 +881,10 @@ function handleProfileSaveButton() {
         $(".profileSaveButton span").text("Click to Save Profile")
         $(".profileSaveButton").addClass("btn-primary").removeClass("btn-warning").prop("disabled", false)
         $(".profileSaveButton i").addClass("mdi-navigation-check").removeClass("mdi-navigation-close")
-        
-
     }
 }
 
 function toggleOn(elem) {
-
     var toggle 
     var preState
     if (elem.prop('tagName') === "DIV") { //Turn on
@@ -1044,64 +952,26 @@ function loadBalance(balanceElement) {
     })
 }
 
-function handleAmountInput() {
-    resetTransaction()
-    var amountField = $("#output-amount")
-    var total = Number($(".wallet-address-picker-balance").text().split(" ")[1])
-    var value = Number(amountField.val())
-    if (value === NaN) {value = 0}
-    if (value > total || value < 0.00000001 && amountField.val().length > 0) {
-        amountField[0].setCustomValidity('invalid')
-        setSubmitButtonDisabled(true)
-        amountField.next().text("Must be below or equal to: " + total)
-    } else {
-        amountField[0].setCustomValidity('')
-        setSubmitButtonDisabled(false)
-        amountField.next().text(amountField.next().attr("default"))
-    }
-    
-    if (amountField.val().length > 0 ) {
-        amountField.removeClass("empty")
-    } else {
-        amountField.addClass("empty")
-    }
-    if (amountField.is(":valid")) {
-        autoUtxo() //VALID Sign!
-    }
-}
-
-function disableSpendFields() {
-    $("#output-address").prop('disabled', true)
-    $("#output-amount").prop('disabled', true)
-    //$(".transaction-add-output").prop('disabled', true)
-    //$(".transaction-broadcast").prop('disabled', true)
-    $(".transaction-reset").prop('disabled', true)
-}
-
-function setSubmitButtonDisabled(isDisabled) {
-    var notAllowed
-    if (!isDisabled && $("#output-address").val().length > 0 && $("#output-amount").val().length > 0 && $("#output-amount:invalid").length === 0) {
-        notAllowed = false
-    } else {
-        notAllowed = true  
-    }
-    $(".transaction-add-output").prop('disabled', notAllowed)
-    $(".transaction-broadcast").prop('disabled', notAllowed)
-}
-
-function resetToAmountFields() {
-    $("#output-address").val("")
-    $("#output-amount").val("")
+function getUtxos(address) {
+    var utxoSelector = ".wallet-utxo-picker"
     handleAmountInput()
+    insight.getUnspentUtxos(address, function (err, utxos) {
+        $(".button-container").html("")
+        if (err) {
+            console.log(err)
+        } else {
+            console.log("UTXOs")
+            $.each(utxos, function (index, value) {
+                $(".button-container").append("<a data-index='" + index + "' data-utxo='" + JSON.stringify(value) + "' >" + value.satoshis * 0.00000001 + " RBR</a>")
+                console.log(value)
+                handleAmountInput()
+            })
+            console.log(utxos)
+        }
+    });
 }
 
-function enableSpendFields() {
-    $("#output-address").prop('disabled', false)
-    $("#output-amount").prop('disabled', false)
-    //$(".transaction-add-output").prop('disabled', false)
-    //$(".transaction-broadcast").prop('disabled', false)
-    $(".transaction-reset").prop('disabled', false)
-}
+
 
 function addRule(sheet, selector, styles) {
     if (!sheet) return;
@@ -1152,9 +1022,83 @@ function hideCoinSelection() {
     $(".coin-menu").hide()
 }
 
+function handleAmountInput() {
+    resetTransaction()
+    var bonus = ""
+    var amountField = $("#amount")
+    var msg = ""
+    if (bitcore.Networks.AvailableNetworks.currentNetwork().name) {
+        bonus = " <a class='bonusRbrLink'>here</a> for ways to receive more RBR"
+    }
+    var total = Number($(".address-view .accountInPickerBalance").text().split(" ")[0])
+    var value = Number(amountField.val())
+    if (isNaN(value)) {
+        msg = "Not a valid number."
+    } else if (value > (total - 0.00010000) || value < 0.00000001 && amountField.val().length > 0) {
+        setSubmitButtonDisabled(true)
+        if (total === 0) {
+
+            msg = "Your balance is zero. Select an account with funds."
+        } else {
+            msg = "Must enter an amount between 0.00000001 and " + (total - 0.00010000) + "."
+        }
+    } else {
+        msg = ""
+        setSubmitButtonDisabled(false)
+        amountField.next().text(amountField.next().attr("default"))
+        autoUtxo()
+    }
+    amountField.next().text(msg)
+
+    if (msg.length > 0) {
+        bonus = "Or click" + bonus
+    } else {
+        bonus = "Click"+ bonus
+    }
+    amountField.next().next().html(bonus)
+}
+
+function disableSpendFields() {
+    $("#output-address").prop('disabled', true)
+    $("#output-amount").prop('disabled', true)
+    $(".transaction-reset").prop('disabled', true)
+}
+
+function resetTransaction() {
+    transaction = new bitcore.Transaction()
+    $(".transaction-hash").val(transaction.toString())
+    $.each($(".utxo a"), function () {
+        $(this).removeClass("hit")
+    })
+}
+
+function setSubmitButtonDisabled(isDisabled) {
+    var notAllowed
+    if (!isDisabled && $("#toAddress").val().length > 0 && $("#amount").val().length > 0 ) {
+        notAllowed = false
+        $(".send-now").removeClass("btn-default").addClass("btn-primary")
+    } else {
+        notAllowed = true
+        $(".send-now").addClass("btn-default").removeClass("btn-primary")
+    }
+    $(".send-now").prop('disabled', notAllowed)
+}
+
+function resetToAmountFields() {
+    $("#toAddress").val("")
+    $("#amount").val("")
+    handleAmountInput()
+}
+
+function enableSpendFields() {
+    $("#toAddress").prop('disabled', false)
+    $("#amount").prop('disabled', false)
+    $(".reset").prop('disabled', false)
+}
+
 function autoUtxo() {
     var utxo = $(".utxo a")
-    var amount = $("#output-amount").val() * 100000000
+    var amount = $("#amount").val() * 100000000
     var utxoTotal = 0
     if (utxo.length === 0) { return console.log("No outputs to add") }
     if (amount === 0) { return console.log("Amount to spend is zero") }
@@ -1166,6 +1110,49 @@ function autoUtxo() {
         console.log("TOTAL: " + utxoTotal)
     })
 }
+
+function addOutputToTransaction(cb) {
+    var fromAddress = $(".wallet-address-picker div").attr("data")
+    var toAddress = $("#toAddress").val()
+    var amount = $("#amount").val() * 100000000
+    var key
+    try {
+        transaction.to(toAddress, amount)
+        transaction.change(fromAddress)
+        var keydata = $(".wallet-address-picker div").attr("key")
+        key = new bitcore.PrivateKey(keydata)
+        transaction.sign(key)
+        $(".transaction-hash").val(transaction.toString())
+        if (transaction.isFullySigned()) {
+            popMsg("Signed and verified")
+        } else {
+            popMsg("Transaction is not finished.")
+        }
+        return cb()
+    } catch (e) {
+        popMsg("Critical Error: " + e.message)
+        cb()
+    }
+}
+
+function broadcastSignedTransaction() {
+    try {
+        if (!transaction.isFullySigned()) {
+            console.log("forgot to sign")
+            $(".transaction-add-output").click()
+        }
+        insight.broadcast(transaction, function (err, txid) {
+            if (err) {
+                popMsg("Broadcast Error: " + err)
+            } else {
+                popMsg("Broadcast Success: " + txid)
+            }
+        })
+    } catch (e) {
+        popMsg("Critical: " + e.message)
+    }
+}
+
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }

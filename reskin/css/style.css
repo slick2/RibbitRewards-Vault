@@ -28,6 +28,10 @@ body {
     overflow-x: hidden;
 }
 
+.advanced {
+    display: none !important;
+}
+
 #wrap {
         min-height: 100%;
         height: auto !important;
@@ -107,6 +111,10 @@ iframe {
 
 #v {
     width: 55vw;
+}
+
+.utxo .hit {
+    color: #26C281 !important;
 }
 
 .qrButton .glyphicon-qrcode {
@@ -458,9 +466,9 @@ li .accountInPicker {
         color: gray;
     }
 
-        .dropdown-menu a {
-            color: gray !important;
-        }
+    .dropdown-menu a {
+        color: gray !important;
+    }
 
     .btn-primary:not(.btn-link):not(.btn-flat) {
         background-color: #26c281 !important;

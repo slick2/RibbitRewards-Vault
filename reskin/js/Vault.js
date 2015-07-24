@@ -113,15 +113,9 @@ function getKeyFromAddress(address, cb) {
         })
     })
 }
-function resetTransaction() {
-    transaction = new bitcore.Transaction()
-    $(".transaction-hash").val(transaction.toString())
-    $.each($(".utxo a"), function() {
-        $(this).removeClass("hit")
-    })
-}
 
-function getBalance(address) {
+
+/*function getBalance(address) {
     var balanceSelector = ".wallet-address-picker-balance"
     $(balanceSelector).removeClass("label-success")
     $(balanceSelector).removeClass("label-warning")
@@ -144,24 +138,9 @@ function getBalance(address) {
             }
         }
     })
-}
+}*/
 
-function getUtxos(address) {
-    var utxoSelector = ".wallet-utxo-picker"
-    insight.getUnspentUtxos(address, function (err, utxos) {
-        $(".button-container").html("")
-        if (err) {
-            console.log(err)
-        } else {
-            console.log("UTXOs")
-            $.each(utxos, function (index, value) {
-                $(".button-container").append("<a data-index='" + index + "' data-utxo='" + JSON.stringify(value) + "' >" + value.satoshis * 0.00000001 + " RBR</a>")
-                console.log(value)
-            })
-            console.log(utxos)
-        }
-    });
-}
+
 
 function checkHash() {
     switch (location.hash) {
