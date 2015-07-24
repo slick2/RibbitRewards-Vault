@@ -25,17 +25,17 @@
                                                         <div class="form-group">
                                                             <input type="text" class="form-control input-lg amount" id="amount" placeholder="How much?">
                                                             <p class="text-warning amount-warning"></p>
-                                                            <p class="text-primary"></p>
+                                                            <p class="text-primary amount-bonus"></p>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-sm-2">
-                                                        <label for="inputEmail3" class="control-label">FROM:</label>
+                                                        <label for="inputEmail3" class="control-label fromAddressLabel">FROM:</label>
                                                     </div>
                                                     <div class="col-sm-7">
                                                         <div class="btn-group wallet-address-picker">
-                                                            <button class="address-view btn btn-default" type="button">Choose Account to send from</button>
+                                                            <button class="address-view btn btn-default" type="button"><span>xChoose Account to send from</span></button>
                                                             <button type="button" class="btn btn-default dropdown-toggle"
                                                                     aria-expanded="false" data-toggle="dropdown">
                                                                 <span class="caret"></span>
@@ -68,7 +68,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-sm-2">
-                                                        <label for="toAddress" class="control-label">TO:</label>
+                                                        <label for="toAddress" class="control-label toAddressLabel">TO:</label>
                                                     </div>
                                                     <div class="col-sm-7">
                                                         <div class="form-group">
@@ -95,17 +95,21 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <div class="col-sm-4 span6">
-                                                        <button type="button" class="btn btn-default send-now" >
-                                                            Send Now
-                                                        </button>
+                                                    <button type="button" class="btn btn-default send-now" disabled>
+                                                        Send Now
+                                                    </button>
+                                                    <button class="btn btn-default reset">
+                                                        Reset
+                                                    </button>
+                                                    <!--<div class="col-sm-4 span6">
+
                                                     </div>
                                                     <div class="col-sm-3 span3 advanced">
                                                         <button class="btn btn-default send-later">Send Later</button>
                                                     </div>
-                                                    <div class="col-sm-4 span6">
-                                                        <button class="btn btn-default reset">Reset</button>
-                                                    </div>
+                                                    <div class="col-sm-4 span6 pull-right">
+
+                                                    </div>-->
                                                 </div>
                                             </form>
                                         </div>

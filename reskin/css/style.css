@@ -14,6 +14,115 @@
 	font-style: normal;
 }
 
+/* Above 962 and 1760 */
+@media all and (min-width: 962px) and (max-width: 1760px){
+   .balance-container {
+       font-size: 8vw !important;
+   }
+}
+/* Between 815 and 962 */
+@media all and (min-width: 815px)and (max-width: 960px){
+   .balance-container {
+       font-size: 10vw !important;
+   }
+}
+
+@media all and (min-width: 600px) and (max-width: 814px) {
+    .balance-container {
+        font-size: 2.1vw !important;
+    }
+}
+/* Below 814px */
+@media all /*and (min-width: 321px)*/ and (max-width: 814px){
+    .tab-content {
+        padding-left: 0 !important;
+    }
+    .amount {
+        height: 55px !important;
+        font-size: 7.0vw !important;
+        text-align: center;
+        color: #26C281;
+        padding-left: 35vw;
+    }
+    .dropdown-toggle {
+        position: fixed !important;
+        right: 20px !important;
+    }
+    .address-view span {
+        left: 50px;
+        position: inherit;
+            font-size: 3.5vw;
+    }
+    .amount-label {
+        vertical-align: middle;
+        top: 23px;
+        position: absolute;
+        left: -0.1em;
+    }
+
+    .amount-warning {
+        font-size: 3.5vw;
+        margin-bottom: 1px;
+    }
+
+    .amount-bonus {
+        font-size: 2.5vw;
+    }
+
+    .fromAddressLabel {
+        position: absolute;
+        left: 0;
+        top: 9px;
+    }
+    .address-view .accountLabel {
+        left: 50px;
+        position: relative;
+    }
+    .address-view accountInPickerBalance {
+        
+    }
+    .toAddressLabel {
+        position: absolute;
+        left: 0;
+        top: 7px;
+    }
+    .toAddress {
+        padding-left: 30px;
+    }
+    .dropdown-menu .accountInPicker {
+        left: 20px;
+        position: inherit;
+    }
+
+    .balance-container {
+       position: relative;
+       top: -25px;
+       font-size: 12vw !important;
+       left: 0 !important;
+       font-family: Raleway !important;
+   }
+
+    .tab-content {
+        top: -25px;
+        position: relative;
+    }
+
+    .form-group {
+        margin-bottom: 3px;
+    }
+
+    .copyright {
+        padding-left: 0 !important;
+        font-size: 2.3vw;
+        text-align: center;
+        padding-bottom: 5px;
+    }
+
+   .navmenu-fixed-left {
+       display: none !important;
+   }
+}
+
 html, body {
 	height: 100%;
     font-family: Raleway !important;
@@ -62,9 +171,10 @@ body {
 footer {
     position: fixed;
     bottom: 0;
+    width: 100%;
 }
 .navmenu-fixed-left {
-    display: block !important;
+    /*display: block !important;*/
     width: 60px;
     z-index: 100 !important;
 }
@@ -107,6 +217,10 @@ iframe {
 
 #toAddress {
     font-size: .8em;
+}
+
+.copyright {
+    padding-left: 65px
 }
 
 #v {
@@ -217,6 +331,8 @@ iframe {
 
 .footer-icons {
     z-index: 2 !important;
+    right: 0;
+    position: fixed;
 }
 
 .logo {
@@ -308,7 +424,7 @@ li a:not(.active) {
 }
 
 .amount {
-  height: 75px !important;
+  height: 75px;
   font-size: 2em;
   text-align: center;
   font-size: 3em;
@@ -322,9 +438,17 @@ li a:not(.active) {
 }
 
 .balance-container {
-    text-align: center;
+    /*text-align: center;
     font-size: 5em;
     left: -30px;
+    position: relative;
+    color: #26C281;
+    font-family: Raleway-thin;
+    font-variant: small-caps;*/
+    /* EDITS for MOBILE */
+    text-align: center;
+    font-size: 13vw;
+    left: 30px;
     position: relative;
     color: #26C281;
     font-family: Raleway-thin;
@@ -513,6 +637,8 @@ li .accountInPicker {
 .container {
     margin-left: 0 !important;
     width: auto !important;
+    padding-right: 1vw !important;
+    padding-left: 1vw !important;
 }
 
 .page-header {

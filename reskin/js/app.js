@@ -731,7 +731,7 @@ function bindClicks() {
     
     /*New address picker event binding (Click on an account) */
     $(document).on('click.customBindings', '.wallet-address-picker .dropdown-menu .address-item', function (data) {
-        if ($(".address-view").html() !== "Choose Account to send from") {
+        if ($(".address-view").html() !== "<span>Choose Account to send from</span>") {
             var previouslySelected = $(".address-view").html()
             $(previouslySelected).insertBefore($(this))
         }
@@ -817,7 +817,7 @@ function loadAddressPicker() {
     var targetNetwork = top.bitcore.Networks.AvailableNetworks.currentNetwork().name
     var shortCode = top.bitcore.Networks.AvailableNetworks.currentNetwork().insight.network.alias
     $(".wallet-address-picker .dropdown-menu li.addressItem").remove()
-    $(".address-view").html('Choose Account to send from')
+    $(".address-view").html('<span>Choose Account to send from</span>')
     
     top.newtables.privkey.allRecordsArray(function (records) {
         $.each(records, function () {
