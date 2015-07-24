@@ -75,21 +75,27 @@
         left: 0;
         top: 9px;
     }
+
     .address-view .accountLabel {
         left: 50px;
         position: relative;
     }
+
     .address-view accountInPickerBalance {
-        
+        padding-left: 25px;
     }
+
     .toAddressLabel {
         position: absolute;
         left: 0;
         top: 7px;
     }
+
     .toAddress {
         padding-left: 30px;
+        text-align: center;
     }
+
     .dropdown-menu .accountInPicker {
         left: 20px;
         position: inherit;
