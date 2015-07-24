@@ -822,7 +822,8 @@ function loadAddressPicker() {
     top.newtables.privkey.allRecordsArray(function (records) {
         $.each(records, function () {
             if ($(this)[0].isIdentity) { return }
-            var hd = new top.bitcore.HDPrivateKey($(this)[0].key.xprivkey)
+            var privkeyData = JSON.parse($(this)[0].key).xprivkey
+            var hd = new top.bitcore.HDPrivateKey(privkeyData)
             var address = hd.privateKey.toAddress()
             var addressNetwork = address.network.name
             if ($(this)[0].label !== undefined) {
