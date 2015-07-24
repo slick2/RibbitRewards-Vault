@@ -44,12 +44,13 @@
         color: #26C281;
         padding-left: 35vw;
     }
-    .dropdown-toggle {
+    /*.dropdown-toggle {
         position: fixed !important;
         right: 20px !important;
-    }
+    }*/
+
     .address-view span {
-        left: 50px;
+        left: 40px;
         position: inherit;
             font-size: 3.5vw;
     }
