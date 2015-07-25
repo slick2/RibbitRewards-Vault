@@ -14,24 +14,40 @@
 	font-style: normal;
 }
 
+.peer-name {
+    float: left;
+}
+
+.peer-pay {
+    color: #26C281 !important;
+    /*position: relative;
+    top: -15px;*/
+}
+
+.new-navbar-toggle {
+    padding: 20px !important;
+    cursor: cell;
+}
+
 /* Above 962 and 1760 */
 @media all and (min-width: 962px) and (max-width: 1760px){
-   .balance-container {
+   .balance-container, .accountInHeadBalance  {
        font-size: 8vw !important;
    }
 }
 /* Between 815 and 962 */
 @media all and (min-width: 815px)and (max-width: 960px){
-   .balance-container {
+   .balance-container, .accountInHeadBalance {
        font-size: 10vw !important;
    }
 }
 
 @media all and (min-width: 600px) and (max-width: 814px) {
-    .balance-container {
+    .balance-container, .accountInHeadBalance {
         font-size: 2.1vw !important;
     }
 }
+
 /* Below 814px */
 @media all /*and (min-width: 321px)*/ and (max-width: 814px){
     .tab-content {
@@ -48,7 +64,13 @@
         position: fixed !important;
         right: 20px !important;
     }*/
-
+     .context-balance-container {
+            position: relative;
+            top: -15px;
+            font-size: 12vw !important;
+            left: 0 !important;
+            font-family: Raleway !important;
+        }
     .address-view span {
         left: 40px;
         position: inherit;
@@ -96,6 +118,21 @@
         text-align: center;
     }
 
+    .address-view .accountInPickerBalance {
+        display: none;
+    }
+
+    .context-balance-container {
+    text-align: center;
+    font-size: 13vw;
+    left: 30px;
+    position: relative;
+    color: #26C281;
+    font-family: Raleway-thin;
+    font-variant: small-caps;
+    }
+
+
     .dropdown-menu .accountInPicker {
         left: 20px;
         position: inherit;
@@ -103,7 +140,7 @@
 
     .balance-container {
        position: relative;
-       top: -25px;
+       top: -15px;
        font-size: 12vw !important;
        left: 0 !important;
        font-family: Raleway !important;
@@ -125,7 +162,11 @@
         padding-bottom: 5px;
     }
 
-   .navmenu-fixed-left {
+   .collapsable {
+       display: block !important;
+   }
+
+   .collapsed {
        display: none !important;
    }
 }
@@ -272,9 +313,30 @@ iframe {
   background-color: #26C281 !important;
 }
 
+.balance {
+    padding-left: 60px;
+}
+
+.navmenu-top {
+    background-color: #26C281 !important;
+    position: fixed;
+    height: 105px;
+    z-index: 3;
+    width: 60px;
+}
+
+.navmenu-bottom {
+    background-color: #D2D7D3;
+    position: fixed;
+    height: 100%;
+    width: 60px;
+    z-index: 3;
+    top: 105px;
+}
+
 .navmenu {
   z-index: 1;
-  background: #26C281;
+  background: transparent;
   overflow: hidden !important;
   /*overflow-x: hidden;*/
 }
@@ -291,7 +353,7 @@ iframe {
 
 .wallet-address-picker .itemAddress {
   position: relative;
-  top: 3px;
+  top: 25px;
   left: 15px;
   font-size: .7em;
 }
@@ -444,7 +506,7 @@ li a:not(.active) {
   position: absolute;
 }
 
-.balance-container {
+.balance-container, .accountInHeadBalance {
     /*text-align: center;
     font-size: 5em;
     left: -30px;
@@ -472,6 +534,12 @@ li .accountInPicker {
 .accountInPicker {
   color: grey !important;
   font-weight: bold;
+}
+
+.accountInHeadBalance {
+    color: #1ECBDA;
+    left: 10px;
+    position: relative;
 }
 
 .accountInPickerBalance {
@@ -520,6 +588,9 @@ li .accountInPicker {
 .menu-item-sm .square {
     left: -100px !important;
     top: -60px !important;
+} 
+.menu-item-sm {
+    text-align: center;
 }
 
 

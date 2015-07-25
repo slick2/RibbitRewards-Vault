@@ -67,7 +67,7 @@ var signaler
             if (settings.inFrame()) {return}
             getPublicIdentity(function (ident) {
                 var pk = foundIdentity[0]
-                ident.address = bitcore.HDPrivateKey(pk.xprivkey).privateKey.toAddress().toString()
+                ident.address = bitcore.HDPrivateKey(JSON.parse(pk).xprivkey).privateKey.toAddress().toString()
                 ident.peerid = meshnet.qc.id
                 setInterval(function() {
                     meshnet.issueCommand("heartbeat", meshnet.qc.id)

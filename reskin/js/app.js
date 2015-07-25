@@ -12,7 +12,7 @@ var lazyCheck, getDisplayName, checkLocalIdentity
     })
 }*/
 var onPage = function () {
-    var page, title
+    var page, title, simple
     var hash = window.location.hash.replace('#', '')
     if (hash === "") {
         hash = window.location.pathname.replace("/", "").split(".")[0]
@@ -20,38 +20,49 @@ var onPage = function () {
     switch (hash) {
         case "wallet":
             page = "wallet.html"
-            title= "Wallet"
+            title = "Wallet"
+            simple="wallet"
+            break;
+        case "chat":
+            simple = "chat"
             break;
         case "keys":
             page = "keys.html"
             title="Key Management"
+            simple = "keys"
             break;
         case "video-chat":
             page = "video-chat.html"
             title = "Chat / Video"
+            simple = ""
             break;
         case "raw":
             page = "raw.html"
             title = "Create a raw transaction"
+            simple = ""
             break;
         case "import":
             page = "import.html"
             title="Import / Export"
+            simple = "import"
             break;
         case "address":
             page = "address.html"
             title = "Generate Addresses"
+            simple = ""
             break;
         case "settings":
             page = "settings.html"
             title = "Settings"
+            simple = ""
             break;
         default:
             page = "profile.html"
             title="Profile"
+            simple = "profile"
             break;
     }
-    return {page: page, title: title}
+    return {page: page, title: title, simple: simple}
 }
 /* Entry */
 $(document).ready(function () {
@@ -220,10 +231,12 @@ var getQueryStringParam = function(target) {
 
 var loadPageByHash = function () {
     var pageData = onPage()
+
     showContent()
     switch(pageData.title) {
         case "Wallet":
-            return renderWalletTemplate({})
+            var to = escapeHtml(getParameterByName("to"))
+            return renderWalletTemplate({to: to})
         case "Profile":
             return renderProfileTemplate({})
         case "Key Management":
@@ -231,6 +244,7 @@ var loadPageByHash = function () {
         case "Import / Export":
             return renderImportTemplate({})
     }
+    /*loadPageExplicitely(pageData.simple)*/
     if (pageData.page === "video-chat.html" && getQueryStringParam("call") !== undefined) {
         pageData.page = pageData.page + "?call=" + getQueryStringParam("call")
     }
@@ -241,6 +255,30 @@ var loadPageByHash = function () {
         $(".frame-tab").tab("show")
     }
     setTimeout(function (){ handleSettingsElementFromStore() }, 500)
+}
+
+var loadPageExplicitely = function (page, type) {
+    if (settings.onPage.simple === page) {
+        showContent()
+        return
+    }
+    if (type === "handlebar") {
+        settings.onPage = {simple: page}
+        showContent()
+    }
+    switch (page) {
+        case "wallet":
+        var to = escapeHtml(getParameterByName("to"))
+            return renderWalletTemplate({to: to})
+        case "profile":
+            return renderProfileTemplate({})
+        case "keys":
+            return renderKeysTemplate({})
+        case "import":
+            return renderImportTemplate({})
+        case "chat":
+            return showChat()
+    }
 }
 
 function setSetting(value,target,type,cb) {
@@ -526,8 +564,9 @@ function bindClicks() {
     });
 
     /* Navbar toggle */
-    $(document).on('click.customBindings', '.navbar-toggle', function() {
-        handleMenuToggle()
+    $(document).on('click.customBindings', '.new-navbar-toggle', function() {
+        //handleMenuToggle()
+        showNav()
     })
         
         /* Profile Save Button */
@@ -552,9 +591,9 @@ function bindClicks() {
         })
         
         /* Menu Chat */
-        $(document).on('click.customBindings', '.small-chat-link', function () {
+        /*$(document).on('click.customBindings', '.small-chat-link', function () {
             showChat()
-        })
+        })*/
 
         /* Change Coin */
         $(document).on('click.customBindings', '.coinSelect', function() {
@@ -586,11 +625,23 @@ function bindClicks() {
         })
         
         /* Any hash link that should load framed content */
-        $(document).on('click.customBindings', '.navlink', function () {
-            if ($(this).attr("href") === undefined) { return }
-            setTimeout(function() { top.loadPageByHash() }, 500)
-        })
-    
+        $(document).on('click.customBindings', '.navlink', function() {
+            if ($(this).attr("href") === undefined) {
+                return
+        }
+        var toPage = $(this).attr("page")
+        var linkType = $(this).attr("type")
+            if (linkType === undefined) {
+                linkType = "handlebar"
+            }
+        //loadPageByHash()
+            loadPageExplicitely(toPage, linkType)
+            hideNav()
+    })
+    $(document).on('click.customBindings', '.peer-pay', function() {
+        loadPageExplicitely("wallet")
+    })
+
     $(document).on('click.customBindings', '.importKey', function (data) {
         top.newtables.privkey.importHD($("#inputpk").val(), $("#labelInput").val() , function (a, b) {
             console.log(a, b)
@@ -735,6 +786,10 @@ function bindClicks() {
             var previouslySelected = $(".address-view").html()
             $(previouslySelected).insertBefore($(this))
         }
+        $(".accountInHeadBalance ").text($(this).find(".accountInPickerBalance").text())
+             
+        
+        $(".current-balance-container-label").text($(this).find(".accountLabel").text())
         $(".address-view").html($(this))
         $(".qrButton").removeAttr("disabled")
         var address = $(data.currentTarget).attr("data")
@@ -752,6 +807,9 @@ function bindClicks() {
         var addressString = $(this).val()
         try {
             var address = top.bitcore.Address(addressString)
+            newtables.peers.get("Ru6N3isCmBpojc7GMvX3gbzHJ6AqqjNNU2", function(a, b) {
+                $(".toImage").attr("src", photoObjectToUrl(b.value).photo)
+            })
             if (address.network.name === top.bitcore.Networks.AvailableNetworks.currentNetwork().name
                 && $(".amount-warning").text().length === 0
                 && $(".amount").val() > 0) {
@@ -814,6 +872,7 @@ function bindClicks() {
 function loadAddressPicker() {
     var label = "Basic"
     var totalBalance = 0
+    var identityIcon = ""
     var targetNetwork = top.bitcore.Networks.AvailableNetworks.currentNetwork().name
     var shortCode = top.bitcore.Networks.AvailableNetworks.currentNetwork().insight.network.alias
     $(".wallet-address-picker .dropdown-menu li.addressItem").remove()
@@ -821,7 +880,11 @@ function loadAddressPicker() {
     
     top.newtables.privkey.allRecordsArray(function (records) {
         $.each(records, function () {
-            if ($(this)[0].isIdentity) { return }
+            if ($(this)[0].isIdentity) {
+                identityIcon = "<i class=\" fa fa-star \" style='float: left'></i>"
+            } else {
+                identityIcon = ""
+            }
             var privkeyData = JSON.parse($(this)[0].key).xprivkey
             var hd = new top.bitcore.HDPrivateKey(privkeyData)
             var address = hd.privateKey.toAddress()
@@ -833,7 +896,7 @@ function loadAddressPicker() {
                 addressNetwork = "bitcoin"
             }
             if (addressNetwork === targetNetwork) {
-                $('<li class="addressItem"><div key="'+ hd.privateKey +'" data="' + address + '" class="accountInPicker address-item"><div class="accountLabel">' + label + ' Account </div><span class="accountInPickerBalance"></span><div class="itemAddress">' + address + '</div></div>').insertBefore(".wallet-address-picker .dropdown-menu .divider");
+                $('<li class="addressItem">'+ identityIcon +'<div key="'+ hd.privateKey +'" data="' + address + '" class="accountInPicker address-item"><div class="accountLabel">' + label + ' Account </div><span class="accountInPickerBalance"></span><div class="itemAddress">' + address + '</div></div>').insertBefore(".wallet-address-picker .dropdown-menu .divider");
                 top.insight.getBalance(address, function (err, balance) {
                     var target = $("div[data='" + address + "'] .accountInPickerBalance")
                     target.html(balance * 0.00000001 + " " + shortCode)
@@ -930,7 +993,7 @@ function loadBalance(balanceElement) {
     balanceElement.text(totalBalance + " " + shortCode)
     top.newtables.privkey.allRecordsArray(function (records) {
         $.each(records, function () {
-            var hd = new top.bitcore.HDPrivateKey($(this)[0].key.xprivkey)
+            var hd = new top.bitcore.HDPrivateKey(JSON.parse($(this)[0].key).xprivkey)
             var address = hd.privateKey.toAddress()
             var addressNetwork = address.network.name
             if ($(this)[0].label !== undefined) {
@@ -1169,6 +1232,15 @@ function changeProfileImageStock(context) {
         top.meshnet.publicUpdateIdentity()
     })
 }
+
+function showNav() {
+    $(".collapsed").removeClass("collapsed").addClass("collapsable")
+}
+
+function hideNav() {
+    $(".collapsable").removeClass("collapsable").addClass("collapsed")
+}
+
 /* CHAT  */
 function addGroupChatMsg(payload) {
     var msg = payload.msg
@@ -1236,12 +1308,12 @@ function renderChatRow(data) {
 }
 
 /* HandleBars compile Wallet template */
-function renderWalletTemplate(data) {
+function renderWalletTemplate(templateData) {
     $.ajax({
         url : './templates/wallet.html',
         success : function (data) {
             var template = Handlebars.compile(data)
-            animateOut(template, function() {
+            animateOut(template(templateData), function() {
                 loadAddressPicker()
             })
         },
@@ -1326,6 +1398,7 @@ function locatePeerRow(address, cb) {
     })
 }
 
+/* CHAT */
 function continuationOfLastChat(data) {
     return data.address === $(".discussion li").last().find("img[address]").attr("address")
 }
@@ -1367,82 +1440,8 @@ function renderChatList() {
             }
         })
     })
-        /*$(".chatlist").html("")
-        var onlineCnt = 0
-        var listActionIcon, listActionClass
-        $.each(rows, function () {
-            var data = $(this).get(0)
-            var photo = data.photo
-            var user, url
-            if (data.name !== undefined) {
-                user = data.name
-            } else if (data.nickname !== undefined) {
-                user = data.nickname
-            } else {
-                user = "Anonymous"
-            }
-            if (photo !== undefined && photo.location !== undefined && photo.location === "stock") {
-                url = "./images/avatars/characters_" + photo.id + ".png"
-            } else if (photo !== undefined && photo.location !== undefined && photo.location === "base64") {
-                url = photo.data
-            } else {
-                url = "./images/profile.png"
-            }
-            var onlineclass = ""
-            var onlinestyle = ""
-            var onlineindicator = ""
-            var isonline = ""
-            var border = "border: 2px solid green;"
-            var detailstyle = " position: relative;  left: 45px;  top: -15px;"
-            var listAction
-            if (data.isfriend) {
-                listAction = "data='" + data.address + "'"
-                listActionIcon = "fa-minus-circle"
-                listActionClass = "removeFriend"
-            } else {
-                listAction = "data='" + data.address + "'"
-                listActionIcon = "fa-plus-circle"
-                listActionClass = "addFriend"
-            }
-            var communicate = '<i '+ listAction+' class="'+ listActionClass +' fa-double fa fa-lg '+ listActionIcon +'" style="float:right;"></i>'
-            var shadow = "  box-shadow: 0 1px 6px 0 rgba(0,0,0,.12),0 1px 6px 0 rgba(0,0,0,.12); transition: box-shadow .28s cubic-bezier(.4,0,.2,1);"
-            if (!data.online) {
-                onlineclass = "btn-danger";
-                onlinestyle = "opacity: 0.4;filter: alpha(opacity=40);";
-                border = "border: 2px solid red;";
-            } else {
-                communicate += '<i class="fa fa-lg fa-weixin" style="float:right;"></i>'
-                communicate += '<i class="fa fa-lg fa-video-camera" style="float:right;"></i>'
-                onlineclass = "btn-success";
-                onlineCnt = onlineCnt + 1
-                $(".hometabs .badge").text(onlineCnt)
-            }
-            newtables.settings.get("hideoffline", function (err, doc) {
-                if (doc.value && !data.online) {
-                    isonline = "display: none; "
-                }
-                $(".chatlist").append('<li style="' + isonline + '"><div><div>' + onlineindicator + '<img address="' + escapeHtml(data.address) + '" class="circular" style="width:35px !important; height:35px !important; cursor: pointer; ' + onlinestyle + shadow + border + '" src="' + escapeHtml(url) + '"></div><div style="' + detailstyle + '">' + escapeHtml(user) + communicate + '</div></div></li>')
-                $(".chatlist .row").css("height", "38px")
-
-                /* update past chats #1#
-                $.each($(".chatmsg"), function () {
-                    var image = $(this).find($("img[address='"+ escapeHtml(data.address) +"']")).get(0)
-                    var display = $(this).find($(".username")).get(0)
-                    if (image !== undefined) {
-                        $(image).attr("src", escapeHtml(url))
-                        $(display).text(user)
-                    }
-                })
-            })
-            
-
-
-            //onlineindicator = '<a href="javascript:void(0)" class="btn '+onlineclass+' btn-fab btn-raised" style="width:40px; height:40px; position: absolute;"></a>'
-            
-        })
-    })*/
 }
-/* CHAT */
+
 
 function photoObjectToUrl(data) {
     if (data === undefined) {
@@ -1463,4 +1462,12 @@ function escapeHtml(html) {
     var div = document.createElement('div');
     div.appendChild(text);
     return div.innerHTML;
+}
+
+//http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1]);
 }
