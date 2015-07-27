@@ -186,7 +186,7 @@ var preInit = function(cb) {
         }
         newtables.privkey.keys(function(keys) {
              if (keys.error) {
-                 newtables.privkey.newIdentity("Me",function(out) {
+                 newtables.privkey.newIdentity("Identity",function(out) {
                     return setLocalIdentity()
                  })
              } else {
@@ -622,7 +622,24 @@ function bindClicks() {
                 popMsg("Wallet context changed to " + $(".coinPicker").attr("name").toUpperCase())
                 loadBalance($(".balance-container"))
             })
+    })
+    
+    /* Tooltip Hover */
+    $(document).on('mouseover.customBindings', '[action="tooltip"]', function () {
+        var title = $($(this).get(0)).attr("tooltip-title")
+        var content = $($(this).get(0)).attr("tooltip-content")
+        var target = $($(this).get(0)).attr("for")
+        renderToolTip({ "title": title, "content": content, top: $(this).position().top + 30 , target: target})
+    })
+    /* Tooltip un Hover */
+    $(document).on('mouseout.customBindings', '[action="tooltip"]', function () {
+        var target = $($(this).get(0)).attr("for")
+        var tip = $(".toolTip").children("[for='"+target+"']")
+        tip.fadeOut(function () {
+            tip.remove()
         })
+    })
+
         
         /* Any hash link that should load framed content */
         $(document).on('click.customBindings', '.navlink', function() {
@@ -784,13 +801,13 @@ function bindClicks() {
     $(document).on('click.customBindings', '.wallet-address-picker .dropdown-menu .address-item', function (data) {
         if ($(".address-view").html() !== "<span>Choose Account to send from</span>") {
             var previouslySelected = $(".address-view").html()
-            $(previouslySelected).insertBefore($(this))
+            $(previouslySelected).insertBefore($(this).parent())
         }
         $(".accountInHeadBalance ").text($(this).find(".accountInPickerBalance").text())
              
         
         $(".current-balance-container-label").text($(this).find(".accountLabel").text())
-        $(".address-view").html($(this))
+        $(".address-view").html($(this).parent())
         $(".qrButton").removeAttr("disabled")
         var address = $(data.currentTarget).attr("data")
         $(".wallet-address-picker").removeClass("open")
@@ -805,19 +822,7 @@ function bindClicks() {
     /* Monitor To Address */
     $(document).on('keyup.customBindings', '.toAddress', function () {
         var addressString = $(this).val()
-        try {
-            var address = top.bitcore.Address(addressString)
-            newtables.peers.get("Ru6N3isCmBpojc7GMvX3gbzHJ6AqqjNNU2", function(a, b) {
-                $(".toImage").attr("src", photoObjectToUrl(b.value).photo)
-            })
-            if (address.network.name === top.bitcore.Networks.AvailableNetworks.currentNetwork().name
-                && $(".amount-warning").text().length === 0
-                && $(".amount").val() > 0) {
-                setSubmitButtonDisabled(false)
-            }
-        } catch (e) {
-            setSubmitButtonDisabled(true)
-        }
+        validateToAddress(addressString)
     })
 
     /* reset the transaction */
@@ -867,6 +872,22 @@ function bindClicks() {
             //top.matchPageSettingsToDatastore()
         })
     })
+}
+
+function validateToAddress(addressString) {
+    try {
+        var address = top.bitcore.Address(addressString)
+        newtables.peers.get(addressString, function (a, b) {
+            $(".toImage").attr("src", photoObjectToUrl(b.value).photo)
+        })
+        if (address.network.name === top.bitcore.Networks.AvailableNetworks.currentNetwork().name 
+                && $(".amount-warning").text().length === 0 
+                && $(".amount").val() > 0) {
+            setSubmitButtonDisabled(false)
+        }
+    } catch (e) {
+        setSubmitButtonDisabled(true)
+    }    
 }
 
 function loadAddressPicker() {
@@ -1294,6 +1315,14 @@ function renderPeerRow(data, target) {
         $(target).append(template(data));
     })
 }
+
+/* HandleBars compile template */
+function renderToolTip(data) {
+    var source = $("#toolTip").html()
+    var template = Handlebars.compile(source)
+    $(".toolTip").append(template(data))
+}
+
 /* HandleBars compile template */
 function renderChatRow(data) {
     var source = $("#chatRow").html();
@@ -1302,7 +1331,7 @@ function renderChatRow(data) {
     if (continuationOfLastChat(data)) {
         $(".discussion li .messages").last().append("<p>" + data.msg + "</p>")
     } else {
-        $(".discussion").append(template(data));
+        $(".discussion").append(template(data))
     }
     scrollChat()
 }
@@ -1315,6 +1344,7 @@ function renderWalletTemplate(templateData) {
             var template = Handlebars.compile(data)
             animateOut(template(templateData), function() {
                 loadAddressPicker()
+                validateToAddress(templateData.to)
             })
         },
         dataType: "text",

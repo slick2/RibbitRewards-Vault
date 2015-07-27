@@ -7304,22 +7304,22 @@ fieldset[disabled] .navbar .btn-link:focus {
 }
 .popover,
 .tooltip-inner {
-  color: #ececec;
+  /*color: #ececec;
   line-height: 1em;
   background: rgba(101, 101, 101, 0.9);
   border: none;
   border-radius: 2px;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
-}
+*/}
 .tooltip,
 .tooltip.in {
-  opacity: 1;
+  /*opacity: 1;*/
 }
 .popover .arrow,
 .tooltip .arrow,
 .popover .tooltip-arrow,
 .tooltip .tooltip-arrow {
-  display: none;
+ /* display: none;*/
 }
 .mdi,
 icon {

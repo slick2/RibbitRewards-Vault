@@ -36,7 +36,7 @@
     <link href="css/jasny-bootstrap.css" rel="stylesheet">
     
     <link href="css/peers.css" rel="stylesheet">
-    <link href="css/material.min.css" rel="stylesheet">
+    <link href="css/material.css" rel="stylesheet">
     <link href="css/ripples.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
@@ -96,6 +96,13 @@
             </div>
         </li>
     </script>
+    <script id="toolTip" type="text/x-handlebars-template">
+        <div class="popover fade right in" role="tooltip" id="popover" style="top: {{top}}px; left:60px; display: block;" for="{{target}}">
+            <div class="arrow" style="top: 50%;"></div>
+            <h3 class="popover-title">{{title}}</h3>
+            <div class="popover-content">{{content}}</div>
+        </div>
+   </script>
 
 </head>
 
@@ -175,35 +182,35 @@
                 <ul>
                     <li>
                         <a href="#profile" page="profile" class="navlink menu-item-sm">
-                            <i class="fa fa-lg fa-user"></i>
+                            <i class="fa fa-lg fa-user" action="tooltip" tooltip-title="Profile" tooltip-content="View and Modify your identify information and public profile." for="profile"></i>
                             <br>
                             <span></span>
                         </a>
                     </li>
                     <li>
                         <a href="#wallet" page="wallet" class="navlink menu-item-sm">
-                            <i class="fa fa-lg fa-university"></i>
+                            <i class="fa fa-lg fa-university" action="tooltip" tooltip-title="Wallet" tooltip-content="Access your wallet to send / receive rewards or other tokens." for="wallet"></i>
                             <br>
                             <span></span>
                         </a>
                     </li>
-                    <li>
+                    <li >
                         <a href="#keys" page="keys" class="navlink menu-item-sm">
-                            <i class="fa fa-lg fa-key"></i>
+                            <i class="fa fa-lg fa-key" action="tooltip" tooltip-title="Manage your keys" tooltip-content="Name, Delete, Provision private and public keys." for="keys"></i>
                             <br>
                             <span></span>
                         </a>
                     </li>
                     <li>
                         <a href="#chat" type="tab" page="chat" class="navlink menu-item-sm">
-                            <i class="fa-double fa fa-lg fa-weixin"></i>
+                            <i class="fa-double fa fa-lg fa-weixin" action="tooltip" tooltip-title="Group Chat" tooltip-content="Come chat with other wallet users. Initiate private chats and transfer reward to other users." for="chat"></i>
                             <br>
                             <span></span>
                         </a>
                     </li>
                     <li>
                         <a href="#import" page="import" class="navlink menu-item-sm">
-                            <i class="fa-double fa fa-lg fa-download"></i>
+                            <i class="fa-double fa fa-lg fa-download" action="tooltip" tooltip-title="Import / Export" tooltip-content="Import and export wallets, private keys or entire accounts." for="import"></i>
                             <br>
                             <span></span>
                         </a>
@@ -274,8 +281,9 @@
                 </ul>
             </li>
         </ul>
+        <div class="toolTip"></div>
         <!-- Balance Container -->
-        <div class="container">
+          <div class="container">
             <div class="row-fluid clearfix ">
                 <div class="col-md-2 hidden-xs span3"></div>
                 <div class="col-md-6 span8">

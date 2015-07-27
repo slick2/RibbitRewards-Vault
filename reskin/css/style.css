@@ -115,7 +115,6 @@
 
     .toAddress {
         padding-left: 30px;
-        text-align: center;
     }
 
     .address-view .accountInPickerBalance {
@@ -249,6 +248,11 @@ iframe {
     overflow: hidden;
 }
 
+.toolTip {
+    position: fixed;
+    width: 350px;
+}
+
 /* QR Scanner */
 .qrButton {
   font-size: 2em;
@@ -265,6 +269,7 @@ iframe {
 
 #toAddress {
     font-size: .8em;
+    text-align: center !important;
 }
 
 .copyright {
@@ -352,11 +357,14 @@ iframe {
 }
 
 .wallet-address-picker .itemAddress {
-  position: relative;
-  top: 25px;
-  left: 15px;
-  font-size: .7em;
+    position: relative;
+  /*top: 25px;
+  left: 15px;*/
+    color: #d2d7dc;
+    color: rgba(0,0,0,0.4);
+  font-size: .9em;
 }
+
 .modal-backdrop {
     z-index: -1;
 }
