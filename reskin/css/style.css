@@ -53,6 +53,16 @@
     .tab-content {
         padding-left: 0 !important;
     }
+    .toolTip {
+        display: none !important;
+    }
+    .wallet-address-picker .itemAddress {
+            font-size: .6em !important;
+        top: 15px;
+    }
+    .tab-content {
+           padding-top: 10px !important; 
+    }
     .amount {
         height: 55px !important;
         font-size: 7.0vw !important;
