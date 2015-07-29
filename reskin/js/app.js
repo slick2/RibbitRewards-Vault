@@ -14,9 +14,7 @@ var lazyCheck, getDisplayName, checkLocalIdentity
 var onPage = function () {
     var page, title, simple
     var hash = window.location.hash.replace('#', '')
-    if (hash === "") {
-        hash = window.location.pathname.replace("/", "").split(".")[0]
-    }
+
     switch (hash) {
         case "wallet":
             page = "wallet.html"
@@ -56,14 +54,22 @@ var onPage = function () {
             title = "Settings"
             simple = ""
             break;
-        default:
-            page = "profile.html"
-            title="Profile"
-            simple = "profile"
+        case "":
+        case null:
+        case "onboard":
+            page = "onboard.html"
+            title = "On Board"
+            simple = "onboard"
+            break;
+        default :
+            page = hash+".html"
+            simple = "dynamic"
             break;
     }
     return {page: page, title: title, simple: simple}
 }
+
+
 /* Entry */
 $(document).ready(function () {
     handleSettings(function () {
@@ -79,9 +85,33 @@ $(document).ready(function () {
 })
 /* Page is completely loaded */
 $(window).load(function() {
-/*    loading = false*/
     setTimeout(function () { handleSettingsElementFromStore() }, 500)
 })
+
+/* Kloudless */
+function initKloudless(element) {
+    Kloudless.authenticator(element, {
+        'app_id': 'bZHisu_8861zNPS5TdfCc3j3ddy3pjJENtghT0BFaMH_9yE1'
+    }, function (err, authResult) {
+        var payload = {}
+        if (err) {
+            payload = getCloudFeedback(false, result, payload)
+            console.error('An error occurred with Kloudless:', err);
+            return;
+        }
+        console.log(authResult)
+        newtables.cloud.insert(authResult.service, authResult.id, function (result) {
+            console.log(result)
+            renderImportTemplate()
+        })
+    });
+}
+
+function removeCloudService(service) {
+    newtables.cloud.remove(service, function() {
+        renderImportTemplate()
+    })
+}
 
 function handleSettings(cb) {
     settings.onPage = onPage()
@@ -99,7 +129,7 @@ function handleSettings(cb) {
         })
     
     //onboarding first
-    getOrSetSetting("onboard", {seen:"false",level:0,dismissed:false}, function(setting) {
+    getOrSetSetting("onboard", {seen:false, level:0, dismissed:false}, function(setting) {
         settings.onboard = setting
         loadApplication
     })
@@ -243,6 +273,8 @@ var loadPageByHash = function () {
             return renderKeysTemplate({})
         case "Import / Export":
             return renderImportTemplate({})
+        default :
+            return renderHashTemplate({})
     }
     /*loadPageExplicitely(pageData.simple)*/
     if (pageData.page === "video-chat.html" && getQueryStringParam("call") !== undefined) {
@@ -568,7 +600,22 @@ function bindClicks() {
         //handleMenuToggle()
         showNav()
     })
-        
+    
+    /* Remove Cloud */
+    $(document).on('click.customBindings', '.cloud-remove', function () {
+        var data = $(this).attr("data")
+        removeCloudService(data)
+    })
+    
+    /* Skip Step */
+    $(document).on('click.customBindings', '.skip-step', function () {
+        var data = $(this).attr("for")
+        var next = $("." + data).parent().parent().next().find(".panel-heading")
+        next.removeClass("disabled")
+        next.find(".skip-step").removeClass("disabled")
+        $("." + data).find(".panel-heading").addClass("disabled")
+    })
+
         /* Profile Save Button */
         $(document).on('click.customBindings', '.profileSaveButton', function () {
             top.popMsg("Saved profile settings")
@@ -629,7 +676,7 @@ function bindClicks() {
         var title = $($(this).get(0)).attr("tooltip-title")
         var content = $($(this).get(0)).attr("tooltip-content")
         var target = $($(this).get(0)).attr("for")
-        renderToolTip({ "title": title, "content": content, top: $(this).position().top + 30 , target: target})
+        renderToolTip({ "title": title, "content": content, top: $(this).position().top - 40 , target: target})
     })
     /* Tooltip un Hover */
     $(document).on('mouseout.customBindings', '[action="tooltip"]', function () {
@@ -906,7 +953,12 @@ function loadAddressPicker() {
             } else {
                 identityIcon = ""
             }
-            var privkeyData = JSON.parse($(this)[0].key).xprivkey
+            var privkeyData
+            try {
+                privkeyData = JSON.parse($(this)[0].key).xprivkey
+            } catch (e){
+                privkeyData = $(this)[0].key.xprivkey
+            }
             var hd = new top.bitcore.HDPrivateKey(privkeyData)
             var address = hd.privateKey.toAddress()
             var addressNetwork = address.network.name
@@ -1014,7 +1066,12 @@ function loadBalance(balanceElement) {
     balanceElement.text(totalBalance + " " + shortCode)
     top.newtables.privkey.allRecordsArray(function (records) {
         $.each(records, function () {
-            var hd = new top.bitcore.HDPrivateKey(JSON.parse($(this)[0].key).xprivkey)
+            var hd
+            try {
+                hd = new top.bitcore.HDPrivateKey(JSON.parse($(this)[0].key).xprivkey)
+            } catch (e) {
+                hd = new top.bitcore.HDPrivateKey($(this)[0].key.xprivkey)
+            }
             var address = hd.privateKey.toAddress()
             var addressNetwork = address.network.name
             if ($(this)[0].label !== undefined) {
@@ -1353,7 +1410,7 @@ function renderWalletTemplate(templateData) {
 }
 
 /* HandleBars compile wallet template */
-function renderProfileTemplate(data) {
+function renderProfileTemplate() {
     getPublicIdentity(function (a) {
         var profile = a
         profile.photo = photoObjectToUrl(a.photo).photo
@@ -1389,11 +1446,49 @@ function renderKeysTemplate(data) {
 
 /* Handlebars compile import template */
 function renderImportTemplate(data) {
+    var payload = {}
+    payload.incoming = data
+    newtables.cloud.keys(function (result) {
+        if (result === undefined || result == null || result.error || result.length < 1) {
+            payload = getCloudFeedback(false, result, payload)
+            payload.services = []
+        } else {
+            payload = getCloudFeedback(true, result, payload)
+            payload.services = result
+        }
+
+        $.ajax({
+            url : './templates/import.html',
+            success : function (data) {
+                var template = Handlebars.compile(data)
+                animateOut(template(payload), function () { })
+            },
+            dataType: "text",
+            async : false
+        })
+    })
+}
+
+function getCloudFeedback(wasSuccess, result, payload) {
+    if (wasSuccess) {
+        payload.warn = "success"
+        payload.warnmsgClass = "info"
+        payload.warntext = "You have " + result.length + " cloud accounts account(s) activated for backups."
+        return payload
+    } else {
+        payload.warn = "warning"
+        payload.warnmsgClass = "danger"
+        payload.warntext = "It is extremely important that you back up your wallet now and often to ensure you can restore funds in the event of a catastrophe."
+        return payload
+    }
+}
+
+function renderHashTemplate(templateData) {
     $.ajax({
-        url : './templates/import.html',
+        url : './templates/'+ settings.onPage.page,
         success : function (data) {
             var template = Handlebars.compile(data)
-            animateOut(template(profile), function() {})
+            animateOut(template, function () { })
         },
         dataType: "text",
         async : false

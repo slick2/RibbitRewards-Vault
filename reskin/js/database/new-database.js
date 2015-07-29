@@ -10,6 +10,7 @@ newtables.privkey.newIdentity = getnewHDKey(newtables.privkey.table,true)
 newtables.privkey.signMessage = getsignMessage(newtables.privkey.table)
 newtables.privkey.verifyMessage = getverifyMessage(newtables.privkey.table)
 newtables.channel = setupTableObject('vault_channel')
+newtables.cloud = setupTableObject('vault_cloud')
 newtables.peers = setupTableObject('vault_peers')
 newtables.peers.offline = getoffline(newtables.peers.table)
 newtables.peers.online = getonline(newtables.peers.table)
@@ -395,6 +396,7 @@ function getallRecordsArray(database) {
 function allRecordsArray(db, cb) {
     var records = []
     keys(db, function (outs) {
+        if (outs.error) {return cb(null)}
         for (var index = 0; index < outs.length; ++index) {
             get(db, outs[index], function (err, doc) {
                 records.push(doc.value)

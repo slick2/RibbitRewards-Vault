@@ -13,23 +13,24 @@
             $ = jQuery = module.exports;
             // If you want module.exports to be empty, uncomment:
             // module.exports = {};
-        } catch (e) {
-        }
+        } catch (e) { }
     </script>
     <script>
-        var remote = require('remote');
-        var Menu = remote.require('menu');
-        var MenuItem = remote.require('menu-item');
+        try {
+            var remote = require('remote');
+            var Menu = remote.require('menu');
+            var MenuItem = remote.require('menu-item');
 
-        var menu = new Menu();
-        menu.append(new MenuItem({ label: 'Dev Tools', click: function () { remote.getCurrentWindow().toggleDevTools(); } }));
-        //menu.append(new MenuItem({ type: 'separator' }));
-        //menu.append(new MenuItem({ label: 'MenuItem2', type: 'checkbox', checked: true }));
+            var menu = new Menu();
+            menu.append(new MenuItem({ label: 'Dev Tools', click: function() { remote.getCurrentWindow().toggleDevTools(); } }));
+            //menu.append(new MenuItem({ type: 'separator' }));
+            //menu.append(new MenuItem({ label: 'MenuItem2', type: 'checkbox', checked: true }));
 
-        window.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            menu.popup(remote.getCurrentWindow());
-        }, false);
+            window.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                menu.popup(remote.getCurrentWindow());
+            }, false);
+        } catch (e) {console.log("Not loaded inside electron",e)}
     </script>
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -283,7 +284,7 @@
         </ul>
         <div class="toolTip"></div>
         <!-- Balance Container -->
-          <div class="container">
+        <div class="container">
             <div class="row-fluid clearfix ">
                 <div class="col-md-2 hidden-xs span3"></div>
                 <div class="col-md-6 span8">
@@ -334,6 +335,24 @@
         </div>
     </div>
 </div>
+<!-- Cloud Confirm Modal -->
+    <div id="cloudConfirm" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body…</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 <!-- Name address modal -->
 <div class="modal fade" id="nameAccountModal">
     <div class="modal-dialog">
@@ -527,7 +546,15 @@
 <script type="text/javascript" src="js/bitcore-message.js"></script>
 <script type="text/javascript" src="js/bitcore-p2p.js"></script>
 <script type="text/javascript" src="js/bitcore-explorers-multi.js"></script>
-<script type="text/javascript" src="js/out-wallet.js"></script>
+<script type="text/javascript" src="https://static-cdn.kloudless.com/p/platform/sdk/kloudless.authenticator.v0.1.js"></script>
+
+<!---->
+<!---->
+<!-- Need to research why out-wallet was causing kloudless to fail -->
+<!---->
+<!---->
+
+<!--<script type="text/javascript" src="js/out-wallet.js"></script>-->
 <!-- VAULT -->
 <script src="js/app.js"></script>
 <script src="js/Vault.js"></script>
