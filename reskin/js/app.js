@@ -14,9 +14,7 @@ var lazyCheck, getDisplayName, checkLocalIdentity
 var onPage = function () {
     var page, title, simple
     var hash = window.location.hash.replace('#', '')
-    if (hash === "") {
-        hash = window.location.pathname.replace("/", "").split(".")[0]
-    }
+
     switch (hash) {
         case "wallet":
             page = "wallet.html"
