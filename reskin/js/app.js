@@ -408,6 +408,14 @@ function initTables(){
     });
 }
 
+function loadProfileImageView() {
+    for (i = 1; i < 94; i++) {
+        $('<div class="item"><img src="images/avatars/characters_'+i+'.png"></div>').insertBefore(".item.active");
+    }
+        
+
+}
+
 function getIdSelections() {
     return $.map($table.bootstrapTable('getSelections'), function (row) {
         return row.id
