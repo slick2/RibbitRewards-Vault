@@ -18,6 +18,16 @@
     width: 35px;
 }
 
+#profile-carousel {
+    max-width: 200px !important;
+    display: table;
+    margin: 0 auto;
+}
+
+.carousel-inner img {
+  margin: auto;
+}
+
 .peer-name {
     float: left;
 }
@@ -594,7 +604,7 @@ li .accountInPicker {
   background-color: rgba(190, 190, 190, 0.3);
 }
 
-.form-control:not(.toAddress):not(.amount)  {
+.form-control:not(.toAddress):not(.amount):not(#inputName):not(#inputNickname):not(#inputSocial) {
     width: 250px !important;    
 }
 
@@ -626,57 +636,57 @@ li .accountInPicker {
 }
 
 
-      .wallet-address-picker .dropdown-toggle {
-        right: 5px;
-        position: absolute;
-      }
-      .address-view {left: -20px;}
-      .form-horizontal .form-control-feedback { left: -35px; }
-      .dropdown-menu {
+.wallet-address-picker .dropdown-toggle {
+right: 5px;
+position: absolute;
+}
+.address-view {left: -20px;}
+.form-horizontal .form-control-feedback { left: -35px; }
+.dropdown-menu {
 
-        color: gray;
-      }
-      .dropdown-menu a {
-        color: gray !important;
-      }
-      .btn-primary:not(.btn-link):not(.btn-flat) {
-        background-color: #26c281 !important;
-        color: rgba(255, 255, 255, 0.84);
-      }
-      .form-group .control-label, .form-group-default .control-label, .btn-default {
-        color: gray !important;
-      }
-      body {
-        color: gray;
-      }
-      .wallet-address-picker {
-        /*box-shadow: none;*/
-        width: 100%;
-        left: -20px;      
-        margin: 0px 1px;
-      }
-      .btn {
-        text-transform: none !important;
-      }
-      .address-view.btn {
-        /*left: -45px;
-        color: #b2b2b2 !important;
-      }
-        *::-webkit-input-placeholder {
-        color: #b2b2b2 !important;
-      }
-        *:-moz-placeholder {
-        /* FF 4-18 */
-        color: #b2b2b2 !important;
-      }
-      *::-moz-placeholder {
-        /* FF 19+ */
-        color: #b2b2b2 !important;
-      }
-      *:-ms-input-placeholder {
-        /* IE 10+ */
-        color: #b2b2b2 !important;
-      }
+    color: gray;
+}
+.dropdown-menu a {
+    color: gray !important;
+}
+.btn-primary:not(.btn-link):not(.btn-flat) {
+    background-color: #26c281 !important;
+    color: rgba(255, 255, 255, 0.84);
+}
+.form-group .control-label, .form-group-default .control-label, .btn-default {
+    color: gray !important;
+}
+body {
+    color: gray;
+}
+.wallet-address-picker {
+    /*box-shadow: none;*/
+    width: 100%;
+    left: -20px;      
+    margin: 0px 1px;
+}
+.btn {
+    text-transform: none !important;
+}
+.address-view.btn {
+    /*left: -45px;
+    color: #b2b2b2 !important;
+    }
+    *::-webkit-input-placeholder {
+    color: #b2b2b2 !important;
+    }
+    *:-moz-placeholder {
+    /* FF 4-18 */
+    color: #b2b2b2 !important;
+}
+    *::-moz-placeholder {
+    /* FF 19+ */
+    color: #b2b2b2 !important;
+}
+*:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #b2b2b2 !important;
+}
 
 .modal-backdrop {
     display: none !important;
@@ -687,62 +697,62 @@ li .accountInPicker {
         position: absolute;
     }
 
-    .address-view {
-        left: -20px;
-    }
+.address-view {
+    left: -20px;
+}
 
-    .form-horizontal .form-control-feedback {
-        right: -5px !important;
-        left: inherit !important;
-    }
+.form-horizontal .form-control-feedback {
+    right: -5px !important;
+    left: inherit !important;
+}
 
-    .dropdown-menu {
-        color: gray;
-    }
+.dropdown-menu {
+    color: gray;
+}
 
-    .dropdown-menu a {
-        color: gray !important;
-    }
+.dropdown-menu a {
+    color: gray !important;
+}
 
-    .btn-primary:not(.btn-link):not(.btn-flat) {
-        background-color: #26c281 !important;
-        color: rgba(255, 255, 255, 0.84);
-    }
+.btn-primary:not(.btn-link):not(.btn-flat) {
+    background-color: #26c281 !important;
+    color: rgba(255, 255, 255, 0.84);
+}
 
-    .form-group .control-label, .form-group-default .control-label, .btn-default {
-        color: gray !important;
-    }
+.form-group .control-label, .form-group-default .control-label, .btn-default {
+    color: gray !important;
+}
 
-    .wallet-address-picker {
-        /*box-shadow: none;*/
-        width: 100%;
-        left: -20px;
-        margin: 0 1px;
-        float: left;
-    }
+.wallet-address-picker {
+    /*box-shadow: none;*/
+    width: 100%;
+    left: -20px;
+    margin: 0 1px;
+    float: left;
+}
 
-    .btn {
-        text-transform: none !important;
-    }
+.btn {
+    text-transform: none !important;
+}
 
-    .address-view.btn {
-        color: #b2b2b2 !important;
-    }
+.address-view.btn {
+    color: #b2b2b2 !important;
+}
 
-    *::-moz-placeholder {
-        /* FF 19+ */
-        color: #b2b2b2 !important;
-    }
+*::-moz-placeholder {
+    /* FF 19+ */
+    color: #b2b2b2 !important;
+}
 
-    *:-ms-input-placeholder {
-        /* IE 10+ */
-        color: #b2b2b2 !important;
-    }
+*:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #b2b2b2 !important;
+}
 
 .circular img {
-	opacity: 0;
-	filter: alpha(opacity=0);
-	}
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
 
 .container {
     margin-left: 0 !important;

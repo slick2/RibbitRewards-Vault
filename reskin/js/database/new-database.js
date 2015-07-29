@@ -204,7 +204,12 @@ function signMessage(db, msg, cb, idx) {
     keys(function (keyrecords) {
         var lookupKey = keyrecords[idx]
         get(lookupKey, function (err, record) {
-            var hdkey = bitcore.HDPrivateKey(record.value.key.xprivkey)
+            var hdkey
+            try {
+                hdkey = bitcore.HDPrivateKey(JSON.parse(record.value.key).xprivkey)
+            } catch (e) {
+                hdkey = bitcore.HDPrivateKey(record.value.key.xprivkey)
+            }
             var privateKey = hdkey.privateKey
             var address = privateKey.toAddress().toString()
             var signature = Message(msg).sign(privateKey);

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/jasny-bootstrap.css" rel="stylesheet">
+        <link href="../css/peers.css" rel="stylesheet">
+        <link href="../css/material.css" rel="stylesheet">
+        <link href="../css/ripples.min.css" rel="stylesheet">
+        <link href="../css/style.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/normalize.css" rel="stylesheet">
+    </head>
+    
+    <body>
+        <div class="section animated fadeInUp">
+            <!--<div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <h3 class="panel-title">Enter you personal information
+                  <br>
+                </h3>
+              </div>
+              <div class="panel-body">
+                <div class="section">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-md-4 col-xs-4">
+                        <div class="col-md-6">
+                          <label class="control-label">Profile Picture</label>
+                        </div>
+                        <div class="col-md-3">
+                          <div class="togglebutton">
+                            <label>Public
+                              <input tabindex="-1" type="checkbox" for="profileImage" toggletype="public">
+                            </label>
+                          </div>
+                        </div>
+                        <!--<div for="profileImage" class="square" style="background-image: url({{photo}});"></div>-->
+            <!--<div class="form-group">
+                          <div class="col-sm-3">
+                            <input id="profileImageUpload" type="file">
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-8 col-xs-8">
+                        <form class="form-horizontal" role="form">
+                          <div class="form-group">
+                            <div class="col-sm-2">
+                              <label for="inputName" class="control-label">Name
+                                <br>
+                              </label>
+                            </div>
+                            <div class="col-sm-6">
+                              <input for="name" type="text" class="form-control input-lg" id="inputName"
+                              placeholder="Enter your name here." value="{{name}}">
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="togglebutton">
+                                <label>Public
+                                  <input tabindex="-1" type="checkbox" for="name" toggletype="public">
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-2">
+                              <label for="inputNickname" class="control-label">Nickname</label>
+                            </div>
+                            <div class="col-sm-6">
+                              <input for="nickname" type="text" class="form-control input-lg" id="inputNickname"
+                              placeholder="Enter your nickname here" value="{{nickname}}">
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="togglebutton">
+                                <label>Public
+                                  <input tabindex="-1" type="checkbox" for="nickname" toggletype="public">
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-2">
+                              <label for="inputSocial" class="control-label">Twitter&nbsp;
+                                <br>
+                              </label>
+                            </div>
+                            <div class="col-sm-6">
+                              <input for="social" type="text" class="form-control input-lg" id="inputSocial"
+                              placeholder="What is your twitter handle" value="{{social}}">
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="togglebutton">
+                                <label>Public
+                                  <input tabindex="-1" type="checkbox" for="social" toggletype="public">
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-2">
+                              <label for="inputBio" class="control-label">Bio
+                                <br>
+                              </label>
+                            </div>
+                            <div class="col-sm-6">
+                              <!--<input for="bio" type="text" class="form-control input-lg" id="inputBio"
+                              placeholder="Something about yourself">-->
+            <!--<textarea for="bio" class="form-control" rows="3" id="inputBio">{{bio}}</textarea>
+                            </div>
+                            <div class="col-sm-2">
+                              <div class="togglebutton">
+                                <label>Public
+                                  <input tabindex="-1" type="checkbox" for="bio" toggletype="public">
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10"></div>
+                          </div>
+                        </form>
+                        <button class="pull-right profileSaveButton btn btn-primary btn-flat">
+                          <i class="mdi-navigation-check"></i>
+                          <span>Click to Save Profile</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-footer"></div>
+            </div>
+          </div>
+        </div>
+      </div>-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Panel title</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="section">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div id="profile-carousel" data-interval="false" class="carousel slide"
+                                                data-ride="carousel">
+                                                    <div class="carousel-inner">
+                                                        <div class="item active">
+                                                            <img src="./images/profile.png">
+                                                        </div>
+                                                    </div>
+                                                    <a class="left carousel-control" href="#profile-carousel" data-slide="prev"><i class="icon-prev fa fa-angle-left"></i></a>
+                                                    <a class="right carousel-control" href="#profile-carousel" data-slide="next"><i class="icon-next fa fa-angle-right"></i> </a>
+                                                </div>
+                                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                                    <span class="btn btn-default btn-file">
+                                                        <span class="fileinput-new">Upload a profile image.</span>
+                                                        <span class="fileinput-exists">Change</span>
+                                                        <input type="file" name="...">
+                                                    </span>
+                                                    <span class="fileinput-filename"></span>
+                                                    <a href="#" class="close fileinput-exists" data-dismiss="fileinput"
+                                                    style="float: none">×</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <form class="form-horizontal" role="form">
+                                                    <div class="form-group">
+                                                        <div class="col-sm-2">
+                                                            <label for="inputEmail3" class="control-label">Name</label>
+                                                        </div>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control input-lg" id="inputName" placeholder="Enter your name here."
+                                                            for="name" value="{{name}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-2">
+                                                            <label for="inputPassword3" class="control-label">Nickname</label>
+                                                        </div>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control input-lg" id="inputNickname" placeholder="Enter your nickname here"
+                                                            for="nickname" value="{{nickname}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-2">
+                                                            <label for="inputPassword3" class="control-label">Twitter</label>
+                                                        </div>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control input-lg" id="inputSocial" placeholder="What is your twitter handle"
+                                                            for="social" value="{{social}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-2">
+                                                            <label for="inputBio" class="control-label">Bio</label>
+                                                        </div>
+                                                        <div class="col-sm-10">
+                                                            <textarea for="bio" class="form-control input-lg" rows="3" id="inputBio">{{bio}}</textarea>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                                $('.profile-carousel').bcSwipe({ threshold: 50 });
+                                loadProfileImageView()
+                              })
+        </script>
+    </body>
+
+</html>
