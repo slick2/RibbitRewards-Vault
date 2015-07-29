@@ -57,6 +57,7 @@ var onPage = function () {
             simple = ""
             break;
         case "":
+        case null:
         case "onboard":
             page = "onboard.html"
             title = "On Board"
